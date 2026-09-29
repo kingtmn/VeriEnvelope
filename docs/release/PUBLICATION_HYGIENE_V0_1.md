@@ -7,7 +7,7 @@
 ## 已确认
 
 1. 本地仓库是 `/Users/<user>/Desktop/VeriEnvelope`，分支是 `main`，检查开始时工作区干净，HEAD 是 `10183be`。
-2. GitHub 远端 `kingtmn/VeriEnvelope` 实时显示为 Public，且为空仓库。首次 push 尚未发生。
+2. GitHub 远端 `kingtmn/VeriEnvelope` 实时显示为 Public；隐私安全的公开快照已经 push 到 `main`，未公开旧的本地 Git 历史。
 3. 当前树共 360 个已跟踪文件。没有已跟踪的 `.env`、私钥文件、数据库文件或证书文件。
 4. 当前树和全部 Git commit 做过高置信度 secret shape 检查。没有命中私钥头、GitHub token、OpenAI-style key、Cloudflare API token assignment 或 Bearer token。
 5. 当前树里的个人绝对路径已改成 `/Users/<user>/...`。容器里的 `/home/node` 是公开镜像用户路径，不是宿主用户信息。
@@ -49,3 +49,10 @@ Git 历史不能仅靠修改当前 HEAD 擦除。现有私有历史里仍能看�
 4. 操作 Cloudflare Dashboard，创建 Pages 项目并上线。
 
 GitHub OAuth / GitHub App 的实际授权页面仍属于账户权限变更；到达该按钮前再次停下做 action-time confirmation。
+
+## 上线结果
+
+- GitHub：`https://github.com/kingtmn/VeriEnvelope`
+- Cloudflare Pages：`https://verienvelope.pages.dev/`
+- GitHub App 已收紧为仅选择 `kingtmn/VeriEnvelope`；Cloudflare Pages 项目只绑定该仓库的 `main` 分支。
+- 首次 Cloudflare 构建完成并上传 14 个静态文件；线上首页、反馈邮箱和案例详情页已验证可访问。

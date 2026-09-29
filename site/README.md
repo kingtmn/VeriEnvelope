@@ -11,6 +11,8 @@ python3 site/verify_public.py
 
 The generated directory is `site/dist/` and remains untracked.
 
+Published site: <https://verienvelope.pages.dev/>
+
 Cloudflare Pages configuration:
 
 ```text

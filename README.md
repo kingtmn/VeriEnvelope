@@ -32,7 +32,7 @@ Working project name: **VeriEnvelope**。
 
 - 数据模型可以表示 tool 和 mcp_server。
 - 参考 runner 的 `run_case` **拒绝**执行第三方组件验证。Everything 的三次运行走的是单独的容器路径，不是 `run_case`。不在宿主机上安装陌生代码。
-- 组件登记状态没有 `admitted`。验证结果里的 `admission=admitted` 不是发布，也不是认证。Historical Project GATE 1 已通过。v0.1 发布审计是 READY，但还没有 Publication Authorization。GATE 2 锁定。
+- 组件登记状态没有 `admitted`。验证结果里的 `admission=admitted` 不是发布，也不是认证。Historical Project GATE 1 已通过。v0.1 发布审计是 READY，已获得 Publication Authorization，并已发布 GitHub 公共快照与 Cloudflare Pages 静态站。GATE 2 锁定。
 - 本地查看器只渲染已有记录，不重新裁决。
 
 宪法在 [CONSTITUTION.md](CONSTITUTION.md)。思想来源在 [METHODOLOGY_LINEAGE.md](METHODOLOGY_LINEAGE.md)。现在做到哪一步，以 [CURRENT_STATE.md](CURRENT_STATE.md) 为准。
@@ -65,6 +65,8 @@ python3 -m venv .venv
 ## 公开网站
 
 `site/` 是只读展示层，从五个现行封存结果生成静态 HTML。它不重跑组件，也不重新裁决。GitHub 始终是事实来源。
+
+公开站点：<https://verienvelope.pages.dev/>
 
 ```bash
 python3 site/build.py
