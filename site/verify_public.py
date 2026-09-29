@@ -24,6 +24,9 @@ SECRET_PATTERNS = {
 PERSONAL_PATH = re.compile("/" + r"Users/(?!<user>)[^/\s`\"']+")
 MARKDOWN_LINK = re.compile(r"(?<!!)\[[^\]]*\]\(([^)]+)\)")
 HTML_LINK = re.compile(r"(?:href|src)=\"([^\"]+)\"")
+TITLE = re.compile(r"<title>([^<]+)</title>")
+DESCRIPTION = re.compile(r'<meta name="description" content="([^"]+)">')
+CANONICAL = re.compile(r'<link rel="canonical" href="([^"]+)">')
 
 
 def tracked_files() -> list[Path]:
@@ -124,6 +127,60 @@ def check_generated_links(errors: list[str]) -> None:
     home = (DIST / "index.html").read_text(encoding="utf-8")
     if 'mailto:kingtmn1@gmail.com' not in home:
         errors.append("homepage feedback email is missing")
+    required_story = [
+        "What exactly passed?",
+        "Verify specific claims, not products.",
+        "This does not mean Playwright is broken.",
+        "Evidence stayed.",
+        "Five claims. Five evidence trails.",
+        "Challenge a claim.",
+    ]
+    for phrase in required_story:
+        if phrase not in home:
+            errors.append(f"homepage story is missing: {phrase}")
+
+
+def check_metadata(errors: list[str]) -> None:
+    html_files = sorted(DIST.rglob("*.html"))
+    titles: set[str] = set()
+    descriptions: set[str] = set()
+    canonicals: set[str] = set()
+    for path in html_files:
+        text = path.read_text(encoding="utf-8")
+        relative = path.relative_to(DIST)
+        for label, pattern, seen in (
+            ("title", TITLE, titles),
+            ("description", DESCRIPTION, descriptions),
+            ("canonical", CANONICAL, canonicals),
+        ):
+            match = pattern.search(text)
+            if match is None:
+                errors.append(f"missing {label} in {relative}")
+            elif match.group(1) in seen:
+                errors.append(f"duplicate {label} in {relative}: {match.group(1)}")
+            else:
+                seen.add(match.group(1))
+        for required in (
+            'property="og:title"',
+            'property="og:description"',
+            'property="og:image"',
+            'name="twitter:card"',
+            'type="application/ld+json"',
+        ):
+            if required not in text:
+                errors.append(f"missing metadata in {relative}: {required}")
+    for asset in ("assets/og-card.svg", "assets/og-card.png", "sitemap.xml", "robots.txt"):
+        if not (DIST / asset).is_file():
+            errors.append(f"missing generated asset: {asset}")
+    sitemap = (DIST / "sitemap.xml").read_text(encoding="utf-8")
+    expected_urls = 5 + EXPECTED_CASE_COUNT
+    if sitemap.count("<url>") != expected_urls:
+        errors.append(
+            f"sitemap expected {expected_urls} URLs, found {sitemap.count('<url>')}"
+        )
+    robots = (DIST / "robots.txt").read_text(encoding="utf-8")
+    if "https://verienvelope.pages.dev/sitemap.xml" not in robots:
+        errors.append("robots.txt is missing the sitemap URL")
 
 
 def main() -> int:
@@ -132,11 +189,12 @@ def main() -> int:
     check_markdown_links(errors)
     check_cases(errors)
     check_generated_links(errors)
+    check_metadata(errors)
     if errors:
         for error in sorted(set(errors)):
             print(f"ERROR: {error}", file=sys.stderr)
         return 1
-    print("Public verification passed: 5 cases, repository hygiene, source links, and generated links.")
+    print("Public verification passed: 5 cases, narrative, metadata, sitemap, hygiene, source links, and generated links.")
     return 0
 
 

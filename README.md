@@ -1,45 +1,108 @@
 # VeriEnvelope
 
-Working project name: **VeriEnvelope**。
+> **“It passed.” What exactly passed?**
 
-这是 Evidence-bound Tool Verification 的 v0.1。VeriEnvelope verifies specific claims under declared conditions. It does not decide overall product quality or fitness for use。它不是软件排名，也不是认证机构。发布说明在 [docs/release/V0_1_RELEASE_CANDIDATE.md](docs/release/V0_1_RELEASE_CANDIDATE.md)。源码已经公开在 `kingtmn/VeriEnvelope`；静态网站部署状态以 [CURRENT_STATE.md](CURRENT_STATE.md) 为准。
+VeriEnvelope is an open evidence system for verifying specific Tool claims under declared conditions.
 
-名称尚未做商标和域名尽调。正式发布前至少还要检查 USPTO、WIPO、EUIPO、CNIPA、GitHub、域名，以及公司或产品名冲突。本仓库不宣称这项清查已经完成。
+**Verify specific claims, not products.** A result without its envelope is incomplete.
 
-## 它回答什么
+```text
+Claim → Method → Evidence → Envelope
+```
 
-针对一个固定下来的软件组件版本，回答五件事：
+VeriEnvelope keeps a narrow, testable statement attached to the frozen rule that judged it, the observation that supports it, and the conditions where the conclusion stops. It does not produce product scores, rankings, certifications, or fitness-for-use verdicts.
 
-1. 在什么版本和环境下，实际证明了它能做什么？
-2. 为什么这个结论可以被暂时相信？
-3. 结论在什么边界停止成立？
-4. 原始证据在哪里？
-5. 如果结论后来变了，历史还在不在？
+Explore the public Viewer at [verienvelope.pages.dev](https://verienvelope.pages.dev/) or inspect the source-of-truth records in this repository.
 
-不回答“这个软件好不好”，也不给出总分。
+## A real case: Playwright MCP
 
-## 三层，不能混
+The current record for the claim that `browser_navigate` reaches a fixed local page is **`not_demonstrated`** under `VE-METHOD-MCP-002` 0.4.0.
 
-| 层 | 位置 | 是什么 |
+This does **not** mean Playwright is broken. It means this specific claim was not demonstrated under the frozen Method and runtime envelope. The cause remains unclassified.
+
+- [Read the sealed result](evidence/mcp.playwright-mcp/0.0.82/run-d22d4d1928204029b8d2e45e82f749ad/result.json)
+- [Inspect the frozen Method](methods/VE-METHOD-MCP-002/method.yaml)
+- [View the claim and Envelope](https://verienvelope.pages.dev/cases/playwright-navigate/)
+
+## Why this exists
+
+Software results are often easier to publish than the conditions that made those results true. `PASS`, `FAIL`, `verified`, and `safe` travel quickly; the component identity, decision rule, runtime, permissions, untested areas, and revalidation triggers often do not.
+
+VeriEnvelope exists to bind those parts back together. It asks:
+
+1. What exact behavior was claimed?
+2. What was fixed before execution?
+3. What was actually observed?
+4. Which frozen rule authorized the result?
+5. Where does that conclusion stop?
+6. If the conclusion changes, does the history remain visible?
+
+## Sometimes the tool isn’t wrong. The test is.
+
+The Filesystem MCP case preserves a real correction chain.
+
+Its first `read_text_file` observation matched the preregistered fixture bytes. But an independent review found that Method 0.1.0 did not specify the formal capability status while the Runner supplied `demonstrated`. The raw observation remained valid; the formal status was not authorized by the frozen Method.
+
+The old evidence package stayed unchanged. Method 0.2.0 made the decision rule explicit, the Runner was repaired, a new run was authorized, and the claim was measured again. Only then did the current `demonstrated` conclusion return.
+
+> **Evidence stayed. The conclusion changed.**
+
+- [Historical record](evidence/mcp.server-filesystem/0.6.3/run-605485ecb4594a0d9fabd0002ca19899/result.json)
+- [Current record](evidence/mcp.server-filesystem/0.6.3/run-a030ab0bf2ee40faaf0b22cf003147ce/result.json)
+- [Revalidation note](docs/research/pilot3_rule_revalidation.md)
+
+## Methodology
+
+VeriEnvelope separates the normative Method from its implementation and from any downstream registry decision.
+
+| Layer | Location | Responsibility |
 | --- | --- | --- |
-| Method Specification | `methods/` | 公开方法。第三方可以不用本仓库代码，按方法自行复现。 |
-| Reference Implementation | `runner/` | 该方法的一种参考实现。不是唯一裁判。 |
-| Verification Result | 一次运行写出的 `result.json` | 某次测量的结论。第三方结果不会自动变成官方结论。 |
+| Method Specification | `methods/` | Public rules that can be reproduced without this repository's Runner. |
+| Reference Implementation | `runner/` | One implementation of a Method; never the sole normative authority. |
+| Verification Result | One run's `result.json` | The conclusion from one measurement. Third-party results do not become official automatically. |
 
-`VE-METHOD-001` 只审计测量管线本身。当前范围是 Tool。五条现行语义主张和它们的证据列在 [docs/release/PUBLICATION_AUDIT_V0_1.md](docs/release/PUBLICATION_AUDIT_V0_1.md)。其中 Playwright MCP 的 `browser_navigate` 是 not_demonstrated。这不是认证。
+The evidence chain is:
 
-## 当前边界
+```text
+Measurement Object
+  → Method
+  → Raw Observation
+  → Interpretation / Decision Rule
+  → Claim Result
+  → Claim Envelope
+  → Admission Rule
+  → Registry Decision
+```
 
-- 数据模型可以表示 tool 和 mcp_server。
-- 参考 runner 的 `run_case` **拒绝**执行第三方组件验证。Everything 的三次运行走的是单独的容器路径，不是 `run_case`。不在宿主机上安装陌生代码。
-- 组件登记状态没有 `admitted`。验证结果里的 `admission=admitted` 不是发布，也不是认证。Historical Project GATE 1 已通过。v0.1 发布审计是 READY，已获得 Publication Authorization，并已发布 GitHub 公共快照与 Cloudflare Pages 静态站。GATE 2 锁定。
-- 本地查看器只渲染已有记录，不重新裁决。
+Observation is not itself a verdict. Runner behavior is not Method authority. Admission is not certification.
 
-宪法在 [CONSTITUTION.md](CONSTITUTION.md)。思想来源在 [METHODOLOGY_LINEAGE.md](METHODOLOGY_LINEAGE.md)。现在做到哪一步，以 [CURRENT_STATE.md](CURRENT_STATE.md) 为准。
+Start with [the core methodology](methodology/core_method.md), [the responsibility model](docs/architecture/responsibility_model.md), and [the glossary](docs/glossary.md).
 
-## 运行
+## Architecture
 
-要求 Python 3.11+。
+- `methods/` — frozen, public Method specifications and version history
+- `runner/` — one reference implementation of those Methods
+- `evidence/` — sealed run packages and raw observations
+- `schemas/` — machine-readable record contracts
+- `registry/` — identities, authorizations, history, and registry state
+- `site/` — read-only public Viewer generated from five current sealed results
+- `viewer/` — local single-record renderer
+
+GitHub is the source of truth. The website is a Viewer and entry point; it does not rerun tools or recalculate conclusions.
+
+## Current boundary
+
+- v0.1 covers Tool claims only. Skill, Agent, Multi-Agent, and Workflow verification remain outside the active scope; GATE 2 is locked.
+- The data model can represent `tool` and `mcp_server` objects.
+- The reference `run_case` path rejects third-party component verification. Unknown code is not installed on the host.
+- A result with `admission=admitted` is not publication, certification, security assurance, or production readiness.
+- The local and public Viewers render existing records without judging them again.
+
+The governing constraints are in [CONSTITUTION.md](CONSTITUTION.md). Method lineage is recorded in [METHODOLOGY_LINEAGE.md](METHODOLOGY_LINEAGE.md). Current status is in [CURRENT_STATE.md](CURRENT_STATE.md).
+
+## Run locally
+
+Requires Python 3.11+.
 
 ```bash
 python3 -m venv .venv
@@ -47,7 +110,7 @@ python3 -m venv .venv
 .venv/bin/pytest
 ```
 
-跑一次管线自审，并生成单页 HTML：
+Run the measurement-pipeline self-audit and render a local record:
 
 ```bash
 .venv/bin/python -m verienvelope run \
@@ -60,21 +123,25 @@ python3 -m venv .venv
   --out viewer/preview/index.html
 ```
 
-`evidence/_scratch/` 和 `viewer/preview/` 被 gitignore。进程退出码 0 只表示这次观察为 match，不表示任何组件被准入。
+`evidence/_scratch/` and `viewer/preview/` are gitignored. Exit code 0 means only that this observation matched; it does not admit a component.
 
-## 公开网站
+## Build the public site
 
-`site/` 是只读展示层，从五个现行封存结果生成静态 HTML。它不重跑组件，也不重新裁决。GitHub 始终是事实来源。
+`site/` generates a static, read-only presentation from five current sealed results.
 
-公开站点：<https://verienvelope.pages.dev/>
+Public URL: <https://verienvelope.pages.dev/>
 
 ```bash
 python3 site/build.py
 python3 site/verify_public.py
 ```
 
-Cloudflare Pages 的配置和输出目录见 [site/README.md](site/README.md)。首次公开前的检查结果见 [docs/release/PUBLICATION_HYGIENE_V0_1.md](docs/release/PUBLICATION_HYGIENE_V0_1.md)。
+Cloudflare Pages configuration is documented in [site/README.md](site/README.md). The publication evidence and hygiene checks are recorded in [docs/release/PUBLICATION_AUDIT_V0_1.md](docs/release/PUBLICATION_AUDIT_V0_1.md) and [docs/release/PUBLICATION_HYGIENE_V0_1.md](docs/release/PUBLICATION_HYGIENE_V0_1.md).
 
-## 明确不做
+## Explicitly out of scope
 
-用户系统、评论、排名、支付、广告、SEO 站、项目方自助提交、批量抓取打分、Agent / Multi-Agent 标准、企业认证、全球统一标准、用模型自动裁决。也不使用“重新定义标准”“全球首个”“权威认证”这类说法。
+User accounts, comments, rankings, payments, ads, self-service verdict submission, bulk scoring, Agent or Multi-Agent standards, enterprise certification, a universal global standard, and model-generated adjudication. VeriEnvelope does not claim to be a “world first” or an authority that certifies products.
+
+## Working-name notice
+
+**VeriEnvelope** remains a working project name. The repository does not claim that a complete trademark or domain clearance has been performed. Formal release planning should still include appropriate USPTO, WIPO, EUIPO, CNIPA, GitHub, domain, company, and product-name checks.

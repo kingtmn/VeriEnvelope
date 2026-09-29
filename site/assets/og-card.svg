@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">VeriEnvelope social preview</title>
+  <desc id="desc">It passed. What exactly passed? A result without its envelope is incomplete.</desc>
+  <rect width="1200" height="630" fill="#f3f0e8"/>
+  <rect x="64" y="58" width="1072" height="514" fill="#fbfaf6" stroke="#13201c" stroke-width="2"/>
+  <rect x="96" y="92" width="58" height="58" fill="none" stroke="#13201c" stroke-width="2"/>
+  <text x="125" y="128" text-anchor="middle" fill="#13201c" font-family="ui-monospace, Menlo, monospace" font-size="18" font-weight="700">VE</text>
+  <text x="178" y="130" fill="#13201c" font-family="Georgia, serif" font-size="30" font-weight="700">VeriEnvelope</text>
+  <line x1="96" y1="184" x2="1104" y2="184" stroke="#d2cec2"/>
+  <text x="96" y="298" fill="#c85532" font-family="Georgia, serif" font-size="72" font-style="italic">“It passed.”</text>
+  <text x="96" y="386" fill="#13201c" font-family="Georgia, serif" font-size="72">What exactly passed?</text>
+  <text x="98" y="466" fill="#59665f" font-family="ui-monospace, Menlo, monospace" font-size="25">VERIFY SPECIFIC CLAIMS, NOT PRODUCTS.</text>
+  <circle cx="98" cy="528" r="5" fill="#c85532"/>
+  <text x="118" y="536" fill="#59665f" font-family="ui-sans-serif, system-ui, sans-serif" font-size="21">A result without its envelope is incomplete.</text>
+  <text x="1104" y="536" text-anchor="end" fill="#59665f" font-family="ui-monospace, Menlo, monospace" font-size="16">CLAIM · METHOD · EVIDENCE · ENVELOPE</text>
+</svg>
