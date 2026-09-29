@@ -2,7 +2,7 @@
 
 Working project name: **VeriEnvelope**。
 
-这是 Evidence-bound Tool Verification 的 v0.1 发布候选。VeriEnvelope verifies specific claims under declared conditions. It does not decide overall product quality or fitness for use。它不是软件排名，也不是认证机构。候选说明在 [docs/release/V0_1_RELEASE_CANDIDATE.md](docs/release/V0_1_RELEASE_CANDIDATE.md)。首次公开 push 仍需人类的 Publication Authorization。
+这是 Evidence-bound Tool Verification 的 v0.1。VeriEnvelope verifies specific claims under declared conditions. It does not decide overall product quality or fitness for use。它不是软件排名，也不是认证机构。发布说明在 [docs/release/V0_1_RELEASE_CANDIDATE.md](docs/release/V0_1_RELEASE_CANDIDATE.md)。源码已经公开在 `kingtmn/VeriEnvelope`；静态网站部署状态以 [CURRENT_STATE.md](CURRENT_STATE.md) 为准。
 
 名称尚未做商标和域名尽调。正式发布前至少还要检查 USPTO、WIPO、EUIPO、CNIPA、GitHub、域名，以及公司或产品名冲突。本仓库不宣称这项清查已经完成。
 

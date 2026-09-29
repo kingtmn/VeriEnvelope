@@ -1,6 +1,6 @@
-# VeriEnvelope v0.1 release candidate
+# VeriEnvelope v0.1 release
 
-这是本地候选，不是已经公开的版本。没有 GitHub Release，没有 push。要公开，还需要一次人类的 Publication Authorization。
+Publication Authorization 已在 2026-09-28 给出。源码已经以隐私安全的公开根提交发布到 `kingtmn/VeriEnvelope`。没有创建 GitHub Release。Cloudflare Pages 部署状态以 `CURRENT_STATE.md` 为准。
 
 VeriEnvelope verifies specific claims under declared conditions. It does not decide overall product quality or fitness for use.
 

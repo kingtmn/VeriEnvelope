@@ -2,7 +2,7 @@
 
 审计只回答：Tool-only VeriEnvelope v0.1 现在能不能诚实公开。结果是 READY。没有打分。
 
-GATE 2 仍然锁定。这一页不是 Publication Authorization。不创建 GitHub Release，不 push，不扩大 registry。
+GATE 2 仍然锁定。这一页本身不是 Publication Authorization。授权后来已在 2026-09-28 给出；GitHub 源码已公开，没有创建 GitHub Release，也没有扩大 registry。
 
 ## 检查
 
@@ -47,4 +47,4 @@ Filesystem 的 `run-605485ecb4594a0d9fabd0002ca19899` 是缺陷被发现之前�
 
 READY。
 
-没有 blocker。Release candidate 写在 `docs/release/V0_1_RELEASE_CANDIDATE.md`。下一步只剩人类的 Publication Authorization。
+没有 blocker。发布说明写在 `docs/release/V0_1_RELEASE_CANDIDATE.md`。Publication Authorization 后续已完成。
