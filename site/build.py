@@ -47,7 +47,7 @@ def page(title: str, body: str, *, description: str) -> str:
   <footer class="site-footer">
     <div class="shell">
       <span>VeriEnvelope v0.1 · Evidence-bound Tool Verification</span>
-      <span>Feedback: <a href="mailto:hongtang1@proton.me">hongtang1@proton.me</a></span>
+      <span>Feedback: <a href="mailto:kingtmn1@gmail.com">kingtmn1@gmail.com</a></span>
     </div>
   </footer>
 </body>
@@ -208,7 +208,7 @@ def build() -> None:
 <section class="feedback">
   <p class="eyebrow">Feedback</p>
   <h2>Challenge a claim. Point to the evidence.</h2>
-  <p>Corrections, counterexamples, and narrow verification requests are welcome at <a href="mailto:hongtang1@proton.me">hongtang1@proton.me</a>.</p>
+  <p>Corrections, counterexamples, and narrow verification requests are welcome at <a href="mailto:kingtmn1@gmail.com">kingtmn1@gmail.com</a>.</p>
 </section>"""
     write_page("index.html", page("Home", home, description="Evidence-bound verification of specific Tool claims under declared conditions."))
 

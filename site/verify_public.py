@@ -122,7 +122,7 @@ def check_generated_links(errors: list[str]) -> None:
             if not candidate.exists():
                 errors.append(f"broken generated link in {path.relative_to(DIST)}: {target}")
     home = (DIST / "index.html").read_text(encoding="utf-8")
-    if 'mailto:hongtang1@proton.me' not in home:
+    if 'mailto:kingtmn1@gmail.com' not in home:
         errors.append("homepage feedback email is missing")
 
 

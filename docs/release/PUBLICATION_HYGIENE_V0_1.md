@@ -31,7 +31,7 @@ Git 历史不能仅靠修改当前 HEAD 擦除。现有私有历史里仍能看�
 
 因此公开仓库采用一个不带 parent 的隐私安全根提交：树内容来自完成脱敏和校验后的本地 HEAD，但不发布旧 Git commit 链。本机原仓库和完整历史保持不动，没有改写历史，也没有删除 evidence。所有 Method、Evidence 包以及文件内记录的 History 仍包含在公开快照中。公开仓库的取舍是：不显示 v0.1 首次公开之前的 Git commit lineage。
 
-首页和全站 footer 使用 Git author 邮箱 `hongtang1@proton.me` 作为反馈地址。
+首页和全站 footer 使用用户指定邮箱 `kingtmn1@gmail.com` 作为反馈地址。Git author 邮箱仍按原提交元数据公开，不做改写。
 
 ## 名称检查边界
 
