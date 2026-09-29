@@ -1,0 +1,12 @@
+{
+  "label": "D1",
+  "diagnostic_only": true,
+  "not_registry_evidence": true,
+  "extra_flags": [
+    "--tmpfs",
+    "/tmp:rw,noexec,nosuid,nodev,size=16m"
+  ],
+  "exit_code": 0,
+  "stdout": "/tmp/ve-tmp-LVyQaf\n",
+  "stderr": ""
+}

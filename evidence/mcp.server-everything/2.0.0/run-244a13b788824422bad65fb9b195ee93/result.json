@@ -1,0 +1,244 @@
+{
+  "admission": "admitted",
+  "admission_reasons": [],
+  "assurance": {
+    "dependencies": [
+      "source package metadata @modelcontextprotocol/server-everything 2.0.0",
+      "local image sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6",
+      "sandbox ADR-008-amendment-1"
+    ],
+    "execution_mode": "oci_runtime_network_none",
+    "external_services": [],
+    "permissions": [
+      "stdio",
+      "tmpfs /work",
+      "user 65532:65532"
+    ],
+    "provenance": "primary_claim C3. prerequisite C1 match. prerequisite C2 match. Run #1 remains at mcp.server-everything/2.0.0/run-b0a7fe2de38d42fd951a10d6cfa06e9a. Run #2 remains at mcp.server-everything/2.0.0/run-b32dbaa357824eb0a7a9474cf35b7d34. artifact_origin locally_built_from_pinned_source. local_image_id sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6. package_version is source metadata, not an npm registry artifact. identity_reference sha256:4412bddbba54baf6ea388ed9c06b7ba34e3196471f70fd2b7dbb44bc15d36fb5.",
+    "reproducibility_notes": "Primary claim is C3. Prerequisite observations do not replace earlier runs. The echo assertion is one text item. identity_reference=sha256:4412bddbba54baf6ea388ed9c06b7ba34e3196471f70fd2b7dbb44bc15d36fb5"
+  },
+  "capabilities": [
+    {
+      "capability_id": "C1",
+      "claim": "C1",
+      "envelope": {
+        "known_limits": [],
+        "revalidation_triggers": [
+          "source_commit",
+          "execution_artifact",
+          "method_version",
+          "runner_version",
+          "protocol"
+        ],
+        "tested_conditions": [
+          "image_id=sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6",
+          "transport stdio",
+          "client capabilities {}",
+          "protocolVersion 2025-03-26",
+          "sandbox ADR-008-amendment-1",
+          "serverInfo.name mcp-servers/everything",
+          "serverInfo.version 2.0.0"
+        ],
+        "untested_areas": [
+          "其他 source commit 未测",
+          "其他 execution artifact 未测",
+          "其他 transport 未测",
+          "非空 client capabilities 未测",
+          "不声明 production readiness",
+          "不声明 security",
+          "不声明 general reliability",
+          "initialize 之后的工具行为不是 C1"
+        ]
+      },
+      "notes": "C1 的 protocolVersion 与 serverInfo 符合固定握手。",
+      "status": "demonstrated",
+      "supporting_evidence": [
+        "ev-2892c18aa60a450b93735583dde98d6e"
+      ],
+      "testable_statement": "initialize 的 id、protocolVersion 和 serverInfo 符合预注册条件。",
+      "tested_under": "method VE-METHOD-MCP-001 0.3.0; primary C3; image sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6; sandbox ADR-008-amendment-1"
+    },
+    {
+      "capability_id": "C2",
+      "claim": "C2",
+      "envelope": {
+        "known_limits": [],
+        "revalidation_triggers": [
+          "source_commit",
+          "execution_artifact",
+          "method_version",
+          "runner_version",
+          "protocol"
+        ],
+        "tested_conditions": [
+          "image_id=sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6",
+          "transport stdio",
+          "client capabilities {}",
+          "protocolVersion 2025-03-26",
+          "sandbox ADR-008-amendment-1",
+          "names echo, get-annotated-message, get-env, get-resource-links, get-resource-reference, get-structured-content, get-sum, get-tiny-image, gzip-file-as-resource, simulate-research-query, toggle-simulated-logging, toggle-subscriber-updates, trigger-long-running-operation",
+          "order is irrelevant",
+          "description inputSchema annotations and title are not asserted"
+        ],
+        "untested_areas": [
+          "其他 source commit 未测",
+          "其他 execution artifact 未测",
+          "其他 transport 未测",
+          "非空 client capabilities 未测",
+          "不声明 production readiness",
+          "不声明 security",
+          "不声明 general reliability",
+          "非空 client capabilities 下的工具集合未由 C2 实测"
+        ]
+      },
+      "notes": "C2 与固定工具名集合一致。",
+      "status": "demonstrated",
+      "supporting_evidence": [
+        "ev-2892c18aa60a450b93735583dde98d6e"
+      ],
+      "testable_statement": "tools/list 的 name 集合与这次预注册的集合相等。",
+      "tested_under": "method VE-METHOD-MCP-001 0.3.0; primary C3; image sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6; sandbox ADR-008-amendment-1"
+    },
+    {
+      "capability_id": "C3",
+      "claim": "C3",
+      "envelope": {
+        "known_limits": [],
+        "revalidation_triggers": [
+          "source_commit",
+          "execution_artifact",
+          "method_version",
+          "runner_version",
+          "protocol"
+        ],
+        "tested_conditions": [
+          "image_id=sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6",
+          "transport stdio",
+          "client capabilities {}",
+          "protocolVersion 2025-03-26",
+          "sandbox ADR-008-amendment-1",
+          "tool echo",
+          "arguments.message verienvelope-pilot-echo",
+          "text item type=text text=Echo: verienvelope-pilot-echo",
+          "other response fields are not asserted"
+        ],
+        "untested_areas": [
+          "其他 source commit 未测",
+          "其他 execution artifact 未测",
+          "其他 transport 未测",
+          "非空 client capabilities 未测",
+          "不声明 production readiness",
+          "不声明 security",
+          "不声明 general reliability",
+          "其他 tool 未测",
+          "只断言这一条 echo 文本"
+        ]
+      },
+      "notes": "C3 只证明这一条 echo 文本。",
+      "status": "demonstrated",
+      "supporting_evidence": [
+        "ev-2892c18aa60a450b93735583dde98d6e"
+      ],
+      "testable_statement": "echo 的文本断言是 Echo: verienvelope-pilot-echo。",
+      "tested_under": "method VE-METHOD-MCP-001 0.3.0; primary C3; image sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6; sandbox ADR-008-amendment-1"
+    }
+  ],
+  "component_commit": "f46d9578190b476b3501923ea8977d899e8db2cb",
+  "component_id": "mcp.server-everything",
+  "component_type": "mcp_server",
+  "component_version": "2.0.0",
+  "envelope": {
+    "environment_constraints": [
+      "Darwin arm64",
+      "host environment is not inherited",
+      "image-defined ENV is recorded separately from the process"
+    ],
+    "known_failures": [],
+    "known_limits": [],
+    "revalidation_triggers": [
+      "source_commit",
+      "execution_artifact",
+      "method_version",
+      "runner_version",
+      "protocol"
+    ],
+    "tested_conditions": [
+      "image_id=sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6",
+      "transport stdio",
+      "client capabilities {}",
+      "protocolVersion 2025-03-26",
+      "sandbox ADR-008-amendment-1",
+      "tool echo",
+      "arguments.message verienvelope-pilot-echo",
+      "text item type=text text=Echo: verienvelope-pilot-echo",
+      "other response fields are not asserted"
+    ],
+    "untested_areas": [
+      "其他 source commit 未测",
+      "其他 execution artifact 未测",
+      "其他 transport 未测",
+      "非空 client capabilities 未测",
+      "不声明 production readiness",
+      "不声明 security",
+      "不声明 general reliability",
+      "其他 tool 未测",
+      "只断言这一条 echo 文本"
+    ],
+    "version_constraints": [
+      "method 0.3.0",
+      "runner 0.1.0"
+    ]
+  },
+  "environment": {
+    "arch": "arm64",
+    "environment_id": "env-3f9003af2ba9",
+    "implementation": "CPython",
+    "os": "Darwin",
+    "os_release": "25.6.0",
+    "python": "3.12.3",
+    "runner_name": "verienvelope-reference",
+    "runner_version": "0.1.0"
+  },
+  "evidence_dir": "mcp.server-everything/2.0.0/run-244a13b788824422bad65fb9b195ee93",
+  "evidence_refs": [
+    "ev-2892c18aa60a450b93735583dde98d6e"
+  ],
+  "fixture_id": "c3-echo",
+  "history": [
+    {
+      "event_id": "evt-65f39f43a4a74833920b828de8b6ec51",
+      "event_type": "confirmed",
+      "evidence_refs": [
+        "ev-2892c18aa60a450b93735583dde98d6e"
+      ],
+      "new_state": "confirmed",
+      "previous_state": null,
+      "reason": "Run #3 primary C3. prerequisite C1 match. prerequisite C2 match. Earlier runs are not replaced. C3 只证明这一条 echo 文本。",
+      "timestamp": "2026-09-26T14:38:37Z"
+    }
+  ],
+  "implemented_rule_ids": [
+    "M1",
+    "M2",
+    "M3",
+    "M4",
+    "M5",
+    "M6",
+    "M7",
+    "M8",
+    "M9",
+    "M10"
+  ],
+  "method_id": "VE-METHOD-MCP-001",
+  "method_version": "0.3.0",
+  "observation": "match",
+  "outcome_class": "confirmed",
+  "record_purpose": "component_verification",
+  "result_id": "res-5d3399df9fa54303a8c9eccca616561f",
+  "rule_id": "M5",
+  "run_id": "run-244a13b788824422bad65fb9b195ee93",
+  "runner_name": "verienvelope-reference",
+  "runner_version": "0.1.0",
+  "source_repository": "https://github.com/modelcontextprotocol/servers",
+  "timestamp": "2026-09-26T14:38:37Z"
+}

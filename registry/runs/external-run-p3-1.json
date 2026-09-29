@@ -1,0 +1,10 @@
+{
+  "authorized": true,
+  "execution_artifact": "sha256:3e895777b0a562383d0ca49a12d27c385d47a43bfe9ab3d3ba50f678431be5cf",
+  "method_version": "0.1.0",
+  "planned_run": "external-run-p3-1",
+  "primary_claim": "R1",
+  "question": "Under the pinned filesystem commit, image, amendment-3 contract and fixture, does read_text_file return the preregistered bytes?",
+  "sandbox_policy": "ADR-008-amendment-3",
+  "timestamp": "2026-09-27T03:30:00Z"
+}

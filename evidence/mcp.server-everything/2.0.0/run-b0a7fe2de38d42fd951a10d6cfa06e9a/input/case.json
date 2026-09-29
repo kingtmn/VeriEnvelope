@@ -1,0 +1,52 @@
+{
+  "case_id": "c1-initialize",
+  "execution_artifact": {
+    "artifact_origin": "locally_built_from_pinned_source",
+    "base_image_id": "sha256:51eff88af6dff26f59316b6e356188ffa2c422bd3c3b76f2556a2e7e89d080bd",
+    "build_recipe": "npm ci --ignore-scripts && tsc -p src/everything/tsconfig.json",
+    "build_recipe_version": "1",
+    "build_timestamp": "2026-09-26T05:44:34.512508881-07:00",
+    "local_image_id": "sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6",
+    "lockfile_sha256": "df3034c8bb82e772389fa4518793c0cee24361c581c66e7bb04d0d7270dc24e1",
+    "node_version": "v22.12.0",
+    "npm_version": "10.9.0",
+    "registry_digest": null
+  },
+  "limits": {
+    "cpus": "1",
+    "memory": "512m",
+    "pids_limit": 64,
+    "timeout_seconds": 20,
+    "user": "65532:65532"
+  },
+  "messages_not_sent": [
+    "notifications/initialized",
+    "tools/list",
+    "tools/call"
+  ],
+  "messages_sent": [
+    "initialize"
+  ],
+  "record_purpose": "component_verification",
+  "request": {
+    "id": 1,
+    "jsonrpc": "2.0",
+    "method": "initialize",
+    "params": {
+      "capabilities": {},
+      "clientInfo": {
+        "name": "verienvelope-pilot",
+        "version": "0.1.0"
+      },
+      "protocolVersion": "2025-03-26"
+    }
+  },
+  "source_identity": {
+    "component_path": "src/everything",
+    "package_name": "@modelcontextprotocol/server-everything",
+    "package_version": "2.0.0",
+    "package_version_meaning": "source package metadata, not an npm registry artifact",
+    "source_commit": "f46d9578190b476b3501923ea8977d899e8db2cb",
+    "source_repository": "https://github.com/modelcontextprotocol/servers"
+  }
+}

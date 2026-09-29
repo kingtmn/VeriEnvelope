@@ -1,0 +1,154 @@
+id: VE-METHOD-MCP-005
+version: "0.1.0"
+title: Memory MCP 的一次创建实体测量
+purpose: mcp_pilot
+status: specified_not_executed
+revisions:
+  - version: "0.1.0"
+    reason: >
+      Pilot #5 执行前的规格。对象是 modelcontextprotocol/servers src/memory
+      的固定 commit。主主张是 create_entities 在声明的图文件上返回刚写入的那一个实体。
+      serverInfo 的构造参数不写成主张。默认 memory.jsonl 路径也不写成主张。
+scope: >
+  只覆盖该 commit、该镜像、MEMORY_FILE_PATH=/tmp/ve-pilot-5.jsonl，
+  以及一次 create_entities。不覆盖读取、关系、删除、搜索或默认路径。
+identity:
+  component_id: mcp.server-memory
+  repository: https://github.com/modelcontextprotocol/servers
+  commit: f46d9578190b476b3501923ea8977d899e8db2cb
+  package_name: "@modelcontextprotocol/server-memory"
+  package_version: "0.6.3"
+  source_path: src/memory
+execution:
+  artifact_origin: locally_built_from_pinned_source
+  local_image_id: sha256:b2e2badf1a34d9f92e2a69a2707b11901eb3d1f3580e018624f644152f7f6c5d
+  base_image_id: sha256:43ac6c60b8f89723f746e8a92ce91abd5017e627ce1ddfe4238355d3a30b772c
+  sandbox_policy: ADR-008-amendment-3
+  launch: node /src/src/memory/dist/index.js
+  memory_file_path: /tmp/ve-pilot-5.jsonl
+  protocol_version: "2025-03-26"
+  tool_name: create_entities
+  arguments:
+    entities:
+      - name: ve-pilot-5
+        entityType: fixture
+        observations:
+          - fixed
+  expected_entities:
+    - name: ve-pilot-5
+      entityType: fixture
+      observations:
+        - fixed
+  timeout_seconds: 25
+claims:
+  - id: S1
+    statement: initialize 的 result.protocolVersion 是 2025-03-26。
+    role: session_precondition
+  - id: S2
+    statement: tools/list 的名字里包含 create_entities。
+    role: discovery_precondition
+    source: index.ts server.registerTool("create_entities")
+  - id: R1
+    statement: >
+      调用 create_entities，实体名 ve-pilot-5，类型 fixture，观察列表只有 fixed。
+      图文件是 /tmp/ve-pilot-5.jsonl。返回的一条 type=text 解析后等于这一个实体的数组。
+      isError 不是 true。
+    role: primary
+    source: >
+      createEntities 在没有同名实体时返回新实体。处理函数用 JSON.stringify(result, null, 2)
+      放进 type=text。比较的是解析后的值。
+    expected_observation: one entity ve-pilot-5
+non_claims:
+  - read_graph
+  - 关系、删除和搜索
+  - 默认的 dist/memory.jsonl 路径
+  - serverInfo 名称和版本
+classification_rules:
+  - id: P5-M1
+    when: initialize 的 protocolVersion 是 2025-03-26。
+    observation: match
+    outcome_class: confirmed
+    capability_status: demonstrated
+    run_note: S1 的 protocolVersion 符合运行前写下的 2025-03-26。serverInfo 不是这一条主张。
+  - id: P5-M2
+    when: 进程已经启动，但没有可解析的对应响应。
+    observation: execution_error
+    outcome_class: unclassified
+    capability_status: not_demonstrated
+    run_note: 没有可解析的对应响应。主张没有被 demonstrated。原因未归类。
+  - id: P5-M3
+    when: protocolVersion 不是 2025-03-26。
+    observation: mismatch
+    outcome_class: unclassified
+    capability_status: not_demonstrated
+    run_note: S1 的 protocolVersion 没有被 demonstrated。原因未归类。
+  - id: P5-M4
+    when: tools/list 包含 create_entities。
+    observation: match
+    outcome_class: confirmed
+    capability_status: demonstrated
+    run_note: S2 只证明 create_entities 在名单里。不要求名单只有这一个工具。
+  - id: P5-M5
+    when: tools/list 可解析，但不包含 create_entities。
+    observation: mismatch
+    outcome_class: unclassified
+    capability_status: not_demonstrated
+    run_note: S2 没有列出 create_entities。原因未归类。
+  - id: P5-M7
+    when: tool result 可解析，isError 不是 true，且一条 type=text 的文本解析后等于预注册实体数组。
+    observation: match
+    outcome_class: confirmed
+    capability_status: demonstrated
+    run_note: R1 的实体数组与预注册值一致。这是这条主张被 demonstrated 的条件。
+  - id: P5-M8
+    when: tool result 可解析，但 isError 为 true，文本不能解析，或者解析后的值与预注册实体数组不同。
+    observation: mismatch
+    outcome_class: unclassified
+    capability_status: not_demonstrated
+    run_note: R1 没有被 demonstrated。原因未归类。
+  - id: P5-M9
+    when: 等待响应超时。
+    observation: execution_error
+    outcome_class: unclassified
+    capability_status: insufficient
+    run_note: 响应超时。超时本身不能分成服务器、运行时或方法的错。
+  - id: P5-M10
+    when: 边界在测量开始前拒绝启动。
+    observation: blocked
+    outcome_class: unclassified
+    capability_status: insufficient
+    run_note: 测量开始前被边界拒绝。这不是组件失败的判定。
+  - id: P5-M11
+    when: 前置主张不是 match，因此没有发送后面的主张。
+    observation: not_run
+    outcome_class: unclassified
+    capability_status: insufficient
+    run_note: 前置主张不是 match，这一条没有发送。
+envelope:
+  tested_conditions:
+    - commit f46d9578190b476b3501923ea8977d899e8db2cb
+    - package @modelcontextprotocol/server-memory 0.6.3
+    - transport stdio
+    - client capabilities 为空对象
+    - protocolVersion 提供 2025-03-26
+    - MEMORY_FILE_PATH /tmp/ve-pilot-5.jsonl
+    - create_entities 一个名为 ve-pilot-5 的实体
+    - 运行时网络关闭
+    - 非 root 65532:65532、只读根文件系统、丢弃全部 capabilities、no-new-privileges
+    - 不挂载宿主家目录、docker socket 或仓库
+    - sandbox ADR-008-amendment-3
+    - local image sha256:b2e2badf1a34d9f92e2a69a2707b11901eb3d1f3580e018624f644152f7f6c5d
+  known_limits: []
+  untested_areas:
+    - read_graph
+    - 关系、删除和搜索
+    - 默认 memory.jsonl 路径
+    - serverInfo 名称和版本
+  version_constraints:
+    - 只覆盖方法 0.1.0 和 identity.commit。
+  revalidation_triggers:
+    - commit 变化
+    - local image 变化
+    - sandbox policy 变化
+    - 图文件路径变化
+    - 预注册实体变化

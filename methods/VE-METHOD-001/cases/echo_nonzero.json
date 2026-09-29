@@ -1,0 +1,15 @@
+{
+  "case_id": "VE-METHOD-001-NONZERO",
+  "method_id": "VE-METHOD-001",
+  "method_version": "0.1.0",
+  "title": "Fixture exits nonzero",
+  "claim": "预期退出码未被满足时，陈述记为未被证明。",
+  "testable_statement": "运行 fixtures/nonzero/tool.py。预期退出码为 0。实际退出码不同，则该陈述未被证明，且不进一步归因。",
+  "fixture_id": "FIX-NONZERO-001",
+  "component_path": "fixtures/component.json",
+  "entrypoint": "fixtures/nonzero/tool.py",
+  "input_file": "fixtures/input.txt",
+  "expected_exit_code": 0,
+  "expected_stdout_file": "fixtures/input.txt",
+  "timeout_seconds": 5
+}

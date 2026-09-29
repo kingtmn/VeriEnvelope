@@ -1,0 +1,10 @@
+{
+  "authorized": true,
+  "execution_artifact": "sha256:cc8221f580a2ff7cdecac250da533250ef12e03a4101c13363056039072544cd",
+  "method_version": "0.3.0",
+  "planned_run": "external-run-p2-5",
+  "primary_claim": "C3",
+  "question": "Under the frozen source, artifact, runtime contract, fixture and Method 0.3.0, does browser_navigate return a text item containing - Page Title: ve-pilot-2?",
+  "sandbox_policy": "ADR-008-amendment-2",
+  "timestamp": "2026-09-27T03:05:00Z"
+}

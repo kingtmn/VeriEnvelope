@@ -1,0 +1,11 @@
+{
+  "id": "example.illustrative-only",
+  "name": "Illustrative example",
+  "component_type": "mcp_server",
+  "description": "只用于说明 schema。这不是一个真实 MCP server，没有被测试，没有证据，也没有准入。",
+  "source_repository": "https://example.invalid/not-a-repository",
+  "license": "UNKNOWN",
+  "version": "0.0.0",
+  "publisher": "example",
+  "status": "candidate"
+}

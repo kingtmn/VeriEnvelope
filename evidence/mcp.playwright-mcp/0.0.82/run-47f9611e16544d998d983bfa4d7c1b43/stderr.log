@@ -1,0 +1,27 @@
+/app/node_modules/playwright-core/lib/coreBundle.js:17
+    throw err = [e], e;
+    ^
+
+SystemError [ERR_SYSTEM_ERROR]: A system error occurred: uv_os_homedir returned ENOENT (no such file or directory)
+    at packages/utils/chromiumChannels.ts (/app/node_modules/playwright-core/lib/coreBundle.js:7046:61)
+    at __init (/app/node_modules/playwright-core/lib/coreBundle.js:15:58)
+    at packages/utils/index.ts (/app/node_modules/playwright-core/lib/coreBundle.js:11019:5)
+    at __init (/app/node_modules/playwright-core/lib/coreBundle.js:15:58)
+    at packages/playwright-core/src/coreBundle.ts (/app/node_modules/playwright-core/lib/coreBundle.js:77260:5)
+    at __init (/app/node_modules/playwright-core/lib/coreBundle.js:15:58)
+    at Object.<anonymous> (/app/node_modules/playwright-core/lib/coreBundle.js:77273:1)
+    at Module._compile (node:internal/modules/cjs/loader:1781:14)
+    at Object..js (node:internal/modules/cjs/loader:1913:10)
+    at Module.load (node:internal/modules/cjs/loader:1505:32) {
+  code: 'ERR_SYSTEM_ERROR',
+  info: {
+    errno: -2,
+    code: 'ENOENT',
+    message: 'no such file or directory',
+    syscall: 'uv_os_homedir'
+  },
+  errno: [Getter/Setter],
+  syscall: [Getter/Setter]
+}
+
+Node.js v22.23.3

@@ -1,0 +1,341 @@
+id: VE-METHOD-MCP-002
+version: "0.3.0"
+title: Playwright MCP 的最小 stdio 观察
+purpose: mcp_pilot
+status: specified_not_executed
+revisions:
+  - version: "0.1.0"
+    reason: >
+      Pilot #2 第一次执行前的规格。对象是 microsoft/playwright-mcp 的固定 commit。
+      不修改 VE-METHOD-MCP-001。看到运行输出之后，不得为了匹配输出而改这一版。
+      原文留在 versions/0.1.0.yaml 和 Git 里，本文件不再是那一版。
+  - version: "0.2.0"
+    reason: >
+      external-run-p2-1 暴露两件事，这一版在新运行之前分开处理，不回写那次结果。
+      第一，P2-M2 与 P2-M10 的字面条件都能盖住“响应前退出”，而且没有 precedence。
+      0.2.0 把它们改成互斥：边界拒绝启动是 P2-M10；进程已经启动但没有可解析响应是 P2-M2。
+      第二，诊断表明 amendment-1 不提供可解析 HOME，而 Node os.homedir 在这种环境下会失败。
+      这被收进通用 sandbox ADR-008-amendment-2 的隔离 HOME，不是为了让 Playwright 通过而改的镜像。
+      原文留在 versions/0.2.0.yaml。0.2.0 的结果不按后来的来源审计回改。
+  - version: "0.3.0"
+    reason: >
+      预期来源审计表明，0.1.0 和 0.2.0 把 createConnection 的工厂名 api
+      映射成了 CLI 进程的 serverInfo.name。声明的启动器调用的是 decorateMCPCommand，
+      该函数把字面量 Playwright 传给 MCP Server 的 Implementation name。
+      修改依据是这条静态源码链，不是因为某次运行返回了 Playwright。
+      external-run-p2-2 只是让这个映射错误被看见。0.1.0 与 0.2.0 的结果不重算。
+scope: >
+  只覆盖 @playwright/mcp 在下方 commit、固定启动参数、镜像内静态 HTML
+  和现有 sandbox 资源上限下的三条陈述：initialize、tools/list 的名字集合、
+  一次 browser_navigate。不覆盖其余工具，不覆盖真实网站。
+identity:
+  component_id: mcp.playwright-mcp
+  repository: https://github.com/microsoft/playwright-mcp
+  commit: e87bb897e15a6f2af402afb0f10b45eced9e1f9b
+  commit_time: "2026-09-25T21:21:17Z"
+  commit_subject: "fix(docker): run server under tini to reap orphaned browser processes (#1771)"
+  package_name: "@playwright/mcp"
+  package_version: "0.0.82"
+  component_type: mcp_server
+  transport: stdio
+  server_name: Playwright
+  server_version: 1.64.0-alpha-1789764292000
+  server_name_source: >
+    镜像内 playwright-core coreBundle.js，源路径
+    packages/playwright-core/src/tools/mcp/program.ts 的 decorateMCPCommand。
+    CLI 工厂的 name 字面量是 Playwright。start 在没有 port 时走 stdio，
+    connect 调用 createServer(factory.name, factory.version)。
+    createServer 执行 new Server({ name, version })。
+    utilsBundle.js 里的 MCP SDK Server._oninitialize 返回 serverInfo: this._serverInfo。
+  expectation_basis:
+    source_commit: e87bb897e15a6f2af402afb0f10b45eced9e1f9b
+    source_location: >
+      playwright-core 1.64.0-alpha-1789764292000 coreBundle.js，
+      decorateMCPCommand 内 factory.name = "Playwright"；
+      package.ts 的 packageJSON.version 作为 factory.version。
+    semantic_mapping: >
+      factory.name 作为 MCP Server 构造函数的 Implementation name 传入，
+      initialize 响应的 serverInfo 就是这个对象。
+      createConnection 里的 api 是另一入口，本方法的 cli.js 不调用它。
+client_handshake:
+  argv:
+    - /app/start.sh
+  protocol_version_offered: "2025-03-26"
+  protocol_version_note: >
+    锁定的 playwright-core utilsBundle 中 SUPPORTED_PROTOCOL_VERSIONS 包含 2025-03-26。
+    客户端提供这个版本。如果服务器不接受，C1 不成立。看到结果后改这个字符串必须升方法版本。
+  capabilities: {}
+  client_info:
+    name: verienvelope-pilot
+    version: "0.1.0"
+  after_initialize: notifications/initialized
+execution:
+  artifact_origin: locally_built_from_pinned_source
+  registry_digest: null
+  local_image_id: sha256:cc8221f580a2ff7cdecac250da533250ef12e03a4101c13363056039072544cd
+  base_image_id: sha256:43ac6c60b8f89723f746e8a92ce91abd5017e627ce1ddfe4238355d3a30b772c
+  base_image_reference: public.ecr.aws/docker/library/node:22-bookworm-slim
+  node_version: v22.23.3
+  npm_version: 10.9.9
+  lockfile_sha256: 10bcbeb19608f046a76ea3b2c2d3d2bea3b2cc43e852c11f1d1b2ce602e1e5eb
+  build_timestamp: "2026-09-26T18:41:58.737324717-07:00"
+  playwright_core: 1.64.0-alpha-1789764292000
+  playwright_core_integrity: sha512-ZgRaybFv4rRy7QMGnYprEGFdNJnvapNqcaER2w96bDQA+40BWIle1el1Yh9KHD3E6XYmieMB+r+UxFTCauTGGQ==
+  launcher: methods/VE-METHOD-MCP-002/image/start.sh
+  launcher_note: >
+    start.sh 在镜像内设置 PLAYWRIGHT_BROWSERS_PATH=/ms-playwright，然后 exec tini 与 node。
+    进程包装是 ADR-008-amendment-2：env -i 放入 PATH、LANG 和 HOME=/work/home。
+    这不是宿主环境继承。
+  process_args:
+    - --headless
+    - --browser
+    - chromium
+    - --no-sandbox
+    - --isolated
+    - --allow-unrestricted-file-access
+    - --no-webmcp
+  no_sandbox_note: >
+    上游容器入口使用 --no-sandbox，因为浏览器自己的 sandbox 与 cap-drop ALL 的容器不能同时成立。
+    VeriEnvelope 的容器边界不因此放宽：仍然是 user 65532:65532、network none、read-only root、
+    cap-drop ALL、no-new-privileges。--no-sandbox 不是一条“浏览器已被沙箱证明”的陈述。
+  file_access_note: >
+    锁定源码的 checkUrlAllowed 在未设置 allowUnrestrictedFileAccess 时拒绝 file:。
+    本方法打开这个服务器开关，只为了导航镜像内的 /app/fixture/ve-pilot-2.html。
+    不挂载宿主家目录。
+  fixture: methods/VE-METHOD-MCP-002/fixtures/ve-pilot-2.html
+  fixture_url: file:///app/fixture/ve-pilot-2.html
+  resource_limits:
+    cpus: "1"
+    memory: 512m
+    pids_limit: 64
+    timeout_seconds: 30
+    user: "65532:65532"
+  sandbox_policy: ADR-008-amendment-2
+  isolated_home: /work/home
+  resource_note: >
+    CPU、内存、pids、网络、用户、只读根和 capability 仍与 amendment-1 相同。
+    0.2.0 增加的环境条件只有隔离 HOME=/work/home。镜像 id 没有变。
+claims:
+  - id: C1
+    title: Initialization
+    subject: mcp.playwright-mcp
+    statement: >
+      在该 commit、上述启动参数和运行时断网的容器里，
+      服务器对 initialize 返回一条没有 error 的 JSON-RPC 结果，
+      result.protocolVersion 等于 2025-03-26，
+      result.serverInfo.name 为 Playwright，
+      result.serverInfo.version 为 1.64.0-alpha-1789764292000。
+    expected_observation: >
+      与请求 id 对应的一条 JSON-RPC 响应；没有 error；
+      protocolVersion、serverInfo.name、serverInfo.version 如上。
+      不断言 capabilities、instructions 或其他字段。
+    source: >
+      CLI 的 decorateMCPCommand 工厂名 Playwright，
+      playwright-core package.json 的 version，
+      以及 utilsBundle 的 SUPPORTED_PROTOCOL_VERSIONS。
+      不是 createConnection 的 api。
+  - id: C2
+    title: Tool Discovery
+    subject: mcp.playwright-mcp
+    statement: >
+      在 C1 的握手完成并发送 notifications/initialized 之后，
+      tools/list 返回的 name 集合等于 core_tools。
+      该集合是运行前从锁定 playwright-core 中抽出的：
+      capability 以 core 开头，且 skillOnly 不是 true。
+      顺序无关。多一个或少一个都是 mismatch。
+    expected_observation: tools/list 的 name 集合与 core_tools 相等。
+    core_tools:
+      - browser_click
+      - browser_close
+      - browser_console_messages
+      - browser_drag
+      - browser_drop
+      - browser_emulate_media
+      - browser_evaluate
+      - browser_file_upload
+      - browser_fill_form
+      - browser_find
+      - browser_handle_dialog
+      - browser_hover
+      - browser_navigate
+      - browser_navigate_back
+      - browser_network_request
+      - browser_network_requests
+      - browser_press_key
+      - browser_resize
+      - browser_run_code_unsafe
+      - browser_select_option
+      - browser_snapshot
+      - browser_tabs
+      - browser_take_screenshot
+      - browser_type
+      - browser_wait_for
+    source: >
+      playwright-core 1.64.0-alpha-1789764292000 coreBundle.js 的 filteredTools。
+      页面注册的 dynamic tools 不在这个预期里。--no-webmcp 是为了不把页面工具混进这次集合。
+  - id: C3
+    title: Local page title
+    subject: mcp.playwright-mcp
+    tool: browser_navigate
+    arguments:
+      url: file:///app/fixture/ve-pilot-2.html
+    statement: >
+      在同一会话中，browser_navigate 打开镜像内的固定 HTML。
+      工具结果的某个 type=text 文本包含 "- Page Title: ve-pilot-2"。
+      这只证明这一条标题文本。不断言整份 snapshot，不断言标题以外的节点。
+    expected_observation: >
+      tools/call 的 content 里至少有一条 type=text，
+      其 text 包含精确子串 "- Page Title: ve-pilot-2"。
+    source: >
+      renderTabMarkdown 会在标题存在时写入 "- Page Title: ${title}"。
+      browser_navigate 的 handle 调用 setIncludeSnapshot。
+      fixture 的 title 是 ve-pilot-2。
+prediction:
+  support: >
+    三条陈述各自的观察与本文件预期一致。
+  revise_if: >
+    未改 commit、启动参数和方法版本时，观察与预期不一致；
+    或为了让一次失败变成通过而修改本文件的预期。
+non_goals:
+  - production readiness
+  - security
+  - browser sandbox proof
+  - general reliability
+  - all tools
+  - live websites
+  - host filesystem access
+  - performance
+assurance:
+  dependencies:
+    - source package metadata @playwright/mcp 0.0.82
+    - playwright-core 1.64.0-alpha-1789764292000
+    - local image sha256:cc8221f580a2ff7cdecac250da533250ef12e03a4101c13363056039072544cd
+    - base image sha256:43ac6c60b8f89723f746e8a92ce91abd5017e627ce1ddfe4238355d3a30b772c
+    - lockfile sha256 10bcbeb19608f046a76ea3b2c2d3d2bea3b2cc43e852c11f1d1b2ce602e1e5eb
+  permissions:
+    - stdio
+    - 容器内只读的镜像文件 /app/fixture/ve-pilot-2.html
+    - 服务器开关 --allow-unrestricted-file-access，范围只为这条 file URL
+  execution_mode: oci_runtime_network_none
+  external_services: []
+  provenance: >
+    SOURCE IDENTITY 是 microsoft/playwright-mcp commit e87bb897e15a6f2af402afb0f10b45eced9e1f9b。
+    package_version 0.0.82 是源码 package metadata，不是已核对的 npm 发布物。
+    EXECUTION ARTIFACT 是 locally_built_from_pinned_source。registry_digest 为空。
+  reproducibility_notes: >
+    比较 observation、outcome_class 和 capability status。忽略 run_id。
+    复现时 commit、lockfile、playwright-core integrity、base image、local image、
+    start.sh 和 sandbox 上限都要相同。
+envelope:
+  tested_conditions:
+    - commit e87bb897e15a6f2af402afb0f10b45eced9e1f9b
+    - package @playwright/mcp 0.0.82
+    - playwright-core 1.64.0-alpha-1789764292000
+    - transport stdio
+    - client capabilities 为空对象
+    - protocolVersion 提供 2025-03-26
+    - 运行时网络关闭
+    - 非 root 65532:65532、只读根文件系统、丢弃全部 capabilities、no-new-privileges
+    - 不挂载宿主家目录、docker socket 或仓库写入区
+    - tmpfs 只有 /work
+    - cpus 1、memory 512m、pids 64、会话超时上限 30 秒
+    - sandbox ADR-008-amendment-2
+    - 进程有隔离 HOME=/work/home，位于 tmpfs /work，不属于宿主 home
+    - local image sha256:cc8221f580a2ff7cdecac250da533250ef12e03a4101c13363056039072544cd
+    - base image sha256:43ac6c60b8f89723f746e8a92ce91abd5017e627ce1ddfe4238355d3a30b772c
+    - 启动参数含 --headless --browser chromium --no-sandbox --isolated --allow-unrestricted-file-access --no-webmcp
+  known_limits: []
+  untested_areas:
+    - 不声明 production readiness
+    - 不声明 security
+    - 不声明浏览器自身 sandbox 仍然开启
+    - 不声明 all tools
+    - 不声明 live websites
+    - 不声明 host filesystem access
+    - 更大的 memory 或 pids 上限没有测
+  version_constraints:
+    - 只覆盖 identity.commit
+    - 只覆盖方法 0.3.0。0.1.0 与 0.2.0 留在 versions/，不按这次来源审计回改。
+  revalidation_triggers:
+    - major_version
+    - relevant_dependency
+    - permission
+    - runtime
+    - protocol
+    - method_revision
+    - runner_bug
+    - external_counterexample
+    - security_or_capability_change
+classification_rules:
+  - id: P2-M1
+    when: initialize 响应满足 C1
+    observation: match
+    outcome_class: confirmed
+    capability_status: demonstrated
+    run_note: C1 的 protocolVersion 与 serverInfo 符合运行前写下的字符串。
+  - id: P2-M2
+    when: >
+      目标进程已经启动，并且预期请求没有可解析的对应响应。
+      进程退出、崩溃或输出无法解析都属于这一支。
+      不包含策略或 sandbox 在启动前拒绝。
+    observation: execution_error
+    outcome_class: unclassified
+    capability_status: not_demonstrated
+    run_note: C1 没有被 demonstrated。原因未归类。
+  - id: P2-M3
+    when: initialize 有结果，但 serverInfo 与固定字符串不同
+    observation: mismatch
+    outcome_class: unclassified
+    capability_status: not_demonstrated
+    run_note: C1 的 serverInfo 没有被 demonstrated。原因未归类。
+  - id: P2-M4
+    when: protocolVersion 缺失或不是 2025-03-26
+    observation: mismatch
+    outcome_class: unclassified
+    capability_status: not_demonstrated
+    run_note: C1 的协议版本没有被 demonstrated。原因未归类。
+  - id: P2-M5
+    when: tools/list 的名字集合等于 core_tools
+    observation: match
+    outcome_class: confirmed
+    capability_status: demonstrated
+    run_note: C2 与运行前抽出的名字集合一致。
+  - id: P2-M6
+    when: tools/list 的名字集合与 core_tools 不同
+    observation: mismatch
+    outcome_class: unclassified
+    capability_status: not_demonstrated
+    run_note: C2 没有被 demonstrated。原因未归类。不把预期改成这次返回的名单。
+  - id: P2-M7
+    when: 'browser_navigate 的文本包含 "- Page Title: ve-pilot-2"'
+    observation: match
+    outcome_class: confirmed
+    capability_status: demonstrated
+    run_note: C3 只证明这一条子串。
+  - id: P2-M8
+    when: browser_navigate 有响应，但文本不包含该子串
+    observation: mismatch
+    outcome_class: unclassified
+    capability_status: not_demonstrated
+    run_note: C3 没有被 demonstrated。原因未归类。
+  - id: P2-M9
+    when: 读响应超时
+    observation: execution_error
+    outcome_class: unclassified
+    capability_status: insufficient
+    run_note: 超时本身不能分成服务器、浏览器、运行时或方法的错。
+  - id: P2-M10
+    when: >
+      策略、预检或 sandbox 在目标进程进入测量路径之前拒绝启动。
+      例如禁止的挂载、禁止的网络、授权不够、工件不可接受，或边界检查失败。
+      不包含进程已经启动之后的退出。
+    observation: blocked
+    outcome_class: out_of_envelope
+    capability_status: insufficient
+    run_note: 目标进程没有进入本方法的测量路径。这不是组件失败的判定。
+  - id: P2-M11
+    when: 前置 claim 与预期冲突，因此没有发送后面的 primary 请求
+    observation: not_run
+    outcome_class: unclassified
+    capability_status: insufficient
+    run_note: 后面的 primary claim 没有测量。先留下已经发生的冲突。

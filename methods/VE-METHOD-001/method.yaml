@@ -1,0 +1,89 @@
+id: VE-METHOD-001
+version: "0.1.0"
+title: 有界本地 fixture 执行
+purpose: pipeline_self_test
+status: active
+scope: >
+  审计参考 runner 能否在允许名单内执行本方法自带的 fixture，
+  捕获环境，并写出符合 schema 的证据包。
+  不验证第三方 tool 或 MCP server。
+prediction:
+  support: >
+    同一 fixture 与同一方法版本下，多次运行的 observation、rule_id
+    和 capability status 一致；证据包中能打开 stdout。
+  revise_if: >
+    未修改 fixture 时两次 observation 不一致；stdout 不同却被标成
+    demonstrated；证据包没有原始输出；本方法的记录被标成 admitted。
+non_goals:
+  - 第三方组件验证
+  - MCP 协议验证
+  - 组件准入
+assurance:
+  dependencies:
+    - python3
+  permissions:
+    - read method fixtures
+    - write the evidence directory
+    - execute the fixture with the current interpreter in a temporary directory
+  execution_mode: subprocess_allowlist_timeout
+  external_services: []
+  provenance: >
+    Fixture 写在本仓库中，只用于审计测量管线。
+  reproducibility_notes: >
+    比较 observation、outcome_class、rule_id 和 capability status。
+    忽略 run_id 和 timestamp。
+envelope:
+  tested_conditions:
+    - 方法目录内的允许名单路径
+    - 临时工作目录中的子进程，不使用 shell
+    - 清洗后的环境变量，以及不超过 30 秒的超时
+  known_limits:
+    - 不验证第三方 tool 或 MCP server
+    - 不隔离网络，也不限制 CPU 和内存
+    - 不证明 PATH 本身未被污染
+  untested_areas:
+    - 捕获环境以外的操作系统和 Python 版本
+    - 并发运行、恶意 fixture、真实组件协议
+  version_constraints:
+    - 只覆盖组件记录上的 fixture 版本
+  revalidation_triggers:
+    - major_version
+    - relevant_dependency
+    - permission
+    - runtime
+    - protocol
+    - method_revision
+    - runner_bug
+    - external_counterexample
+    - security_or_capability_change
+classification_rules:
+  - id: R1
+    when: exit_code == expected_exit_code AND stdout == expected_stdout
+    observation: match
+    outcome_class: confirmed
+    capability_status: demonstrated
+    run_note: 本次运行的退出码和 stdout 与预期一致。
+  - id: R2
+    when: exit_code == expected_exit_code AND stdout != expected_stdout
+    observation: mismatch
+    outcome_class: component_failure
+    capability_status: not_demonstrated
+    run_note: 退出码符合预期，但 stdout 与预期不一致。
+  - id: R3
+    when: exit_code != expected_exit_code
+    observation: execution_error
+    outcome_class: component_failure
+    capability_status: not_demonstrated
+    run_note: 退出码与预期不一致。这里只记录可测试陈述未被满足，不猜测原因。
+  - id: R4
+    when: process exceeded timeout_seconds
+    observation: execution_error
+    outcome_class: unclassified
+    capability_status: insufficient
+    run_note: 进程超时。仅凭超时不能区分 runner、环境或 fixture。
+  - id: R5
+    when: entrypoint or input path failed the allowlist or a required file is missing
+    observation: blocked
+    outcome_class: out_of_envelope
+    capability_status: insufficient
+    run_note: 执行被允许名单拒绝，或必需文件不存在。目标文件没有被运行。

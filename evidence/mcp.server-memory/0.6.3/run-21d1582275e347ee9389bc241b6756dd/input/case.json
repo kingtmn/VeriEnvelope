@@ -1,0 +1,43 @@
+{
+  "case_id": "p5-r1",
+  "expected_entities": [
+    {
+      "entityType": "fixture",
+      "name": "ve-pilot-5",
+      "observations": [
+        "fixed"
+      ]
+    }
+  ],
+  "judgments": {
+    "R1": {
+      "capability_status": "demonstrated",
+      "note": "R1 的实体数组与预注册值一致。这是这条主张被 demonstrated 的条件。",
+      "observation": "match",
+      "outcome_class": "confirmed",
+      "rule_id": "P5-M7"
+    },
+    "S1": {
+      "capability_status": "demonstrated",
+      "note": "S1 的 protocolVersion 符合运行前写下的 2025-03-26。serverInfo 不是这一条主张。",
+      "observation": "match",
+      "outcome_class": "confirmed",
+      "rule_id": "P5-M1"
+    },
+    "S2": {
+      "capability_status": "demonstrated",
+      "note": "S2 只证明 create_entities 在名单里。不要求名单只有这一个工具。",
+      "observation": "match",
+      "outcome_class": "confirmed",
+      "rule_id": "P5-M4"
+    }
+  },
+  "messages_sent": [
+    "initialize",
+    "notifications/initialized",
+    "tools/list",
+    "tools/call"
+  ],
+  "method_version": "0.1.0",
+  "primary_claim": "R1"
+}

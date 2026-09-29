@@ -1,0 +1,231 @@
+{
+  "admission": "admitted",
+  "admission_reasons": [],
+  "assurance": {
+    "dependencies": [
+      "source package metadata @modelcontextprotocol/server-filesystem 0.6.3",
+      "local image sha256:3e895777b0a562383d0ca49a12d27c385d47a43bfe9ab3d3ba50f678431be5cf",
+      "OCI runtime"
+    ],
+    "execution_mode": "oci_runtime_network_none",
+    "external_services": [],
+    "permissions": [
+      "stdio",
+      "tmpfs /work",
+      "tmpfs /tmp",
+      "user 65532:65532",
+      "read /app/fixture"
+    ],
+    "provenance": "primary R1. commit f46d9578190b476b3501923ea8977d899e8db2cb. artifact_origin locally_built_from_pinned_source. local_image_id sha256:3e895777b0a562383d0ca49a12d27c385d47a43bfe9ab3d3ba50f678431be5cf. fixture sha256 dae4e9d957af7c3ddb7fdb92e84de8ef6fb305648d9dc0f559fd27c6acb0b354. package_version is source metadata, not an npm registry artifact.",
+    "reproducibility_notes": "Compare observation, outcome class, and capability status. Ignore run_id. A match is not certification."
+  },
+  "capabilities": [
+    {
+      "capability_id": "S1",
+      "claim": "S1",
+      "envelope": {
+        "known_limits": [],
+        "revalidation_triggers": [
+          "commit 变化",
+          "local image 变化",
+          "sandbox policy 变化",
+          "fixture 内容变化",
+          "允许目录变化"
+        ],
+        "tested_conditions": [
+          "image_id=sha256:3e895777b0a562383d0ca49a12d27c385d47a43bfe9ab3d3ba50f678431be5cf",
+          "transport stdio",
+          "client capabilities {}",
+          "protocolVersion 2025-03-26",
+          "sandbox ADR-008-amendment-3",
+          "allowed directory /app/fixture",
+          "fixture sha256 dae4e9d957af7c3ddb7fdb92e84de8ef6fb305648d9dc0f559fd27c6acb0b354",
+          "protocolVersion 2025-03-26"
+        ],
+        "untested_areas": [
+          "允许目录之外的路径未测",
+          "写入、删除和移动未测",
+          "宿主文件系统未测",
+          "serverInfo 名称未作为主张"
+        ]
+      },
+      "notes": "S1 的 protocolVersion 符合运行前写下的 2025-03-26。serverInfo 不是这一条主张。",
+      "status": "demonstrated",
+      "supporting_evidence": [
+        "ev-27ab1b379339443c99e8003865298f10"
+      ],
+      "testable_statement": "initialize 返回 protocolVersion 2025-03-26。",
+      "tested_under": "method VE-METHOD-MCP-003 0.2.0; primary R1; image sha256:3e895777b0a562383d0ca49a12d27c385d47a43bfe9ab3d3ba50f678431be5cf; sandbox ADR-008-amendment-3"
+    },
+    {
+      "capability_id": "S2",
+      "claim": "S2",
+      "envelope": {
+        "known_limits": [],
+        "revalidation_triggers": [
+          "commit 变化",
+          "local image 变化",
+          "sandbox policy 变化",
+          "fixture 内容变化",
+          "允许目录变化"
+        ],
+        "tested_conditions": [
+          "image_id=sha256:3e895777b0a562383d0ca49a12d27c385d47a43bfe9ab3d3ba50f678431be5cf",
+          "transport stdio",
+          "client capabilities {}",
+          "protocolVersion 2025-03-26",
+          "sandbox ADR-008-amendment-3",
+          "allowed directory /app/fixture",
+          "fixture sha256 dae4e9d957af7c3ddb7fdb92e84de8ef6fb305648d9dc0f559fd27c6acb0b354",
+          "tool name read_text_file is present"
+        ],
+        "untested_areas": [
+          "允许目录之外的路径未测",
+          "写入、删除和移动未测",
+          "宿主文件系统未测",
+          "serverInfo 名称未作为主张",
+          "其余工具名不要求一致"
+        ]
+      },
+      "notes": "S2 只证明 read_text_file 在名单里。不要求名单只有这一个工具。",
+      "status": "demonstrated",
+      "supporting_evidence": [
+        "ev-27ab1b379339443c99e8003865298f10"
+      ],
+      "testable_statement": "tools/list 包含 read_text_file。",
+      "tested_under": "method VE-METHOD-MCP-003 0.2.0; primary R1; image sha256:3e895777b0a562383d0ca49a12d27c385d47a43bfe9ab3d3ba50f678431be5cf; sandbox ADR-008-amendment-3"
+    },
+    {
+      "capability_id": "R1",
+      "claim": "R1",
+      "envelope": {
+        "known_limits": [],
+        "revalidation_triggers": [
+          "commit 变化",
+          "local image 变化",
+          "sandbox policy 变化",
+          "fixture 内容变化",
+          "允许目录变化"
+        ],
+        "tested_conditions": [
+          "image_id=sha256:3e895777b0a562383d0ca49a12d27c385d47a43bfe9ab3d3ba50f678431be5cf",
+          "transport stdio",
+          "client capabilities {}",
+          "protocolVersion 2025-03-26",
+          "sandbox ADR-008-amendment-3",
+          "allowed directory /app/fixture",
+          "fixture sha256 dae4e9d957af7c3ddb7fdb92e84de8ef6fb305648d9dc0f559fd27c6acb0b354",
+          "tool read_text_file",
+          "path /app/fixture/ve-pilot-3.txt",
+          "text equals fixture bytes"
+        ],
+        "untested_areas": [
+          "允许目录之外的路径未测",
+          "写入、删除和移动未测",
+          "宿主文件系统未测",
+          "serverInfo 名称未作为主张"
+        ]
+      },
+      "notes": "R1 的文本与预注册 fixture 字节一致。这是这条主张被 demonstrated 的条件。",
+      "status": "demonstrated",
+      "supporting_evidence": [
+        "ev-27ab1b379339443c99e8003865298f10"
+      ],
+      "testable_statement": "read_text_file 返回的文本等于 fixture 字节。",
+      "tested_under": "method VE-METHOD-MCP-003 0.2.0; primary R1; image sha256:3e895777b0a562383d0ca49a12d27c385d47a43bfe9ab3d3ba50f678431be5cf; sandbox ADR-008-amendment-3"
+    }
+  ],
+  "component_commit": "f46d9578190b476b3501923ea8977d899e8db2cb",
+  "component_id": "mcp.server-filesystem",
+  "component_type": "mcp_server",
+  "component_version": "0.6.3",
+  "envelope": {
+    "environment_constraints": [
+      "Darwin arm64",
+      "host environment is not inherited",
+      "cpus 1, memory 512m, pids 64, network none"
+    ],
+    "known_failures": [],
+    "known_limits": [],
+    "revalidation_triggers": [
+      "commit 变化",
+      "local image 变化",
+      "sandbox policy 变化",
+      "fixture 内容变化",
+      "允许目录变化"
+    ],
+    "tested_conditions": [
+      "image_id=sha256:3e895777b0a562383d0ca49a12d27c385d47a43bfe9ab3d3ba50f678431be5cf",
+      "transport stdio",
+      "client capabilities {}",
+      "protocolVersion 2025-03-26",
+      "sandbox ADR-008-amendment-3",
+      "allowed directory /app/fixture",
+      "fixture sha256 dae4e9d957af7c3ddb7fdb92e84de8ef6fb305648d9dc0f559fd27c6acb0b354",
+      "tool read_text_file",
+      "path /app/fixture/ve-pilot-3.txt",
+      "text equals fixture bytes"
+    ],
+    "untested_areas": [
+      "允许目录之外的路径未测",
+      "写入、删除和移动未测",
+      "宿主文件系统未测",
+      "serverInfo 名称未作为主张"
+    ],
+    "version_constraints": [
+      "method 0.2.0"
+    ]
+  },
+  "environment": {
+    "arch": "arm64",
+    "environment_id": "env-3f9003af2ba9",
+    "implementation": "CPython",
+    "os": "Darwin",
+    "os_release": "25.6.0",
+    "python": "3.12.3",
+    "runner_name": "verienvelope-reference",
+    "runner_version": "0.1.0"
+  },
+  "evidence_dir": "mcp.server-filesystem/0.6.3/run-a030ab0bf2ee40faaf0b22cf003147ce",
+  "evidence_refs": [
+    "ev-27ab1b379339443c99e8003865298f10"
+  ],
+  "fixture_id": "p3-r1",
+  "history": [
+    {
+      "event_id": "evt-b4ecd3ca5c194711a1fefe7be0566bce",
+      "event_type": "confirmed",
+      "evidence_refs": [
+        "ev-27ab1b379339443c99e8003865298f10"
+      ],
+      "new_state": "confirmed",
+      "previous_state": null,
+      "reason": "rule P3-M7: R1 的文本与预注册 fixture 字节一致。这是这条主张被 demonstrated 的条件。",
+      "timestamp": "2026-09-27T04:50:24Z"
+    }
+  ],
+  "implemented_rule_ids": [
+    "P3-M1",
+    "P3-M2",
+    "P3-M3",
+    "P3-M4",
+    "P3-M5",
+    "P3-M7",
+    "P3-M8",
+    "P3-M9",
+    "P3-M10",
+    "P3-M11"
+  ],
+  "method_id": "VE-METHOD-MCP-003",
+  "method_version": "0.2.0",
+  "observation": "match",
+  "outcome_class": "confirmed",
+  "record_purpose": "component_verification",
+  "result_id": "res-c6677082a60048f28e622fc9ab1aa074",
+  "rule_id": "P3-M7",
+  "run_id": "run-a030ab0bf2ee40faaf0b22cf003147ce",
+  "runner_name": "verienvelope-mcp-p3",
+  "runner_version": "0.1.0",
+  "source_repository": "https://github.com/modelcontextprotocol/servers",
+  "timestamp": "2026-09-27T04:50:24Z"
+}

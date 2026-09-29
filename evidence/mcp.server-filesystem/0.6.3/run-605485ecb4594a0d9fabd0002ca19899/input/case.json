@@ -1,0 +1,35 @@
+{
+  "case_id": "p3-r1",
+  "expected_text": "ve-pilot-3\n",
+  "judgments": {
+    "R1": {
+      "capability_status": "demonstrated",
+      "note": "R1 的文本与运行前 fixture 字节一致。",
+      "observation": "match",
+      "outcome_class": "confirmed",
+      "rule_id": "P3-M7"
+    },
+    "S1": {
+      "capability_status": "demonstrated",
+      "note": "S1 只核对协议版本。serverInfo 不是这一条主张。",
+      "observation": "match",
+      "outcome_class": "confirmed",
+      "rule_id": "P3-M1"
+    },
+    "S2": {
+      "capability_status": "demonstrated",
+      "note": "S2 只证明 read_text_file 在名单里。不要求名单只有这一个工具。",
+      "observation": "match",
+      "outcome_class": "confirmed",
+      "rule_id": "P3-M4"
+    }
+  },
+  "messages_sent": [
+    "initialize",
+    "notifications/initialized",
+    "tools/list",
+    "tools/call"
+  ],
+  "method_version": "0.1.0",
+  "primary_claim": "R1"
+}

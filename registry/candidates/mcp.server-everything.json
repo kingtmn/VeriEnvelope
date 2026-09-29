@@ -1,0 +1,12 @@
+{
+  "id": "mcp.server-everything",
+  "name": "Everything MCP Server",
+  "component_type": "mcp_server",
+  "description": "官方 MCP reference / test server，路径 src/everything。version 2.0.0 是源码 package metadata，不是已经验证的 npm registry 发布物。执行工件是 VeriEnvelope 从固定 commit 隔离构建的本地 OCI image，不是官方发布镜像。传输候选是 stdio，写在 VE-METHOD-MCP-001，不在本 schema 里。",
+  "source_repository": "https://github.com/modelcontextprotocol/servers",
+  "license": "package.json 为 SEE LICENSE IN LICENSE。src/everything/README.md 写 MIT。该 commit 的仓库根 LICENSE 是 MIT 向 Apache-2.0 的过渡说明，不是单一 SPDX 授权。GitHub license API 返回 NOASSERTION。",
+  "version": "2.0.0",
+  "commit": "f46d9578190b476b3501923ea8977d899e8db2cb",
+  "publisher": "Model Context Protocol a Series of LF Projects, LLC.",
+  "status": "candidate"
+}

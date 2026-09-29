@@ -1,0 +1,11 @@
+{
+  "commit": "f46d9578190b476b3501923ea8977d899e8db2cb",
+  "component_type": "mcp_server",
+  "description": "SOURCE IDENTITY 的 package_version 2.0.0 是源码 metadata。执行工件是 locally_built_from_pinned_source，不是 npm registry 发布物，也不是官方镜像。",
+  "id": "mcp.server-everything",
+  "name": "Everything MCP Server",
+  "publisher": "Model Context Protocol a Series of LF Projects, LLC.",
+  "source_repository": "https://github.com/modelcontextprotocol/servers",
+  "status": "candidate",
+  "version": "2.0.0"
+}

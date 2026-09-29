@@ -1,0 +1,15 @@
+{
+  "case_id": "VE-METHOD-001-ECHO-MATCH",
+  "method_id": "VE-METHOD-001",
+  "method_version": "0.1.0",
+  "title": "Fixture prints its input",
+  "claim": "允许名单内的 echo fixture 会把输入原样写到 stdout，并退出 0。",
+  "testable_statement": "以当前解释器运行 fixtures/echo/tool.py，并传入 fixtures/input.txt。进程退出码为 0，stdout 与该输入文件的字节一致。",
+  "fixture_id": "FIX-ECHO-001",
+  "component_path": "fixtures/component.json",
+  "entrypoint": "fixtures/echo/tool.py",
+  "input_file": "fixtures/input.txt",
+  "expected_exit_code": 0,
+  "expected_stdout_file": "fixtures/input.txt",
+  "timeout_seconds": 5
+}

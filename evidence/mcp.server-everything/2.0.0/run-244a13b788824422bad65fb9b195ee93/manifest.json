@@ -1,0 +1,86 @@
+{
+  "artifacts": [
+    {
+      "path": "environment.json",
+      "sha256": "8eaa7d2fe57ca239f8c16a4974a4bf7a4bbd08fddd0c9efa4a7613920ffbc97d"
+    },
+    {
+      "path": "input/artifact.json",
+      "sha256": "a38fb88c3ac08cbb354b4df7847ae27e2d7ac4fea5d0732da8ad87008289842e"
+    },
+    {
+      "path": "input/case.json",
+      "sha256": "8dca8ea549c2282b2ac2bdf64ef92d82ecd00e9b6feaca50c4f71572c08b483f"
+    },
+    {
+      "path": "input/component.json",
+      "sha256": "7c3a005e4a0b5cfd9210a93095a1e520d8c278eb60ce9ba3f30861cf3d3413a0"
+    },
+    {
+      "path": "input/initialize.request.log",
+      "sha256": "986bb616dcd151457f6da64de1407aaeca99b546e7dbd968c6b445645c1c30e7"
+    },
+    {
+      "path": "input/initialize.response.log",
+      "sha256": "a660bb815dc1e373b9e886efd439fbd8207cf60cbb95cfbdd5bacb937f680c4d"
+    },
+    {
+      "path": "input/initialized.notification.log",
+      "sha256": "883a6cf5c9ef985204b1312c393b79d87e3efb378272bbbaca6d2cecf13b5bdd"
+    },
+    {
+      "path": "input/tools-call.request.log",
+      "sha256": "d605d386c54a636eab788e1789db4895fb77be29577cdf8c3d30d310bf5d497a"
+    },
+    {
+      "path": "input/tools-call.response.log",
+      "sha256": "6ea9174b947a2f580188b478fa088d8a2ee6d558ccc7bc3fb5b177ec00b3fd38"
+    },
+    {
+      "path": "input/tools-list.request.log",
+      "sha256": "d059fc1a28537e4788d50b9fbb56654fc9612b090e780f0b85e8071601dfa24e"
+    },
+    {
+      "path": "input/tools-list.response.log",
+      "sha256": "a04d3fc34f82b77ce789f336dcf757e5ead410cf52722f32381f9d1bea011b88"
+    },
+    {
+      "path": "input/unmatched.json",
+      "sha256": "19dd6a85dfcf2c03411929446996d543dc0f81450b51768670c8f44836b8f064"
+    },
+    {
+      "path": "runtime.json",
+      "sha256": "216e015ac5adca5be5c5e15eb131da5398dc5cfee4e8430b4f58e2a602303926"
+    },
+    {
+      "path": "stderr.log",
+      "sha256": "40767cda9f6f3ae6f30abe4426f5c037a89a8e55afa9a196a38b663d8357e9f0"
+    },
+    {
+      "path": "stdout.log",
+      "sha256": "05e8672caa00369550a842eb0e840f3a345ee8a5f34105a76c99131983b06623"
+    }
+  ],
+  "environment": {
+    "arch": "arm64",
+    "environment_id": "env-3f9003af2ba9",
+    "implementation": "CPython",
+    "os": "Darwin",
+    "os_release": "25.6.0",
+    "python": "3.12.3",
+    "runner_name": "verienvelope-reference",
+    "runner_version": "0.1.0"
+  },
+  "evidence_id": "ev-2892c18aa60a450b93735583dde98d6e",
+  "fixture_id": "c3-echo",
+  "method_id": "VE-METHOD-MCP-001",
+  "method_version": "0.3.0",
+  "notes": "primary C3 rule M5. prerequisite C1 match. prerequisite C2 match. C3 只证明这一条 echo 文本。",
+  "observation": "match",
+  "outcome_class": "confirmed",
+  "raw_artifact_path": "mcp.server-everything/2.0.0/run-244a13b788824422bad65fb9b195ee93",
+  "run_id": "run-244a13b788824422bad65fb9b195ee93",
+  "runner_version": "0.1.0",
+  "source_type": "ve_test",
+  "timestamp": "2026-09-26T14:38:37Z"
+}

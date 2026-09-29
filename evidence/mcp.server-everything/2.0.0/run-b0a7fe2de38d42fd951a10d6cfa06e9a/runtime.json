@@ -1,0 +1,30 @@
+{
+  "boundary": {
+    "cap_drop": [
+      "ALL"
+    ],
+    "env": [
+      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG=C",
+      "NODE_VERSION=22.12.0",
+      "YARN_VERSION=1.22.22"
+    ],
+    "memory": 536870912,
+    "mount_sources": [],
+    "nano_cpus": 1000000000,
+    "network_mode": "none",
+    "pids_limit": 64,
+    "readonly_rootfs": true,
+    "security_opt": [
+      "no-new-privileges"
+    ],
+    "user": "65532:65532"
+  },
+  "exit_code": 0,
+  "image_id": "sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6",
+  "messages_sent": [
+    "initialize"
+  ],
+  "request_sent_at": "2026-09-26T13:37:23Z",
+  "response_at": "2026-09-26T13:37:23Z"
+}

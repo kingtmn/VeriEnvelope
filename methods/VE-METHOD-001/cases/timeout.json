@@ -1,0 +1,15 @@
+{
+  "case_id": "VE-METHOD-001-TIMEOUT",
+  "method_id": "VE-METHOD-001",
+  "method_version": "0.1.0",
+  "title": "Fixture exceeds timeout",
+  "claim": "超时本身不证明能力，也不自动归因为 runner 或组件。",
+  "testable_statement": "运行 fixtures/timeout/tool.py，超时为 1 秒。进程未在时限内结束时，能力状态为 insufficient。",
+  "fixture_id": "FIX-TIMEOUT-001",
+  "component_path": "fixtures/component.json",
+  "entrypoint": "fixtures/timeout/tool.py",
+  "input_file": "fixtures/input.txt",
+  "expected_exit_code": 0,
+  "expected_stdout_file": "fixtures/input.txt",
+  "timeout_seconds": 1
+}

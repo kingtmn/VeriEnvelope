@@ -1,0 +1,226 @@
+{
+  "admission": "admitted",
+  "admission_reasons": [],
+  "assurance": {
+    "dependencies": [
+      "source package metadata @modelcontextprotocol/server-memory 0.6.3",
+      "local image sha256:b2e2badf1a34d9f92e2a69a2707b11901eb3d1f3580e018624f644152f7f6c5d",
+      "OCI runtime"
+    ],
+    "execution_mode": "oci_runtime_network_none",
+    "external_services": [],
+    "permissions": [
+      "stdio",
+      "tmpfs /work",
+      "tmpfs /tmp",
+      "user 65532:65532"
+    ],
+    "provenance": "primary R1. commit f46d9578190b476b3501923ea8977d899e8db2cb. artifact_origin locally_built_from_pinned_source. local_image_id sha256:b2e2badf1a34d9f92e2a69a2707b11901eb3d1f3580e018624f644152f7f6c5d. memory file /tmp/ve-pilot-5.jsonl. package_version is source metadata, not an npm registry artifact.",
+    "reproducibility_notes": "Compare observation, outcome class, and capability status. Ignore run_id. A match is not certification."
+  },
+  "capabilities": [
+    {
+      "capability_id": "S1",
+      "claim": "S1",
+      "envelope": {
+        "known_limits": [],
+        "revalidation_triggers": [
+          "commit 变化",
+          "local image 变化",
+          "sandbox policy 变化",
+          "图文件路径变化",
+          "预注册实体变化"
+        ],
+        "tested_conditions": [
+          "image_id=sha256:b2e2badf1a34d9f92e2a69a2707b11901eb3d1f3580e018624f644152f7f6c5d",
+          "transport stdio",
+          "client capabilities {}",
+          "protocolVersion 2025-03-26",
+          "sandbox ADR-008-amendment-3",
+          "memory file /tmp/ve-pilot-5.jsonl",
+          "protocolVersion 2025-03-26"
+        ],
+        "untested_areas": [
+          "read_graph 未测",
+          "关系、删除和搜索未测",
+          "默认 memory.jsonl 路径未测",
+          "serverInfo 名称未作为主张"
+        ]
+      },
+      "notes": "S1 的 protocolVersion 符合运行前写下的 2025-03-26。serverInfo 不是这一条主张。",
+      "status": "demonstrated",
+      "supporting_evidence": [
+        "ev-4245e3b5a52e4476b165e06be5e7eb42"
+      ],
+      "testable_statement": "initialize 返回 protocolVersion 2025-03-26。",
+      "tested_under": "method VE-METHOD-MCP-005 0.1.0; primary R1; image sha256:b2e2badf1a34d9f92e2a69a2707b11901eb3d1f3580e018624f644152f7f6c5d; sandbox ADR-008-amendment-3"
+    },
+    {
+      "capability_id": "S2",
+      "claim": "S2",
+      "envelope": {
+        "known_limits": [],
+        "revalidation_triggers": [
+          "commit 变化",
+          "local image 变化",
+          "sandbox policy 变化",
+          "图文件路径变化",
+          "预注册实体变化"
+        ],
+        "tested_conditions": [
+          "image_id=sha256:b2e2badf1a34d9f92e2a69a2707b11901eb3d1f3580e018624f644152f7f6c5d",
+          "transport stdio",
+          "client capabilities {}",
+          "protocolVersion 2025-03-26",
+          "sandbox ADR-008-amendment-3",
+          "memory file /tmp/ve-pilot-5.jsonl",
+          "tool name create_entities is present"
+        ],
+        "untested_areas": [
+          "read_graph 未测",
+          "关系、删除和搜索未测",
+          "默认 memory.jsonl 路径未测",
+          "serverInfo 名称未作为主张",
+          "其余工具名不要求一致"
+        ]
+      },
+      "notes": "S2 只证明 create_entities 在名单里。不要求名单只有这一个工具。",
+      "status": "demonstrated",
+      "supporting_evidence": [
+        "ev-4245e3b5a52e4476b165e06be5e7eb42"
+      ],
+      "testable_statement": "tools/list 包含 create_entities。",
+      "tested_under": "method VE-METHOD-MCP-005 0.1.0; primary R1; image sha256:b2e2badf1a34d9f92e2a69a2707b11901eb3d1f3580e018624f644152f7f6c5d; sandbox ADR-008-amendment-3"
+    },
+    {
+      "capability_id": "R1",
+      "claim": "R1",
+      "envelope": {
+        "known_limits": [],
+        "revalidation_triggers": [
+          "commit 变化",
+          "local image 变化",
+          "sandbox policy 变化",
+          "图文件路径变化",
+          "预注册实体变化"
+        ],
+        "tested_conditions": [
+          "image_id=sha256:b2e2badf1a34d9f92e2a69a2707b11901eb3d1f3580e018624f644152f7f6c5d",
+          "transport stdio",
+          "client capabilities {}",
+          "protocolVersion 2025-03-26",
+          "sandbox ADR-008-amendment-3",
+          "memory file /tmp/ve-pilot-5.jsonl",
+          "tool create_entities",
+          "one entity ve-pilot-5",
+          "parsed entity list"
+        ],
+        "untested_areas": [
+          "read_graph 未测",
+          "关系、删除和搜索未测",
+          "默认 memory.jsonl 路径未测",
+          "serverInfo 名称未作为主张"
+        ]
+      },
+      "notes": "R1 的实体数组与预注册值一致。这是这条主张被 demonstrated 的条件。",
+      "status": "demonstrated",
+      "supporting_evidence": [
+        "ev-4245e3b5a52e4476b165e06be5e7eb42"
+      ],
+      "testable_statement": "create_entities 返回的实体数组等于预注册值。",
+      "tested_under": "method VE-METHOD-MCP-005 0.1.0; primary R1; image sha256:b2e2badf1a34d9f92e2a69a2707b11901eb3d1f3580e018624f644152f7f6c5d; sandbox ADR-008-amendment-3"
+    }
+  ],
+  "component_commit": "f46d9578190b476b3501923ea8977d899e8db2cb",
+  "component_id": "mcp.server-memory",
+  "component_type": "mcp_server",
+  "component_version": "0.6.3",
+  "envelope": {
+    "environment_constraints": [
+      "Darwin arm64",
+      "host environment is not inherited",
+      "cpus 1, memory 512m, pids 64, network none"
+    ],
+    "known_failures": [],
+    "known_limits": [],
+    "revalidation_triggers": [
+      "commit 变化",
+      "local image 变化",
+      "sandbox policy 变化",
+      "图文件路径变化",
+      "预注册实体变化"
+    ],
+    "tested_conditions": [
+      "image_id=sha256:b2e2badf1a34d9f92e2a69a2707b11901eb3d1f3580e018624f644152f7f6c5d",
+      "transport stdio",
+      "client capabilities {}",
+      "protocolVersion 2025-03-26",
+      "sandbox ADR-008-amendment-3",
+      "memory file /tmp/ve-pilot-5.jsonl",
+      "tool create_entities",
+      "one entity ve-pilot-5",
+      "parsed entity list"
+    ],
+    "untested_areas": [
+      "read_graph 未测",
+      "关系、删除和搜索未测",
+      "默认 memory.jsonl 路径未测",
+      "serverInfo 名称未作为主张"
+    ],
+    "version_constraints": [
+      "method 0.1.0"
+    ]
+  },
+  "environment": {
+    "arch": "arm64",
+    "environment_id": "env-3f9003af2ba9",
+    "implementation": "CPython",
+    "os": "Darwin",
+    "os_release": "25.6.0",
+    "python": "3.12.3",
+    "runner_name": "verienvelope-reference",
+    "runner_version": "0.1.0"
+  },
+  "evidence_dir": "mcp.server-memory/0.6.3/run-21d1582275e347ee9389bc241b6756dd",
+  "evidence_refs": [
+    "ev-4245e3b5a52e4476b165e06be5e7eb42"
+  ],
+  "fixture_id": "p5-r1",
+  "history": [
+    {
+      "event_id": "evt-4042d73e00e641699bdc7892c879c252",
+      "event_type": "confirmed",
+      "evidence_refs": [
+        "ev-4245e3b5a52e4476b165e06be5e7eb42"
+      ],
+      "new_state": "confirmed",
+      "previous_state": null,
+      "reason": "rule P5-M7: R1 的实体数组与预注册值一致。这是这条主张被 demonstrated 的条件。",
+      "timestamp": "2026-09-27T05:39:15Z"
+    }
+  ],
+  "implemented_rule_ids": [
+    "P5-M1",
+    "P5-M2",
+    "P5-M3",
+    "P5-M4",
+    "P5-M5",
+    "P5-M7",
+    "P5-M8",
+    "P5-M9",
+    "P5-M10",
+    "P5-M11"
+  ],
+  "method_id": "VE-METHOD-MCP-005",
+  "method_version": "0.1.0",
+  "observation": "match",
+  "outcome_class": "confirmed",
+  "record_purpose": "component_verification",
+  "result_id": "res-f71d1b7f61f24757aa9212bc12f83e46",
+  "rule_id": "P5-M7",
+  "run_id": "run-21d1582275e347ee9389bc241b6756dd",
+  "runner_name": "verienvelope-mcp-p5",
+  "runner_version": "0.1.0",
+  "source_repository": "https://github.com/modelcontextprotocol/servers",
+  "timestamp": "2026-09-27T05:39:15Z"
+}

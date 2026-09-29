@@ -1,0 +1,25 @@
+{
+  "case_id": "p2-c1",
+  "judgments": {
+    "C1": {
+      "capability_status": "not_demonstrated",
+      "note": "C1 没有可解析的对应响应。原因未归类。",
+      "observation": "execution_error",
+      "outcome_class": "unclassified",
+      "rule_id": "P2-M2"
+    },
+    "initialize": {
+      "capability_status": "not_demonstrated",
+      "note": "C1 没有可解析的对应响应。原因未归类。",
+      "observation": "execution_error",
+      "outcome_class": "unclassified",
+      "rule_id": "P2-M2"
+    }
+  },
+  "messages_sent": [
+    "initialize"
+  ],
+  "method_version": "0.1.0",
+  "name_comparison": null,
+  "primary_claim": "C1"
+}

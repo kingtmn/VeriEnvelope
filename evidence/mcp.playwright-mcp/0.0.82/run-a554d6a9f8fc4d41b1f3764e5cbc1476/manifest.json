@@ -1,0 +1,58 @@
+{
+  "artifacts": [
+    {
+      "path": "environment.json",
+      "sha256": "8eaa7d2fe57ca239f8c16a4974a4bf7a4bbd08fddd0c9efa4a7613920ffbc97d"
+    },
+    {
+      "path": "input/artifact.json",
+      "sha256": "985ac489567118715ce4a4d925eb66cde153c239cfd9be4a78faf41cebf91917"
+    },
+    {
+      "path": "input/case.json",
+      "sha256": "776216a76a88d292de1eb29dc4505ea5e8897eb9ea5b4bb8c59b2b175f7d6e41"
+    },
+    {
+      "path": "input/component.json",
+      "sha256": "98569077acb70e9bf908ba69f460da98ec4ffef03ff8bff726823ba03d3ed88b"
+    },
+    {
+      "path": "input/request.log",
+      "sha256": "49e6a89fe75e5f9ca5e6e0892a9b1bfd946985af087ef6af214c3d192b4757ba"
+    },
+    {
+      "path": "runtime.json",
+      "sha256": "18422835f2f45e40c73d976683481ebfe61ecd68812d89d39b6c42c688ea8b8d"
+    },
+    {
+      "path": "stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "stdout.log",
+      "sha256": "49e6a89fe75e5f9ca5e6e0892a9b1bfd946985af087ef6af214c3d192b4757ba"
+    }
+  ],
+  "environment": {
+    "arch": "arm64",
+    "environment_id": "env-3f9003af2ba9",
+    "implementation": "CPython",
+    "os": "Darwin",
+    "os_release": "25.6.0",
+    "python": "3.12.3",
+    "runner_name": "verienvelope-reference",
+    "runner_version": "0.1.0"
+  },
+  "evidence_id": "ev-0db4d517f8ce4726b982fe69ae7e6bb9",
+  "fixture_id": "p2-c3",
+  "method_id": "VE-METHOD-MCP-002",
+  "method_version": "0.3.0",
+  "notes": "primary C3 rule P2-M8. C3 没有被 demonstrated。原因未归类。",
+  "observation": "mismatch",
+  "outcome_class": "unclassified",
+  "raw_artifact_path": "mcp.playwright-mcp/0.0.82/run-a554d6a9f8fc4d41b1f3764e5cbc1476",
+  "run_id": "run-a554d6a9f8fc4d41b1f3764e5cbc1476",
+  "runner_version": "0.1.0",
+  "source_type": "ve_test",
+  "timestamp": "2026-09-27T03:02:26Z"
+}

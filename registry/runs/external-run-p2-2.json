@@ -1,0 +1,10 @@
+{
+  "authorized": true,
+  "execution_artifact": "sha256:cc8221f580a2ff7cdecac250da533250ef12e03a4101c13363056039072544cd",
+  "method_version": "0.2.0",
+  "planned_run": "external-run-p2-2",
+  "primary_claim": "C1",
+  "question": "Under the newly declared environment contract, does P2-C1 initialize now produce the preregistered response?",
+  "sandbox_policy": "ADR-008-amendment-2",
+  "timestamp": "2026-09-27T02:20:00Z"
+}

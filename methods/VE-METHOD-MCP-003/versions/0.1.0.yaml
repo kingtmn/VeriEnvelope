@@ -1,0 +1,123 @@
+id: VE-METHOD-MCP-003
+version: "0.1.0"
+title: Filesystem MCP 的一次只读文件测量
+purpose: mcp_pilot
+status: specified_not_executed
+revisions:
+  - version: "0.1.0"
+    reason: >
+      Pilot #3 第一次执行前的规格。对象是 modelcontextprotocol/servers
+      src/filesystem 的固定 commit。主主张是 read_text_file 返回预注册文本。
+      serverInfo 的构造参数在源码里是 secure-filesystem-server 和 0.2.0，
+      这一版不把 SDK 是否原样转发当成已经证明的映射，所以不把它写成主张。
+scope: >
+  只覆盖该 commit、镜像内 /app/fixture、以及只把该目录作为允许目录时的一次
+  read_text_file。不覆盖写入、删除、允许目录之外的路径，也不覆盖其余工具。
+identity:
+  component_id: mcp.server-filesystem
+  repository: https://github.com/modelcontextprotocol/servers
+  commit: f46d9578190b476b3501923ea8977d899e8db2cb
+  package_name: "@modelcontextprotocol/server-filesystem"
+  package_version: "0.6.3"
+  source_path: src/filesystem
+execution:
+  artifact_origin: locally_built_from_pinned_source
+  local_image_id: sha256:3e895777b0a562383d0ca49a12d27c385d47a43bfe9ab3d3ba50f678431be5cf
+  base_image_id: sha256:43ac6c60b8f89723f746e8a92ce91abd5017e627ce1ddfe4238355d3a30b772c
+  sandbox_policy: ADR-008-amendment-3
+  allowed_directory: /app/fixture
+  fixture: methods/VE-METHOD-MCP-003/fixtures/ve-pilot-3.txt
+  fixture_path: /app/fixture/ve-pilot-3.txt
+  fixture_sha256: dae4e9d957af7c3ddb7fdb92e84de8ef6fb305648d9dc0f559fd27c6acb0b354
+  tool_name: read_text_file
+  launch: node /src/src/filesystem/dist/index.js /app/fixture
+claims:
+  - id: S1
+    statement: initialize 的 result.protocolVersion 是 2025-03-26。
+    role: session_precondition
+  - id: S2
+    statement: tools/list 的名字里包含 read_text_file。
+    role: discovery_precondition
+    source: src/filesystem/index.ts server.registerTool("read_text_file")
+  - id: R1
+    statement: >
+      调用 read_text_file，path 为 /app/fixture/ve-pilot-3.txt。
+      返回的 MCP tool result 里，至少有一条 type=text 的 text 与 fixture 字节逐字相同。
+    role: primary
+    source: >
+      readTextFileHandler 调用 readFileContent，后者是 fs.readFile(path, utf-8)，
+      再放进 content 数组的 type=text。
+    expected_observation: fixture bytes
+classification_rules:
+  - id: P3-M1
+    when: initialize 的 protocolVersion 是 2025-03-26。
+    observation: match
+    outcome_class: confirmed
+  - id: P3-M2
+    when: 进程已经启动，但没有可解析的对应响应。
+    observation: execution_error
+    outcome_class: unclassified
+  - id: P3-M3
+    when: protocolVersion 不是 2025-03-26。
+    observation: mismatch
+    outcome_class: unclassified
+  - id: P3-M4
+    when: tools/list 包含 read_text_file。
+    observation: match
+    outcome_class: confirmed
+  - id: P3-M5
+    when: tools/list 不包含 read_text_file。
+    observation: mismatch
+    outcome_class: unclassified
+  - id: P3-M6
+    when: 这条规则保留编号，不与 P3-M2 重叠。
+    observation: execution_error
+    outcome_class: unclassified
+  - id: P3-M7
+    when: 一条 type=text 的文本与 fixture 字节相同。
+    observation: match
+    outcome_class: confirmed
+  - id: P3-M8
+    when: 有可解析的 tool result，但文本与 fixture 不同。
+    observation: mismatch
+    outcome_class: unclassified
+  - id: P3-M9
+    when: 等待响应超时。
+    observation: execution_error
+    outcome_class: unclassified
+  - id: P3-M10
+    when: 边界在测量开始前拒绝启动。
+    observation: blocked
+    outcome_class: unclassified
+  - id: P3-M11
+    when: 前置主张不是 match，主主张没有发送。
+    observation: not_run
+    outcome_class: unclassified
+envelope:
+  tested_conditions:
+    - commit f46d9578190b476b3501923ea8977d899e8db2cb
+    - package @modelcontextprotocol/server-filesystem 0.6.3
+    - transport stdio
+    - client capabilities 为空对象
+    - protocolVersion 提供 2025-03-26
+    - 允许目录只有 /app/fixture
+    - fixture sha256 dae4e9d957af7c3ddb7fdb92e84de8ef6fb305648d9dc0f559fd27c6acb0b354
+    - 运行时网络关闭
+    - 非 root 65532:65532、只读根文件系统、丢弃全部 capabilities、no-new-privileges
+    - 不挂载宿主家目录、docker socket 或仓库
+    - sandbox ADR-008-amendment-3
+    - local image sha256:3e895777b0a562383d0ca49a12d27c385d47a43bfe9ab3d3ba50f678431be5cf
+  known_limits: []
+  untested_areas:
+    - 允许目录之外的路径
+    - 写入、删除、移动
+    - serverInfo 名称和版本
+    - 其余工具
+  version_constraints:
+    - 只覆盖方法 0.1.0 和 identity.commit
+  revalidation_triggers:
+    - commit 变化
+    - local image 变化
+    - sandbox policy 变化
+    - fixture 内容变化
+    - 允许目录变化

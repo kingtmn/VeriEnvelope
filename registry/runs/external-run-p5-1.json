@@ -1,0 +1,10 @@
+{
+  "authorized": true,
+  "execution_artifact": "sha256:b2e2badf1a34d9f92e2a69a2707b11901eb3d1f3580e018624f644152f7f6c5d",
+  "method_version": "0.1.0",
+  "planned_run": "external-run-p5-1",
+  "primary_claim": "R1",
+  "question": "Under method 0.1.0, does create_entities return the one preregistered entity?",
+  "sandbox_policy": "ADR-008-amendment-3",
+  "timestamp": "2026-09-27T05:39:06Z"
+}

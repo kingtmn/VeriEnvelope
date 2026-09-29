@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verienvelope.local/schemas/evidence.schema.json",
+  "title": "EvidenceManifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "evidence_id",
+    "run_id",
+    "source_type",
+    "method_id",
+    "method_version",
+    "runner_version",
+    "environment",
+    "fixture_id",
+    "timestamp",
+    "raw_artifact_path",
+    "observation",
+    "outcome_class",
+    "notes",
+    "artifacts"
+  ],
+  "properties": {
+    "evidence_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_type": {
+      "enum": ["vendor_claim", "ve_test", "independent_test", "external_report"]
+    },
+    "method_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "method_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "runner_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "environment": {
+      "$ref": "#/$defs/environment"
+    },
+    "fixture_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "raw_artifact_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observation": {
+      "enum": ["match", "mismatch", "execution_error", "blocked", "not_run"]
+    },
+    "outcome_class": {
+      "$ref": "#/$defs/outcomeClass"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "outcomeClass": {
+      "enum": [
+        "confirmed",
+        "not_reproduced",
+        "out_of_envelope",
+        "component_failure",
+        "runner_defect",
+        "method_defect",
+        "environment_failure",
+        "evaluation_defect",
+        "unclassified"
+      ]
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "environment_id",
+        "os",
+        "os_release",
+        "arch",
+        "python",
+        "runner_name",
+        "runner_version",
+        "implementation"
+      ],
+      "properties": {
+        "environment_id": { "type": "string", "minLength": 1 },
+        "os": { "type": "string", "minLength": 1 },
+        "os_release": { "type": "string" },
+        "arch": { "type": "string", "minLength": 1 },
+        "python": { "type": "string", "minLength": 1 },
+        "runner_name": { "type": "string", "minLength": 1 },
+        "runner_version": { "type": "string", "minLength": 1 },
+        "implementation": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

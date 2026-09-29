@@ -1,0 +1,63 @@
+{
+  "case_id": "c3-echo",
+  "echo_request": {
+    "id": 3,
+    "jsonrpc": "2.0",
+    "method": "tools/call",
+    "params": {
+      "arguments": {
+        "message": "verienvelope-pilot-echo"
+      },
+      "name": "echo"
+    }
+  },
+  "execution_artifact": {
+    "artifact_origin": "locally_built_from_pinned_source",
+    "base_image_id": "sha256:51eff88af6dff26f59316b6e356188ffa2c422bd3c3b76f2556a2e7e89d080bd",
+    "build_recipe": "npm ci --ignore-scripts && tsc -p src/everything/tsconfig.json",
+    "build_recipe_version": "1",
+    "build_timestamp": "2026-09-26T05:44:34.512508881-07:00",
+    "local_image_id": "sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6",
+    "lockfile_sha256": "df3034c8bb82e772389fa4518793c0cee24361c581c66e7bb04d0d7270dc24e1",
+    "node_version": "v22.12.0",
+    "npm_version": "10.9.0",
+    "registry_digest": null
+  },
+  "messages_not_sent": [],
+  "messages_sent": [
+    "initialize",
+    "notifications/initialized",
+    "tools/list",
+    "tools/call"
+  ],
+  "method_version": "0.3.0",
+  "prerequisite_c1": {
+    "capability_status": "demonstrated",
+    "note": "C1 的 protocolVersion 与 serverInfo 符合固定握手。",
+    "observation": "match",
+    "outcome_class": "confirmed",
+    "replaces_earlier_run": false,
+    "rule_id": "M1"
+  },
+  "prerequisite_c2": {
+    "capability_status": "demonstrated",
+    "note": "C2 与固定工具名集合一致。",
+    "observation": "match",
+    "outcome_class": "confirmed",
+    "replaces_earlier_run": false,
+    "rule_id": "M3"
+  },
+  "primary_claim": "C3",
+  "record_purpose": "component_verification",
+  "replaces_earlier_runs": false,
+  "run_1_evidence": "mcp.server-everything/2.0.0/run-b0a7fe2de38d42fd951a10d6cfa06e9a",
+  "run_2_evidence": "mcp.server-everything/2.0.0/run-b32dbaa357824eb0a7a9474cf35b7d34",
+  "source_identity": {
+    "component_path": "src/everything",
+    "package_name": "@modelcontextprotocol/server-everything",
+    "package_version": "2.0.0",
+    "package_version_meaning": "source package metadata, not an npm registry artifact",
+    "source_commit": "f46d9578190b476b3501923ea8977d899e8db2cb",
+    "source_repository": "https://github.com/modelcontextprotocol/servers"
+  }
+}

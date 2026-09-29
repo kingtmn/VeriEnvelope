@@ -1,0 +1,160 @@
+id: VE-METHOD-MCP-004
+version: "0.1.0"
+title: Time MCP 的一次时区差测量
+purpose: mcp_pilot
+status: specified_not_executed
+revisions:
+  - version: "0.1.0"
+    reason: >
+      Pilot #4 执行前的规格。对象是 modelcontextprotocol/servers src/time
+      的固定 commit。主主张只覆盖 convert_time 在 UTC 与 Asia/Tokyo 之间的
+      time_difference。日期、星期、is_dst 和 get_current_time 不是主张。
+scope: >
+  只覆盖该 commit、该镜像、--local-timezone UTC，以及一次 convert_time。
+  不覆盖其他时区对，不覆盖夏令时切换日，也不覆盖当前时间。
+identity:
+  component_id: mcp.server-time
+  repository: https://github.com/modelcontextprotocol/servers
+  commit: f46d9578190b476b3501923ea8977d899e8db2cb
+  package_name: mcp-server-time
+  package_version: "0.6.2"
+  source_path: src/time
+execution:
+  artifact_origin: locally_built_from_pinned_source
+  local_image_id: sha256:f4cd3016ba9ee1e1fc2c94a75694e7a67a23d9882514372129c49ed04f0ef3b4
+  base_image_id: sha256:1042b61448fef4ba92d16a8c7eb4996d027568ce64792a7877fd88511e0af7c6
+  sandbox_policy: ADR-008-amendment-3
+  launch: /src/src/time/.venv/bin/mcp-server-time --local-timezone UTC
+  local_timezone: UTC
+  protocol_version: "2025-03-26"
+  server_name: mcp-time
+  server_version: "1.29.0"
+  tool_name: convert_time
+  arguments:
+    source_timezone: UTC
+    time: "12:00"
+    target_timezone: Asia/Tokyo
+  text_substring: '  "time_difference": "+9.0h"'
+  tzdata_version: "2024.2"
+  timeout_seconds: 25
+claims:
+  - id: S1
+    statement: >
+      initialize 的 protocolVersion 是 2025-03-26，serverInfo.name 是 mcp-time，
+      serverInfo.version 是 1.29.0。
+    role: session_precondition
+    source: >
+      Server("mcp-time") 的 version 为空，SDK 用 mcp 发行包版本，锁文件是 1.29.0。
+      2025-03-26 在 SUPPORTED_PROTOCOL_VERSIONS 中，会被原样回写。
+  - id: S2
+    statement: tools/list 的名字里包含 convert_time。
+    role: discovery_precondition
+    source: list_tools 注册 TimeTools.CONVERT_TIME。
+  - id: R1
+    statement: >
+      调用 convert_time，source_timezone 为 UTC，time 为 12:00，target_timezone 为 Asia/Tokyo。
+      返回的一条 type=text 文本包含两格缩进的 "time_difference": "+9.0h"。
+      isError 不是 true。
+    role: primary
+    source: >
+      convert_time 用两端 utcoffset 的小时差。整数小时格式是 {hours:+.1f}h。
+      锁定的 tzdata 2024.2 在 2026-01-15 和 2026-07-15 都给出 9 小时。
+      json.dumps(indent=2) 把该字段放在顶层。
+    expected_observation: '  "time_difference": "+9.0h"'
+non_claims:
+  - get_current_time
+  - source 或 target 的日期、星期和 is_dst
+  - 其他时区对
+  - 夏令时切换日
+  - 本地时区自动发现
+classification_rules:
+  - id: P4-M1
+    when: initialize 的 protocolVersion、serverInfo.name 和 serverInfo.version 都与方法一致。
+    observation: match
+    outcome_class: confirmed
+    capability_status: demonstrated
+    run_note: S1 的协议版本、服务器名和服务器版本与运行前写下的值一致。
+  - id: P4-M2
+    when: 进程已经启动，但没有可解析的对应响应。
+    observation: execution_error
+    outcome_class: unclassified
+    capability_status: not_demonstrated
+    run_note: 没有可解析的对应响应。主张没有被 demonstrated。原因未归类。
+  - id: P4-M3
+    when: initialize 可解析，但 protocolVersion、serverInfo.name 或 serverInfo.version 至少有一项不符。
+    observation: mismatch
+    outcome_class: unclassified
+    capability_status: not_demonstrated
+    run_note: S1 没有被 demonstrated。原因未归类。
+  - id: P4-M4
+    when: tools/list 包含 convert_time。
+    observation: match
+    outcome_class: confirmed
+    capability_status: demonstrated
+    run_note: S2 只证明 convert_time 在名单里。不要求名单只有这一个工具。
+  - id: P4-M5
+    when: tools/list 可解析，但不包含 convert_time。
+    observation: mismatch
+    outcome_class: unclassified
+    capability_status: not_demonstrated
+    run_note: S2 没有列出 convert_time。原因未归类。
+  - id: P4-M7
+    when: tool result 可解析，isError 不是 true，且一条 type=text 的文本包含预注册的 time_difference 子串。
+    observation: match
+    outcome_class: confirmed
+    capability_status: demonstrated
+    run_note: R1 的文本包含预注册的 time_difference。这是这条主张被 demonstrated 的条件。
+  - id: P4-M8
+    when: tool result 可解析，但 isError 为 true，或者文本不包含预注册子串。
+    observation: mismatch
+    outcome_class: unclassified
+    capability_status: not_demonstrated
+    run_note: R1 没有被 demonstrated。原因未归类。
+  - id: P4-M9
+    when: 等待响应超时。
+    observation: execution_error
+    outcome_class: unclassified
+    capability_status: insufficient
+    run_note: 响应超时。超时本身不能分成服务器、运行时或方法的错。
+  - id: P4-M10
+    when: 边界在测量开始前拒绝启动。
+    observation: blocked
+    outcome_class: unclassified
+    capability_status: insufficient
+    run_note: 测量开始前被边界拒绝。这不是组件失败的判定。
+  - id: P4-M11
+    when: 前置主张不是 match，因此没有发送后面的主张。
+    observation: not_run
+    outcome_class: unclassified
+    capability_status: insufficient
+    run_note: 前置主张不是 match，这一条没有发送。
+envelope:
+  tested_conditions:
+    - commit f46d9578190b476b3501923ea8977d899e8db2cb
+    - package mcp-server-time 0.6.2
+    - mcp SDK 1.29.0
+    - tzdata 2024.2
+    - transport stdio
+    - client capabilities 为空对象
+    - protocolVersion 提供 2025-03-26
+    - launch --local-timezone UTC
+    - convert_time UTC 12:00 to Asia/Tokyo
+    - 运行时网络关闭
+    - 非 root 65532:65532、只读根文件系统、丢弃全部 capabilities、no-new-privileges
+    - 不挂载宿主家目录、docker socket 或仓库
+    - sandbox ADR-008-amendment-3
+    - local image sha256:f4cd3016ba9ee1e1fc2c94a75694e7a67a23d9882514372129c49ed04f0ef3b4
+  known_limits: []
+  untested_areas:
+    - get_current_time
+    - 日期、星期和 is_dst
+    - 其他时区对
+    - 夏令时切换日
+  version_constraints:
+    - 只覆盖方法 0.1.0 和 identity.commit。
+  revalidation_triggers:
+    - commit 变化
+    - local image 变化
+    - sandbox policy 变化
+    - tzdata 版本变化
+    - 预注册子串变化

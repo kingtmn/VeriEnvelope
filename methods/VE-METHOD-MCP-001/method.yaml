@@ -1,0 +1,295 @@
+id: VE-METHOD-MCP-001
+version: "0.3.0"
+title: 第一个外部 MCP 的最小 stdio 观察
+purpose: mcp_pilot
+status: specified_not_executed
+revisions:
+  - version: "0.1.0"
+    reason: >
+      执行前初稿。M2、M4、M6 把 initialize 错误、tools/list 不一致和 echo 不一致
+      直接写成 component_failure。该版本已由 Git 提交 87bd0ad 保留，此处不覆盖。
+  - version: "0.2.0"
+    reason: >
+      第一次观察只说明对应陈述没有按预期被 demonstrated。
+      它还不区分组件、方法、runner、协议假设、构建或环境。
+      M2、M4、M6 的 outcome_class 改为 unclassified。
+      原因要等后续诊断写进 history。C1、C2、C3 的预期观察没有改。
+  - version: "0.3.0"
+    reason: >
+      Before first external execution, protocolVersion was added to C1 because
+      the method claims a fixed handshake and therefore must observe the
+      negotiated protocol version. This is a pre-run correction, not a
+      result-driven edit. C2 and C3 are unchanged. After the first external
+      observation this file must not be edited to match that output.
+scope: >
+  只覆盖 mcp.server-everything 在下方固定 commit、固定握手和运行时断网条件下的
+  三条陈述：initialize、tools/list、一次 echo 调用。
+  不覆盖该仓库里的其他服务器，也不覆盖 Everything 的其余工具。
+identity:
+  component_id: mcp.server-everything
+  repository: https://github.com/modelcontextprotocol/servers
+  commit: f46d9578190b476b3501923ea8977d899e8db2cb
+  commit_time: "2026-09-22T14:30:15Z"
+  commit_subject: "fix(everything): clean up subscriptions on session disconnect (#4712)"
+  component_path: src/everything
+  package_name: "@modelcontextprotocol/server-everything"
+  package_version: "2.0.0"
+  component_type: mcp_server
+  transport: stdio
+  server_name: mcp-servers/everything
+  server_version: "2.0.0"
+client_handshake:
+  argv:
+    - node
+    - dist/index.js
+    - stdio
+  protocol_version_offered: "2025-03-26"
+  protocol_version_note: >
+    该 commit 的 src/everything/README.md 把 stdio 用法链到
+    specification/2025-03-26。本方法因此提供这个版本字符串。
+    选择它的时候还没有外部运行。如果服务器拒绝这个版本，C1 不成立。
+    看到结果之后改这个字符串，必须再升方法版本。
+  capabilities: {}
+  client_info:
+    name: verienvelope-pilot
+    version: "0.1.0"
+  after_initialize: notifications/initialized
+claims:
+  - id: C1
+    title: Initialization
+    subject: mcp.server-everything
+    statement: >
+      在该 commit、stdio、上面的握手和运行时断网的容器里，
+      服务器对 initialize 返回一条没有 error 的 JSON-RPC 结果，
+      result.protocolVersion 等于所提供的 2025-03-26，
+      且 serverInfo.name 与 serverInfo.version 等于本文件 identity 中的值。
+    expected_observation: >
+      与请求 id 对应的一条 JSON-RPC 响应；没有 error；
+      result.protocolVersion 为 2025-03-26；
+      result.serverInfo.name 为 mcp-servers/everything；
+      result.serverInfo.version 为 2.0.0。
+      stderr 可以包含 Starting default (STDIO) server...。
+      仅有 stderr 不能单独判定 C1 失败或通过。
+    source: src/everything/server/index.ts 与 transports/stdio.ts，该 commit。
+  - id: C2
+    title: Tool Discovery
+    subject: mcp.server-everything
+    statement: >
+      在 C1 的握手完成并发送 notifications/initialized 之后，
+      tools/list 返回的工具名集合等于下面的 unconditional_tools。
+      这是该 commit 在空客户端能力下会注册的集合，不是未来版本，
+      也不是仓库里每一个工具。
+    expected_observation: >
+      tools/list 的 name 集合与 unconditional_tools 相等。
+      顺序无关。多一个或少一个都是 mismatch。
+    unconditional_tools:
+      - echo
+      - get-annotated-message
+      - get-env
+      - get-resource-links
+      - get-resource-reference
+      - get-structured-content
+      - get-sum
+      - get-tiny-image
+      - gzip-file-as-resource
+      - simulate-research-query
+      - toggle-simulated-logging
+      - toggle-subscriber-updates
+      - trigger-long-running-operation
+    not_expected_without_client_capability:
+      - name: get-roots-list
+        requires: roots
+      - name: trigger-elicitation-request
+        requires: elicitation
+      - name: trigger-url-elicitation
+        requires: elicitation.url
+      - name: trigger-sampling-request
+        requires: sampling
+      - name: trigger-sampling-request-async
+        requires: sampling and tasks.requests.sampling.createMessage
+      - name: trigger-elicitation-request-async
+        requires: elicitation and tasks.requests.elicitation.create
+    source: >
+      tools/index.ts 的 registerTools 与 registerConditionalTools。
+      条件工具的 register 调用位于客户端能力判断之内。
+      simulate-research-query 使用 registerToolTask，不在该判断之内，
+      因此列入预期集合。elicitation 只影响它的 ambiguous 行为，本方法不调用它。
+  - id: C3
+    title: Deterministic Tool Invocation
+    subject: mcp.server-everything
+    tool: echo
+    statement: >
+      在 C1 与 C2 的同一会话中，用固定参数调用 echo。
+      该工具不访问网络、宿主文件系统、密钥或模型。
+    arguments:
+      message: verienvelope-pilot-echo
+    expected_observation: >
+      tools/call 结果的 content 中有且仅用这一条文本作断言：
+      type 为 text，text 为 "Echo: verienvelope-pilot-echo"。
+      不断言 SDK 可能附加的其他元数据。
+    source: "src/everything/tools/echo.ts 返回 Echo 前缀加上原始 message。"
+    rejected_alternatives:
+      - get-env 会打印进程环境，不适合作为第一条工具断言。
+      - gzip-file-as-resource 会按 URL 取数据。
+      - get-structured-content 的文档描述返回温度和天气字段，不是纯输入的函数。
+      - 采样、elicitation 和长任务依赖客户端或时间。
+prediction:
+  support: >
+    三次独立容器运行的 C1、C2、C3 观察与本文件预期一致。
+  revise_if: >
+    未改 commit、握手和方法版本时，观察与预期不一致；
+    或为了让一次失败变成通过而修改本文件的预期。
+    那种修改是方法修订，不是同一版本的更正。
+non_goals:
+  - production readiness
+  - security
+  - general reliability
+  - bug-free
+  - all MCP capabilities
+  - all tools
+  - malicious input resistance
+  - cross-platform correctness
+  - long-running stability
+  - performance
+  - resource exhaustion resistance
+  - network behavior
+assurance:
+  dependencies:
+    - source package metadata @modelcontextprotocol/server-everything 2.0.0
+    - lockfile sha256 df3034c8bb82e772389fa4518793c0cee24361c581c66e7bb04d0d7270dc24e1
+    - node v22.12.0
+    - npm 10.9.0
+    - base image sha256:51eff88af6dff26f59316b6e356188ffa2c422bd3c3b76f2556a2e7e89d080bd
+    - local image sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6
+    - OCI runtime
+  permissions:
+    - stdio
+    - 容器内 /work 临时写入
+  execution_mode: oci_runtime_network_none
+  external_services: []
+  provenance: >
+    SOURCE IDENTITY 是源码：repository、commit f46d9578190b476b3501923ea8977d899e8db2cb、
+    component_path src/everything、package_name @modelcontextprotocol/server-everything、
+    package_version 2.0.0。package_version 只是源码 package metadata，
+    不是 npm registry 发布 artifact。
+    EXECUTION ARTIFACT IDENTITY 的 artifact_origin 是 locally_built_from_pinned_source。
+    执行对象是固定 source commit、固定 root package-lock、VeriEnvelope 隔离 build recipe
+    和本地 OCI image sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6。
+    不是官方发布容器镜像。registry_digest 为空。
+  reproducibility_notes: >
+    比较 observation、outcome_class 和 capability status。忽略 run_id。
+    复现时执行工件必须同时是 artifact_origin locally_built_from_pinned_source、
+    build recipe 1（npm ci --ignore-scripts，然后 tsc -p src/everything/tsconfig.json）、
+    lockfile sha256 df3034c8bb82e772389fa4518793c0cee24361c581c66e7bb04d0d7270dc24e1、
+    node v22.12.0、npm 10.9.0、
+    base image sha256:51eff88af6dff26f59316b6e356188ffa2c422bd3c3b76f2556a2e7e89d080bd、
+    local image sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6、
+    registry_digest null、build timestamp 2026-09-26T05:44:34.512508881-07:00。
+    标签相同不够。C1 demonstrated 不是组件准入。
+envelope:
+  tested_conditions:
+    - commit f46d9578190b476b3501923ea8977d899e8db2cb
+    - package @modelcontextprotocol/server-everything 2.0.0
+    - transport stdio
+    - client capabilities 为空对象
+    - protocolVersion 提供 2025-03-26
+    - 运行时网络关闭
+    - 非 root 65532:65532、只读根文件系统、丢弃全部 capabilities、no-new-privileges
+    - 不挂载宿主家目录、docker socket 或仓库写入区
+    - tmpfs 只有 /work
+    - cpus 1、memory 512m、pids 64、initialize 读超时 20 秒
+    - local image sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6
+  known_limits:
+    - 只断言 echo 的那一条文本
+    - tools/list 只针对空客户端能力下的 13 个名字
+    - 运行时断网不等于已经测量了服务器的网络行为
+    - 容器边界不是安全证明
+    - package_version 2.0.0 不是 npm 发布包的验证结论
+    - 第一次外部运行只发送 initialize。C2 和 C3 未执行时组件不得准入
+  untested_areas:
+    - "不声明 production readiness"
+    - "不声明 security"
+    - "不声明 general reliability"
+    - "不声明 bug-free"
+    - "不声明 all MCP capabilities"
+    - "不声明 all tools"
+    - "不声明 malicious input resistance"
+    - "不声明 cross-platform correctness"
+    - "不声明 long-running stability"
+    - "不声明 performance"
+    - "不声明 resource exhaustion resistance"
+    - "不声明 network behavior"
+  version_constraints:
+    - 只覆盖 identity.commit
+    - 只覆盖方法 0.3.0。0.1.0 与 0.2.0 不再作为当前规格。
+  revalidation_triggers:
+    - major_version
+    - relevant_dependency
+    - permission
+    - runtime
+    - protocol
+    - method_revision
+    - runner_bug
+    - external_counterexample
+    - security_or_capability_change
+classification_rules:
+  - id: M1
+    when: initialize 响应满足 C1 的预期观察
+    observation: match
+    outcome_class: confirmed
+    capability_status: demonstrated
+    run_note: C1 的 protocolVersion 与 serverInfo 符合固定握手。
+  - id: M2
+    when: initialize 返回 error，响应无法解析，响应 id 不对应请求，或在响应前进程退出
+    observation: execution_error
+    outcome_class: unclassified
+    capability_status: not_demonstrated
+    run_note: C1 没有被 demonstrated。原因未归类。不改握手来凑结果。
+  - id: M3
+    when: tools/list 的名字集合等于 unconditional_tools
+    observation: match
+    outcome_class: confirmed
+    capability_status: demonstrated
+    run_note: C2 与该 commit 在空能力下的注册集合一致。
+  - id: M4
+    when: tools/list 的名字集合与 unconditional_tools 不同
+    observation: mismatch
+    outcome_class: unclassified
+    capability_status: not_demonstrated
+    run_note: C2 没有被 demonstrated。原因未归类。不允许把预期改成这次实际返回的名单。
+  - id: M5
+    when: echo 的文本断言满足 C3
+    observation: match
+    outcome_class: confirmed
+    capability_status: demonstrated
+    run_note: C3 只证明这一条 echo 文本。
+  - id: M6
+    when: echo 有响应但文本断言不满足
+    observation: mismatch
+    outcome_class: unclassified
+    capability_status: not_demonstrated
+    run_note: C3 没有被 demonstrated。原因未归类。只比较约定的那一条文本。
+  - id: M7
+    when: 进程超过方法超时
+    observation: execution_error
+    outcome_class: unclassified
+    capability_status: insufficient
+    run_note: 超时本身不能分成服务器、运行时或方法的错。
+  - id: M8
+    when: 容器边界或允许名单拒绝启动
+    observation: blocked
+    outcome_class: out_of_envelope
+    capability_status: insufficient
+    run_note: 目标进程没有按本方法启动。
+  - id: M9
+    when: initialize 返回了结果，但 serverInfo 与固定预期不同
+    observation: mismatch
+    outcome_class: unclassified
+    capability_status: not_demonstrated
+    run_note: C1 的 serverInfo 与预期不一致。这只说明陈述未被 demonstrated，不是组件原因的判定。
+  - id: M10
+    when: initialize 返回了结果，但 protocolVersion 缺失或不是 2025-03-26
+    observation: mismatch
+    outcome_class: unclassified
+    capability_status: not_demonstrated
+    run_note: C1 的协议版本没有被 demonstrated。原因未归类。不改握手来凑结果。

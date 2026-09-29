@@ -1,0 +1,58 @@
+{
+  "artifacts": [
+    {
+      "path": "environment.json",
+      "sha256": "8eaa7d2fe57ca239f8c16a4974a4bf7a4bbd08fddd0c9efa4a7613920ffbc97d"
+    },
+    {
+      "path": "input/artifact.json",
+      "sha256": "985ac489567118715ce4a4d925eb66cde153c239cfd9be4a78faf41cebf91917"
+    },
+    {
+      "path": "input/case.json",
+      "sha256": "253c832ae350a84be66bb3e2c3dd6eac1035a76f01e2018aebf40660c45595c4"
+    },
+    {
+      "path": "input/component.json",
+      "sha256": "98569077acb70e9bf908ba69f460da98ec4ffef03ff8bff726823ba03d3ed88b"
+    },
+    {
+      "path": "input/request.log",
+      "sha256": "fbf400682afec4b05bd96cb11732278bf723f70e1cccb2e5f3adf4aa08fe6bc0"
+    },
+    {
+      "path": "runtime.json",
+      "sha256": "854421f66f3b4944c92f8cd7d6dc04d61ec5dfebf528f763cd2d806e9b7105c1"
+    },
+    {
+      "path": "stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "stdout.log",
+      "sha256": "fbf400682afec4b05bd96cb11732278bf723f70e1cccb2e5f3adf4aa08fe6bc0"
+    }
+  ],
+  "environment": {
+    "arch": "arm64",
+    "environment_id": "env-3f9003af2ba9",
+    "implementation": "CPython",
+    "os": "Darwin",
+    "os_release": "25.6.0",
+    "python": "3.12.3",
+    "runner_name": "verienvelope-reference",
+    "runner_version": "0.1.0"
+  },
+  "evidence_id": "ev-e50ab33969b24d95a6767c5892ef0090",
+  "fixture_id": "p2-c1",
+  "method_id": "VE-METHOD-MCP-002",
+  "method_version": "0.3.0",
+  "notes": "primary C1 rule P2-M1. C1 的 protocolVersion 与 serverInfo 符合运行前写下的字符串。",
+  "observation": "match",
+  "outcome_class": "confirmed",
+  "raw_artifact_path": "mcp.playwright-mcp/0.0.82/run-b93181d9aee447d1ad4328d15a8363dc",
+  "run_id": "run-b93181d9aee447d1ad4328d15a8363dc",
+  "runner_version": "0.1.0",
+  "source_type": "ve_test",
+  "timestamp": "2026-09-27T02:34:56Z"
+}

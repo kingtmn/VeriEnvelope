@@ -1,0 +1,232 @@
+{
+  "admission": "admitted",
+  "admission_reasons": [],
+  "assurance": {
+    "dependencies": [
+      "source package metadata mcp-server-time 0.6.2",
+      "local image sha256:f4cd3016ba9ee1e1fc2c94a75694e7a67a23d9882514372129c49ed04f0ef3b4",
+      "OCI runtime"
+    ],
+    "execution_mode": "oci_runtime_network_none",
+    "external_services": [],
+    "permissions": [
+      "stdio",
+      "tmpfs /work",
+      "tmpfs /tmp",
+      "user 65532:65532"
+    ],
+    "provenance": "primary R1. commit f46d9578190b476b3501923ea8977d899e8db2cb. artifact_origin locally_built_from_pinned_source. local_image_id sha256:f4cd3016ba9ee1e1fc2c94a75694e7a67a23d9882514372129c49ed04f0ef3b4. tzdata 2024.2. package_version is source metadata, not a package registry artifact.",
+    "reproducibility_notes": "Compare observation, outcome class, and capability status. Ignore run_id. A match is not certification."
+  },
+  "capabilities": [
+    {
+      "capability_id": "S1",
+      "claim": "S1",
+      "envelope": {
+        "known_limits": [],
+        "revalidation_triggers": [
+          "commit 变化",
+          "local image 变化",
+          "sandbox policy 变化",
+          "tzdata 版本变化",
+          "预注册子串变化"
+        ],
+        "tested_conditions": [
+          "image_id=sha256:f4cd3016ba9ee1e1fc2c94a75694e7a67a23d9882514372129c49ed04f0ef3b4",
+          "transport stdio",
+          "client capabilities {}",
+          "protocolVersion 2025-03-26",
+          "sandbox ADR-008-amendment-3",
+          "local timezone UTC",
+          "tzdata 2024.2",
+          "protocolVersion 2025-03-26",
+          "serverInfo.name mcp-time",
+          "serverInfo.version 1.29.0"
+        ],
+        "untested_areas": [
+          "get_current_time 未测",
+          "日期、星期和 is_dst 未测",
+          "其他时区对未测",
+          "夏令时切换日未测"
+        ]
+      },
+      "notes": "S1 的协议版本、服务器名和服务器版本与运行前写下的值一致。",
+      "status": "demonstrated",
+      "supporting_evidence": [
+        "ev-193018158dcd4fac8b27aaacdfe96fd4"
+      ],
+      "testable_statement": "initialize 的协议版本、服务器名和服务器版本与方法一致。",
+      "tested_under": "method VE-METHOD-MCP-004 0.1.0; primary R1; image sha256:f4cd3016ba9ee1e1fc2c94a75694e7a67a23d9882514372129c49ed04f0ef3b4; sandbox ADR-008-amendment-3"
+    },
+    {
+      "capability_id": "S2",
+      "claim": "S2",
+      "envelope": {
+        "known_limits": [],
+        "revalidation_triggers": [
+          "commit 变化",
+          "local image 变化",
+          "sandbox policy 变化",
+          "tzdata 版本变化",
+          "预注册子串变化"
+        ],
+        "tested_conditions": [
+          "image_id=sha256:f4cd3016ba9ee1e1fc2c94a75694e7a67a23d9882514372129c49ed04f0ef3b4",
+          "transport stdio",
+          "client capabilities {}",
+          "protocolVersion 2025-03-26",
+          "sandbox ADR-008-amendment-3",
+          "local timezone UTC",
+          "tzdata 2024.2",
+          "tool name convert_time is present"
+        ],
+        "untested_areas": [
+          "get_current_time 未测",
+          "日期、星期和 is_dst 未测",
+          "其他时区对未测",
+          "夏令时切换日未测",
+          "其余工具名不要求一致"
+        ]
+      },
+      "notes": "S2 只证明 convert_time 在名单里。不要求名单只有这一个工具。",
+      "status": "demonstrated",
+      "supporting_evidence": [
+        "ev-193018158dcd4fac8b27aaacdfe96fd4"
+      ],
+      "testable_statement": "tools/list 包含 convert_time。",
+      "tested_under": "method VE-METHOD-MCP-004 0.1.0; primary R1; image sha256:f4cd3016ba9ee1e1fc2c94a75694e7a67a23d9882514372129c49ed04f0ef3b4; sandbox ADR-008-amendment-3"
+    },
+    {
+      "capability_id": "R1",
+      "claim": "R1",
+      "envelope": {
+        "known_limits": [],
+        "revalidation_triggers": [
+          "commit 变化",
+          "local image 变化",
+          "sandbox policy 变化",
+          "tzdata 版本变化",
+          "预注册子串变化"
+        ],
+        "tested_conditions": [
+          "image_id=sha256:f4cd3016ba9ee1e1fc2c94a75694e7a67a23d9882514372129c49ed04f0ef3b4",
+          "transport stdio",
+          "client capabilities {}",
+          "protocolVersion 2025-03-26",
+          "sandbox ADR-008-amendment-3",
+          "local timezone UTC",
+          "tzdata 2024.2",
+          "tool convert_time",
+          "UTC 12:00 to Asia/Tokyo",
+          "time_difference substring"
+        ],
+        "untested_areas": [
+          "get_current_time 未测",
+          "日期、星期和 is_dst 未测",
+          "其他时区对未测",
+          "夏令时切换日未测"
+        ]
+      },
+      "notes": "R1 的文本包含预注册的 time_difference。这是这条主张被 demonstrated 的条件。",
+      "status": "demonstrated",
+      "supporting_evidence": [
+        "ev-193018158dcd4fac8b27aaacdfe96fd4"
+      ],
+      "testable_statement": "convert_time 的文本包含预注册的 time_difference。",
+      "tested_under": "method VE-METHOD-MCP-004 0.1.0; primary R1; image sha256:f4cd3016ba9ee1e1fc2c94a75694e7a67a23d9882514372129c49ed04f0ef3b4; sandbox ADR-008-amendment-3"
+    }
+  ],
+  "component_commit": "f46d9578190b476b3501923ea8977d899e8db2cb",
+  "component_id": "mcp.server-time",
+  "component_type": "mcp_server",
+  "component_version": "0.6.2",
+  "envelope": {
+    "environment_constraints": [
+      "Darwin arm64",
+      "host environment is not inherited",
+      "cpus 1, memory 512m, pids 64, network none"
+    ],
+    "known_failures": [],
+    "known_limits": [],
+    "revalidation_triggers": [
+      "commit 变化",
+      "local image 变化",
+      "sandbox policy 变化",
+      "tzdata 版本变化",
+      "预注册子串变化"
+    ],
+    "tested_conditions": [
+      "image_id=sha256:f4cd3016ba9ee1e1fc2c94a75694e7a67a23d9882514372129c49ed04f0ef3b4",
+      "transport stdio",
+      "client capabilities {}",
+      "protocolVersion 2025-03-26",
+      "sandbox ADR-008-amendment-3",
+      "local timezone UTC",
+      "tzdata 2024.2",
+      "tool convert_time",
+      "UTC 12:00 to Asia/Tokyo",
+      "time_difference substring"
+    ],
+    "untested_areas": [
+      "get_current_time 未测",
+      "日期、星期和 is_dst 未测",
+      "其他时区对未测",
+      "夏令时切换日未测"
+    ],
+    "version_constraints": [
+      "method 0.1.0"
+    ]
+  },
+  "environment": {
+    "arch": "arm64",
+    "environment_id": "env-3f9003af2ba9",
+    "implementation": "CPython",
+    "os": "Darwin",
+    "os_release": "25.6.0",
+    "python": "3.12.3",
+    "runner_name": "verienvelope-reference",
+    "runner_version": "0.1.0"
+  },
+  "evidence_dir": "mcp.server-time/0.6.2/run-f4ba0e8b9d3243f7b42f103a9624fb19",
+  "evidence_refs": [
+    "ev-193018158dcd4fac8b27aaacdfe96fd4"
+  ],
+  "fixture_id": "p4-r1",
+  "history": [
+    {
+      "event_id": "evt-ff309582cc754436affafbffda7016f9",
+      "event_type": "confirmed",
+      "evidence_refs": [
+        "ev-193018158dcd4fac8b27aaacdfe96fd4"
+      ],
+      "new_state": "confirmed",
+      "previous_state": null,
+      "reason": "rule P4-M7: R1 的文本包含预注册的 time_difference。这是这条主张被 demonstrated 的条件。",
+      "timestamp": "2026-09-27T05:34:14Z"
+    }
+  ],
+  "implemented_rule_ids": [
+    "P4-M1",
+    "P4-M2",
+    "P4-M3",
+    "P4-M4",
+    "P4-M5",
+    "P4-M7",
+    "P4-M8",
+    "P4-M9",
+    "P4-M10",
+    "P4-M11"
+  ],
+  "method_id": "VE-METHOD-MCP-004",
+  "method_version": "0.1.0",
+  "observation": "match",
+  "outcome_class": "confirmed",
+  "record_purpose": "component_verification",
+  "result_id": "res-a3002f15fa484414b3d550b292e6a913",
+  "rule_id": "P4-M7",
+  "run_id": "run-f4ba0e8b9d3243f7b42f103a9624fb19",
+  "runner_name": "verienvelope-mcp-p4",
+  "runner_version": "0.1.0",
+  "source_repository": "https://github.com/modelcontextprotocol/servers",
+  "timestamp": "2026-09-27T05:34:14Z"
+}

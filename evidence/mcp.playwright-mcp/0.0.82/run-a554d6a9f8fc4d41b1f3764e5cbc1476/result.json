@@ -1,0 +1,239 @@
+{
+  "admission": "insufficient",
+  "admission_reasons": [
+    "a recorded capability was not executed",
+    "a recorded capability is not_demonstrated"
+  ],
+  "assurance": {
+    "dependencies": [
+      "source package metadata @playwright/mcp 0.0.82",
+      "playwright-core 1.64.0-alpha-1789764292000",
+      "local image sha256:cc8221f580a2ff7cdecac250da533250ef12e03a4101c13363056039072544cd",
+      "OCI runtime"
+    ],
+    "execution_mode": "oci_runtime_network_none",
+    "external_services": [],
+    "permissions": [
+      "stdio",
+      "tmpfs /work",
+      "user 65532:65532"
+    ],
+    "provenance": "primary C3. commit e87bb897e15a6f2af402afb0f10b45eced9e1f9b. artifact_origin locally_built_from_pinned_source. local_image_id sha256:cc8221f580a2ff7cdecac250da533250ef12e03a4101c13363056039072544cd. package_version is source metadata, not an npm registry artifact.",
+    "reproducibility_notes": "Compare observation, outcome class, and capability status. Ignore run_id. A match is not certification."
+  },
+  "capabilities": [
+    {
+      "capability_id": "C1",
+      "claim": "C1",
+      "envelope": {
+        "known_limits": [],
+        "revalidation_triggers": [
+          "method_revision",
+          "runner_bug",
+          "runtime",
+          "relevant_dependency",
+          "protocol"
+        ],
+        "tested_conditions": [
+          "image_id=sha256:cc8221f580a2ff7cdecac250da533250ef12e03a4101c13363056039072544cd",
+          "transport stdio",
+          "client capabilities {}",
+          "protocolVersion 2025-03-26",
+          "sandbox ADR-008-amendment-2",
+          "memory 512m",
+          "pids 64",
+          "serverInfo.name Playwright",
+          "serverInfo.version 1.64.0-alpha-1789764292000"
+        ],
+        "untested_areas": [
+          "其他 commit 未测",
+          "真实网站未测",
+          "宿主文件系统未测",
+          "不声明 production readiness",
+          "不声明 security",
+          "initialize 之后的工具行为不是 C1"
+        ]
+      },
+      "notes": "C1 的 protocolVersion 与 serverInfo 符合运行前写下的字符串。",
+      "status": "insufficient",
+      "supporting_evidence": [],
+      "testable_statement": "C1 的 protocolVersion 与 serverInfo 符合运行前写下的字符串。",
+      "tested_under": "method VE-METHOD-MCP-002 0.3.0; primary C3; image sha256:cc8221f580a2ff7cdecac250da533250ef12e03a4101c13363056039072544cd; sandbox ADR-008-amendment-2"
+    },
+    {
+      "capability_id": "C2",
+      "claim": "C2",
+      "envelope": {
+        "known_limits": [],
+        "revalidation_triggers": [
+          "method_revision",
+          "runner_bug",
+          "runtime",
+          "relevant_dependency",
+          "protocol"
+        ],
+        "tested_conditions": [
+          "image_id=sha256:cc8221f580a2ff7cdecac250da533250ef12e03a4101c13363056039072544cd",
+          "transport stdio",
+          "client capabilities {}",
+          "protocolVersion 2025-03-26",
+          "sandbox ADR-008-amendment-2",
+          "memory 512m",
+          "pids 64",
+          "core tool name set",
+          "order is irrelevant"
+        ],
+        "untested_areas": [
+          "其他 commit 未测",
+          "真实网站未测",
+          "宿主文件系统未测",
+          "不声明 production readiness",
+          "不声明 security",
+          "skillOnly 工具不在预期集合里"
+        ]
+      },
+      "notes": "C2 与运行前抽出的名字集合一致。",
+      "status": "insufficient",
+      "supporting_evidence": [],
+      "testable_statement": "C2 与运行前抽出的名字集合一致。",
+      "tested_under": "method VE-METHOD-MCP-002 0.3.0; primary C3; image sha256:cc8221f580a2ff7cdecac250da533250ef12e03a4101c13363056039072544cd; sandbox ADR-008-amendment-2"
+    },
+    {
+      "capability_id": "C3",
+      "claim": "C3",
+      "envelope": {
+        "known_limits": [],
+        "revalidation_triggers": [
+          "method_revision",
+          "runner_bug",
+          "runtime",
+          "relevant_dependency",
+          "protocol"
+        ],
+        "tested_conditions": [
+          "image_id=sha256:cc8221f580a2ff7cdecac250da533250ef12e03a4101c13363056039072544cd",
+          "transport stdio",
+          "client capabilities {}",
+          "protocolVersion 2025-03-26",
+          "sandbox ADR-008-amendment-2",
+          "memory 512m",
+          "pids 64",
+          "tool browser_navigate",
+          "url file:///app/fixture/ve-pilot-2.html",
+          "substring - Page Title: ve-pilot-2"
+        ],
+        "untested_areas": [
+          "其他 commit 未测",
+          "真实网站未测",
+          "宿主文件系统未测",
+          "不声明 production readiness",
+          "不声明 security",
+          "整份 snapshot 未断言"
+        ]
+      },
+      "notes": "C3 没有被 demonstrated。原因未归类。",
+      "status": "not_demonstrated",
+      "supporting_evidence": [],
+      "testable_statement": "browser_navigate 的文本包含 - Page Title: ve-pilot-2。",
+      "tested_under": "method VE-METHOD-MCP-002 0.3.0; primary C3; image sha256:cc8221f580a2ff7cdecac250da533250ef12e03a4101c13363056039072544cd; sandbox ADR-008-amendment-2"
+    }
+  ],
+  "component_commit": "e87bb897e15a6f2af402afb0f10b45eced9e1f9b",
+  "component_id": "mcp.playwright-mcp",
+  "component_type": "mcp_server",
+  "component_version": "0.0.82",
+  "envelope": {
+    "environment_constraints": [
+      "Darwin arm64",
+      "host environment is not inherited",
+      "cpus 1, memory 512m, pids 64, network none"
+    ],
+    "known_failures": [
+      "C3 没有被 demonstrated。原因未归类。"
+    ],
+    "known_limits": [],
+    "revalidation_triggers": [
+      "method_revision",
+      "runner_bug",
+      "runtime",
+      "relevant_dependency",
+      "protocol"
+    ],
+    "tested_conditions": [
+      "image_id=sha256:cc8221f580a2ff7cdecac250da533250ef12e03a4101c13363056039072544cd",
+      "transport stdio",
+      "client capabilities {}",
+      "protocolVersion 2025-03-26",
+      "sandbox ADR-008-amendment-2",
+      "memory 512m",
+      "pids 64",
+      "tool browser_navigate",
+      "url file:///app/fixture/ve-pilot-2.html",
+      "substring - Page Title: ve-pilot-2"
+    ],
+    "untested_areas": [
+      "其他 commit 未测",
+      "真实网站未测",
+      "宿主文件系统未测",
+      "不声明 production readiness",
+      "不声明 security",
+      "整份 snapshot 未断言"
+    ],
+    "version_constraints": [
+      "method 0.3.0"
+    ]
+  },
+  "environment": {
+    "arch": "arm64",
+    "environment_id": "env-3f9003af2ba9",
+    "implementation": "CPython",
+    "os": "Darwin",
+    "os_release": "25.6.0",
+    "python": "3.12.3",
+    "runner_name": "verienvelope-reference",
+    "runner_version": "0.1.0"
+  },
+  "evidence_dir": "mcp.playwright-mcp/0.0.82/run-a554d6a9f8fc4d41b1f3764e5cbc1476",
+  "evidence_refs": [
+    "ev-0db4d517f8ce4726b982fe69ae7e6bb9"
+  ],
+  "fixture_id": "p2-c3",
+  "history": [
+    {
+      "event_id": "evt-2fda1c8701f6458b996edac24660c52a",
+      "event_type": "unclassified",
+      "evidence_refs": [
+        "ev-0db4d517f8ce4726b982fe69ae7e6bb9"
+      ],
+      "new_state": "unclassified",
+      "previous_state": null,
+      "reason": "rule P2-M8: C3 没有被 demonstrated。原因未归类。",
+      "timestamp": "2026-09-27T03:02:26Z"
+    }
+  ],
+  "implemented_rule_ids": [
+    "P2-M1",
+    "P2-M2",
+    "P2-M3",
+    "P2-M4",
+    "P2-M5",
+    "P2-M6",
+    "P2-M7",
+    "P2-M8",
+    "P2-M9",
+    "P2-M10",
+    "P2-M11"
+  ],
+  "method_id": "VE-METHOD-MCP-002",
+  "method_version": "0.3.0",
+  "observation": "mismatch",
+  "outcome_class": "unclassified",
+  "record_purpose": "component_verification",
+  "result_id": "res-e6df0deca5e04e3fab3f23c95887e1d5",
+  "rule_id": "P2-M8",
+  "run_id": "run-a554d6a9f8fc4d41b1f3764e5cbc1476",
+  "runner_name": "verienvelope-mcp-p2",
+  "runner_version": "0.1.0",
+  "source_repository": "https://github.com/microsoft/playwright-mcp",
+  "timestamp": "2026-09-27T03:02:26Z"
+}

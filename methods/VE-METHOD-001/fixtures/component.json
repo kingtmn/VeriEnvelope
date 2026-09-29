@@ -1,0 +1,11 @@
+{
+  "id": "fixture.method001",
+  "name": "VE-METHOD-001 fixtures",
+  "component_type": "tool",
+  "description": "仅用于审计 VE-METHOD-001 与参考 runner 的本地 fixture。不是注册表中的验证对象，也不能被准入。",
+  "source_repository": "methods/VE-METHOD-001/fixtures",
+  "license": "MIT",
+  "version": "0.0.0",
+  "publisher": "verienvelope-fixture",
+  "status": "candidate"
+}

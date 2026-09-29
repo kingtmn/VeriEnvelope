@@ -1,0 +1,20 @@
+{
+  "label": "import-D0",
+  "diagnostic_only": true,
+  "not_registry_evidence": true,
+  "command": [
+    "env",
+    "-i",
+    "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "LANG=C",
+    "sh",
+    "-c",
+    "node -e \"$1\"; status=$?;  exit $status",
+    "ve-diag",
+    "require(\"/app/node_modules/playwright-core/lib/coreBundle.js\");\nconsole.log(\"import-ok\");\n"
+  ],
+  "exit_code": 1,
+  "timed_out": false,
+  "stdout": "",
+  "stderr": "/app/node_modules/playwright-core/lib/coreBundle.js:17\n    throw err = [e], e;\n    ^\n\nSystemError [ERR_SYSTEM_ERROR]: A system error occurred: uv_os_homedir returned ENOENT (no such file or directory)\n    at packages/utils/chromiumChannels.ts (/app/node_modules/playwright-core/lib/coreBundle.js:7046:61)\n    at __init (/app/node_modules/playwright-core/lib/coreBundle.js:15:58)\n    at packages/utils/index.ts (/app/node_modules/playwright-core/lib/coreBundle.js:11019:5)\n    at __init (/app/node_modules/playwright-core/lib/coreBundle.js:15:58)\n    at packages/playwright-core/src/coreBundle.ts (/app/node_modules/playwright-core/lib/coreBundle.js:77260:5)\n    at __init (/app/node_modules/playwright-core/lib/coreBundle.js:15:58)\n    at Object.<anonymous> (/app/node_modules/playwright-core/lib/coreBundle.js:77273:1)\n    at Module._compile (node:internal/modules/cjs/loader:1781:14)\n    at Object..js (node:internal/modules/cjs/loader:1913:10)\n    at Module.load (node:internal/modules/cjs/loader:1505:32) {\n  code: 'ERR_SYSTEM_ERROR',\n  info: {\n    errno: -2,\n    code: 'ENOENT',\n    message: 'no such file or directory',\n    syscall: 'uv_os_homedir'\n  },\n  errno: [Getter/Setter],\n  syscall: [Getter/Setter]\n}\n\nNode.js v22.23.3\n"
+}

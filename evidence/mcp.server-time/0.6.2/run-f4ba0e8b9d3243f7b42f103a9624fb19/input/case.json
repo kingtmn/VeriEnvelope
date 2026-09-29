@@ -1,0 +1,35 @@
+{
+  "case_id": "p4-r1",
+  "expected_text": "  \"time_difference\": \"+9.0h\"",
+  "judgments": {
+    "R1": {
+      "capability_status": "demonstrated",
+      "note": "R1 的文本包含预注册的 time_difference。这是这条主张被 demonstrated 的条件。",
+      "observation": "match",
+      "outcome_class": "confirmed",
+      "rule_id": "P4-M7"
+    },
+    "S1": {
+      "capability_status": "demonstrated",
+      "note": "S1 的协议版本、服务器名和服务器版本与运行前写下的值一致。",
+      "observation": "match",
+      "outcome_class": "confirmed",
+      "rule_id": "P4-M1"
+    },
+    "S2": {
+      "capability_status": "demonstrated",
+      "note": "S2 只证明 convert_time 在名单里。不要求名单只有这一个工具。",
+      "observation": "match",
+      "outcome_class": "confirmed",
+      "rule_id": "P4-M4"
+    }
+  },
+  "messages_sent": [
+    "initialize",
+    "notifications/initialized",
+    "tools/list",
+    "tools/call"
+  ],
+  "method_version": "0.1.0",
+  "primary_claim": "R1"
+}

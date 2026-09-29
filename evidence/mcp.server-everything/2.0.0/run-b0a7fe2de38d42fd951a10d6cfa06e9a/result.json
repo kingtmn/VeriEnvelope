@@ -1,0 +1,145 @@
+{
+  "admission": "insufficient",
+  "admission_reasons": [
+    "a recorded capability was not executed"
+  ],
+  "assurance": {
+    "dependencies": [
+      "source package metadata @modelcontextprotocol/server-everything 2.0.0",
+      "lockfile sha256 df3034c8bb82e772389fa4518793c0cee24361c581c66e7bb04d0d7270dc24e1",
+      "node v22.12.0",
+      "npm 10.9.0",
+      "base image sha256:51eff88af6dff26f59316b6e356188ffa2c422bd3c3b76f2556a2e7e89d080bd",
+      "local image sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6",
+      "OCI runtime"
+    ],
+    "execution_mode": "oci_runtime_network_none",
+    "external_services": [],
+    "permissions": [
+      "stdio",
+      "tmpfs /work",
+      "user 65532:65532"
+    ],
+    "provenance": "SOURCE IDENTITY 是源码 commit f46d9578190b476b3501923ea8977d899e8db2cb，package @modelcontextprotocol/server-everything metadata 2.0.0。package_version 不是 npm registry 发布 artifact。EXECUTION ARTIFACT IDENTITY 是 locally_built_from_pinned_source，local_image_id sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6，registry_digest null。",
+    "reproducibility_notes": "Compare C1 observation, capability status, and outcome class. Ignore run_id. A C1 match does not admit the component. artifact={\"artifact_origin\": \"locally_built_from_pinned_source\", \"base_image_id\": \"sha256:51eff88af6dff26f59316b6e356188ffa2c422bd3c3b76f2556a2e7e89d080bd\", \"build_recipe\": \"npm ci --ignore-scripts && tsc -p src/everything/tsconfig.json\", \"build_recipe_version\": \"1\", \"build_timestamp\": \"2026-09-26T05:44:34.512508881-07:00\", \"local_image_id\": \"sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6\", \"lockfile_sha256\": \"df3034c8bb82e772389fa4518793c0cee24361c581c66e7bb04d0d7270dc24e1\", \"node_version\": \"v22.12.0\", \"npm_version\": \"10.9.0\", \"registry_digest\": null}"
+  },
+  "capabilities": [
+    {
+      "capability_id": "C1",
+      "claim": "C1 initialize",
+      "notes": "C1 的 protocolVersion 与 serverInfo 符合固定握手。",
+      "status": "demonstrated",
+      "supporting_evidence": [
+        "ev-84b670767e9d41f6bdf40d229c79a0fe"
+      ],
+      "testable_statement": "C1 的 protocolVersion 与 serverInfo 符合固定握手。",
+      "tested_under": "method VE-METHOD-MCP-001 0.3.0; runner verienvelope-reference 0.1.0; image sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6; user 65532:65532; network none"
+    },
+    {
+      "capability_id": "C2",
+      "claim": "C2",
+      "notes": "tools/list 没有发送。",
+      "status": "insufficient",
+      "supporting_evidence": [],
+      "testable_statement": "tools/list 没有发送。",
+      "tested_under": "method VE-METHOD-MCP-001 0.3.0; runner verienvelope-reference 0.1.0; image sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6; user 65532:65532; network none"
+    },
+    {
+      "capability_id": "C3",
+      "claim": "C3",
+      "notes": "tools/call 没有发送。",
+      "status": "insufficient",
+      "supporting_evidence": [],
+      "testable_statement": "tools/call 没有发送。",
+      "tested_under": "method VE-METHOD-MCP-001 0.3.0; runner verienvelope-reference 0.1.0; image sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6; user 65532:65532; network none"
+    }
+  ],
+  "component_commit": "f46d9578190b476b3501923ea8977d899e8db2cb",
+  "component_id": "mcp.server-everything",
+  "component_type": "mcp_server",
+  "component_version": "2.0.0",
+  "envelope": {
+    "environment_constraints": [
+      "Darwin arm64",
+      "readonly root, cap-drop ALL, no-new-privileges, tmpfs /work"
+    ],
+    "known_failures": [],
+    "known_limits": [
+      "C2 和 C3 没有执行",
+      "package version 不是 npm 发布包的验证结论",
+      "C1 demonstrated 不是组件准入"
+    ],
+    "revalidation_triggers": [
+      "method_revision",
+      "runner_bug",
+      "runtime"
+    ],
+    "tested_conditions": [
+      "image_id=sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6",
+      "initialize only",
+      "network none",
+      "user 65532:65532"
+    ],
+    "untested_areas": [
+      "不声明 production readiness",
+      "不声明 security",
+      "C2 tools/list",
+      "C3 echo"
+    ],
+    "version_constraints": [
+      "method 0.3.0"
+    ]
+  },
+  "environment": {
+    "arch": "arm64",
+    "environment_id": "env-3f9003af2ba9",
+    "implementation": "CPython",
+    "os": "Darwin",
+    "os_release": "25.6.0",
+    "python": "3.12.3",
+    "runner_name": "verienvelope-reference",
+    "runner_version": "0.1.0"
+  },
+  "evidence_dir": "mcp.server-everything/2.0.0/run-b0a7fe2de38d42fd951a10d6cfa06e9a",
+  "evidence_refs": [
+    "ev-84b670767e9d41f6bdf40d229c79a0fe"
+  ],
+  "fixture_id": "c1-initialize",
+  "history": [
+    {
+      "event_id": "evt-2a675188a9134cecb447361c9d7d873e",
+      "event_type": "confirmed",
+      "evidence_refs": [
+        "ev-84b670767e9d41f6bdf40d229c79a0fe"
+      ],
+      "new_state": "confirmed",
+      "previous_state": null,
+      "reason": "rule M1: C1 的 protocolVersion 与 serverInfo 符合固定握手。",
+      "timestamp": "2026-09-26T13:37:23Z"
+    }
+  ],
+  "implemented_rule_ids": [
+    "M1",
+    "M2",
+    "M3",
+    "M4",
+    "M5",
+    "M6",
+    "M7",
+    "M8",
+    "M9",
+    "M10"
+  ],
+  "method_id": "VE-METHOD-MCP-001",
+  "method_version": "0.3.0",
+  "observation": "match",
+  "outcome_class": "confirmed",
+  "record_purpose": "component_verification",
+  "result_id": "res-0a3e4498cff5407db9f780a7be155e41",
+  "rule_id": "M1",
+  "run_id": "run-b0a7fe2de38d42fd951a10d6cfa06e9a",
+  "runner_name": "verienvelope-reference",
+  "runner_version": "0.1.0",
+  "source_repository": "https://github.com/modelcontextprotocol/servers",
+  "timestamp": "2026-09-26T13:37:23Z"
+}

@@ -1,0 +1,134 @@
+{
+  "admission": "insufficient",
+  "admission_reasons": [
+    "a recorded capability was not executed"
+  ],
+  "assurance": {
+    "dependencies": [
+      "source package metadata @modelcontextprotocol/server-everything 2.0.0",
+      "local image sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6",
+      "sandbox ADR-008-amendment-1",
+      "OCI runtime"
+    ],
+    "execution_mode": "oci_runtime_network_none",
+    "external_services": [],
+    "permissions": [
+      "stdio",
+      "tmpfs /work",
+      "user 65532:65532"
+    ],
+    "provenance": "primary_claim C2. prerequisite C1 observation match. Run #1 remains at mcp.server-everything/2.0.0/run-b0a7fe2de38d42fd951a10d6cfa06e9a. artifact_origin locally_built_from_pinned_source. local_image_id sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6. package_version is source metadata, not an npm registry artifact.",
+    "reproducibility_notes": "Primary claim is C2. Prerequisite initialize is not a replacement of Run #1. Name differences are set descriptions, not causes. artifact={\"artifact_origin\": \"locally_built_from_pinned_source\", \"base_image_id\": \"sha256:51eff88af6dff26f59316b6e356188ffa2c422bd3c3b76f2556a2e7e89d080bd\", \"build_recipe\": \"npm ci --ignore-scripts && tsc -p src/everything/tsconfig.json\", \"build_recipe_version\": \"1\", \"build_timestamp\": \"2026-09-26T05:44:34.512508881-07:00\", \"local_image_id\": \"sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6\", \"lockfile_sha256\": \"df3034c8bb82e772389fa4518793c0cee24361c581c66e7bb04d0d7270dc24e1\", \"node_version\": \"v22.12.0\", \"npm_version\": \"10.9.0\", \"registry_digest\": null} env={\"container_config_env\": [\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\", \"LANG=C\", \"NODE_VERSION=22.12.0\", \"YARN_VERSION=1.22.22\"], \"host_inheritance\": \"none\", \"image_defined_env\": [\"NODE_VERSION=22.12.0\", \"YARN_VERSION=1.22.22\"], \"process_env_names\": [\"LANG\", \"PATH\"], \"process_wrapper\": \"env -i PATH LANG\", \"sandbox_policy\": \"ADR-008-amendment-1\"}"
+  },
+  "capabilities": [
+    {
+      "capability_id": "C2",
+      "claim": "C2 tools/list",
+      "notes": "C2 与固定工具名集合一致。",
+      "status": "demonstrated",
+      "supporting_evidence": [
+        "ev-aa45398558c2477aa86a0ff17194f942"
+      ],
+      "testable_statement": "tools/list 的 name 集合与预注册的 unconditional_tools 相等。",
+      "tested_under": "method VE-METHOD-MCP-001 0.3.0; primary C2; image sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6; sandbox ADR-008-amendment-1"
+    },
+    {
+      "capability_id": "C3",
+      "claim": "C3 echo",
+      "notes": "tools/call 没有发送。",
+      "status": "insufficient",
+      "supporting_evidence": [],
+      "testable_statement": "这次运行不发送 tools/call。",
+      "tested_under": "method VE-METHOD-MCP-001 0.3.0; primary C2; image sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6; sandbox ADR-008-amendment-1"
+    }
+  ],
+  "component_commit": "f46d9578190b476b3501923ea8977d899e8db2cb",
+  "component_id": "mcp.server-everything",
+  "component_type": "mcp_server",
+  "component_version": "2.0.0",
+  "envelope": {
+    "environment_constraints": [
+      "Darwin arm64",
+      "host environment is not inherited",
+      "image-defined ENV is recorded separately from the process"
+    ],
+    "known_failures": [],
+    "known_limits": [
+      "C3 没有执行",
+      "C1 在这次会话里只是前置观察",
+      "多出来的响应字段不进入判定"
+    ],
+    "revalidation_triggers": [
+      "method_revision",
+      "runner_bug",
+      "runtime"
+    ],
+    "tested_conditions": [
+      "image_id=sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6",
+      "primary_claim=C2",
+      "network none",
+      "user 65532:65532"
+    ],
+    "untested_areas": [
+      "不声明 production readiness",
+      "不声明 security",
+      "C3 echo"
+    ],
+    "version_constraints": [
+      "method 0.3.0",
+      "ADR-008-amendment-1"
+    ]
+  },
+  "environment": {
+    "arch": "arm64",
+    "environment_id": "env-3f9003af2ba9",
+    "implementation": "CPython",
+    "os": "Darwin",
+    "os_release": "25.6.0",
+    "python": "3.12.3",
+    "runner_name": "verienvelope-reference",
+    "runner_version": "0.1.0"
+  },
+  "evidence_dir": "mcp.server-everything/2.0.0/run-b32dbaa357824eb0a7a9474cf35b7d34",
+  "evidence_refs": [
+    "ev-aa45398558c2477aa86a0ff17194f942"
+  ],
+  "fixture_id": "c2-tools-list",
+  "history": [
+    {
+      "event_id": "evt-d3f3ef133ba444fd92f9459f756e413e",
+      "event_type": "confirmed",
+      "evidence_refs": [
+        "ev-aa45398558c2477aa86a0ff17194f942"
+      ],
+      "new_state": "confirmed",
+      "previous_state": null,
+      "reason": "Run #2 primary C2. prerequisite C1 match. Run #1 at mcp.server-everything/2.0.0/run-b0a7fe2de38d42fd951a10d6cfa06e9a is not replaced. C2 与固定工具名集合一致。",
+      "timestamp": "2026-09-26T13:56:19Z"
+    }
+  ],
+  "implemented_rule_ids": [
+    "M1",
+    "M2",
+    "M3",
+    "M4",
+    "M5",
+    "M6",
+    "M7",
+    "M8",
+    "M9",
+    "M10"
+  ],
+  "method_id": "VE-METHOD-MCP-001",
+  "method_version": "0.3.0",
+  "observation": "match",
+  "outcome_class": "confirmed",
+  "record_purpose": "component_verification",
+  "result_id": "res-891124750465450e895482fa62fa5e88",
+  "rule_id": "M3",
+  "run_id": "run-b32dbaa357824eb0a7a9474cf35b7d34",
+  "runner_name": "verienvelope-reference",
+  "runner_version": "0.1.0",
+  "source_repository": "https://github.com/modelcontextprotocol/servers",
+  "timestamp": "2026-09-26T13:56:19Z"
+}

@@ -1,0 +1,9 @@
+{
+  "authorized": true,
+  "execution_artifact": "sha256:cc8221f580a2ff7cdecac250da533250ef12e03a4101c13363056039072544cd",
+  "method_version": "0.1.0",
+  "planned_run": "external-run-p2-1",
+  "primary_claim": "C1",
+  "sandbox_policy": "ADR-008-amendment-1",
+  "timestamp": "2026-09-27T01:45:00Z"
+}

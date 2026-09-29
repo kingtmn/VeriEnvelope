@@ -1,0 +1,78 @@
+{
+  "artifacts": [
+    {
+      "path": "environment.json",
+      "sha256": "8eaa7d2fe57ca239f8c16a4974a4bf7a4bbd08fddd0c9efa4a7613920ffbc97d"
+    },
+    {
+      "path": "input/artifact.json",
+      "sha256": "a38fb88c3ac08cbb354b4df7847ae27e2d7ac4fea5d0732da8ad87008289842e"
+    },
+    {
+      "path": "input/case.json",
+      "sha256": "208f643a054aa662ca872f1e6156bc8c5005030a04e5e511fd97e5e0b657347d"
+    },
+    {
+      "path": "input/component.json",
+      "sha256": "7c3a005e4a0b5cfd9210a93095a1e520d8c278eb60ce9ba3f30861cf3d3413a0"
+    },
+    {
+      "path": "input/initialize.request.log",
+      "sha256": "986bb616dcd151457f6da64de1407aaeca99b546e7dbd968c6b445645c1c30e7"
+    },
+    {
+      "path": "input/initialize.response.log",
+      "sha256": "a660bb815dc1e373b9e886efd439fbd8207cf60cbb95cfbdd5bacb937f680c4d"
+    },
+    {
+      "path": "input/initialized.notification.log",
+      "sha256": "883a6cf5c9ef985204b1312c393b79d87e3efb378272bbbaca6d2cecf13b5bdd"
+    },
+    {
+      "path": "input/tools-list.request.log",
+      "sha256": "d059fc1a28537e4788d50b9fbb56654fc9612b090e780f0b85e8071601dfa24e"
+    },
+    {
+      "path": "input/tools-list.response.log",
+      "sha256": "a04d3fc34f82b77ce789f336dcf757e5ead410cf52722f32381f9d1bea011b88"
+    },
+    {
+      "path": "input/unmatched.json",
+      "sha256": "19dd6a85dfcf2c03411929446996d543dc0f81450b51768670c8f44836b8f064"
+    },
+    {
+      "path": "runtime.json",
+      "sha256": "c679d2f7523f0f1b57d95f409ded1e9d6f971262537ff47eb675e5b69d2d8b3c"
+    },
+    {
+      "path": "stderr.log",
+      "sha256": "40767cda9f6f3ae6f30abe4426f5c037a89a8e55afa9a196a38b663d8357e9f0"
+    },
+    {
+      "path": "stdout.log",
+      "sha256": "90897316b955728cb91b777b78537a93a85e1b25e8a39977f48d488c76bd42b9"
+    }
+  ],
+  "environment": {
+    "arch": "arm64",
+    "environment_id": "env-3f9003af2ba9",
+    "implementation": "CPython",
+    "os": "Darwin",
+    "os_release": "25.6.0",
+    "python": "3.12.3",
+    "runner_name": "verienvelope-reference",
+    "runner_version": "0.1.0"
+  },
+  "evidence_id": "ev-aa45398558c2477aa86a0ff17194f942",
+  "fixture_id": "c2-tools-list",
+  "method_id": "VE-METHOD-MCP-001",
+  "method_version": "0.3.0",
+  "notes": "primary C2 rule M3. prerequisite C1 match. C2 与固定工具名集合一致。",
+  "observation": "match",
+  "outcome_class": "confirmed",
+  "raw_artifact_path": "mcp.server-everything/2.0.0/run-b32dbaa357824eb0a7a9474cf35b7d34",
+  "run_id": "run-b32dbaa357824eb0a7a9474cf35b7d34",
+  "runner_version": "0.1.0",
+  "source_type": "ve_test",
+  "timestamp": "2026-09-26T13:56:19Z"
+}

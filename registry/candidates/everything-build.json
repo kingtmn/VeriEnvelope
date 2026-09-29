@@ -1,0 +1,69 @@
+{
+  "base_image": "public.ecr.aws/docker/library/node:22.12-alpine",
+  "base_image_acquisition": "docker pull node:22.12-alpine failed: registry-1.docker.io HEAD EOF. Pulled public.ecr.aws/docker/library/node:22.12-alpine instead. The image was not pushed.",
+  "base_image_id": "sha256:51eff88af6dff26f59316b6e356188ffa2c422bd3c3b76f2556a2e7e89d080bd",
+  "base_image_repo_digests": [
+    "public.ecr.aws/docker/library/node@sha256:51eff88af6dff26f59316b6e356188ffa2c422bd3c3b76f2556a2e7e89d080bd"
+  ],
+  "build_command": "docker build of a VeriEnvelope Dockerfile: npm ci --ignore-scripts, then tsc -p src/everything/tsconfig.json. Host npm/npx/pip/uvx are not invoked.",
+  "build_context": "Full checkout. src/everything/tsconfig.json extends ../../tsconfig.json, npm workspaces are src/*, and src/everything has no package-lock.json. Only src/everything is compiled.",
+  "build_log_tail": "Sending build context to Docker daemon  1.644MB\r\r\nStep 1/7 : FROM sha256:51eff88af6dff26f59316b6e356188ffa2c422bd3c3b76f2556a2e7e89d080bd\n ---> 51eff88af6df\nStep 2/7 : WORKDIR /src\n ---> Running in 276e3bbb8cd8\n ---> Removed intermediate container 276e3bbb8cd8\n ---> 73b0dfb62046\nStep 3/7 : COPY . /src\n ---> 29678839c75a\nStep 4/7 : RUN npm ci --ignore-scripts\n ---> Running in 36f72c01eac2\n\nadded 265 packages, and audited 270 packages in 3m\n\n64 packages are looking for funding\n  run `npm fund` for details\n\n9 vulnerabilities (5 moderate, 4 high)\n\nTo address all issues, run:\n  npm audit fix\n\nRun `npm audit` for details.\n\u001b[91mnpm notice\nnpm notice New major version of npm available! 10.9.0 -> 12.1.0\nnpm notice Changelog: https://github.com/npm/cli/releases/tag/v12.1.0\nnpm notice To update run: npm install -g npm@12.1.0\nnpm notice\n\u001b[0m ---> Removed intermediate container 36f72c01eac2\n ---> 6a6172c7fa6e\nStep 5/7 : RUN if [ -x /src/node_modules/.bin/tsc ]; then       /src/node_modules/.bin/tsc -p /src/src/everything/tsconfig.json;     else       /src/src/everything/node_modules/.bin/tsc -p /src/src/everything/tsconfig.json;     fi\n ---> Running in 6054855b54e4\n ---> Removed intermediate container 6054855b54e4\n ---> 552a6fac532b\nStep 6/7 : WORKDIR /src/src/everything\n ---> Running in 250c13a8c5d2\n ---> Removed intermediate container 250c13a8c5d2\n ---> c25a3a932ca2\nStep 7/7 : CMD [\"node\", \"dist/index.js\", \"stdio\"]\n ---> Running in dba250b51307\n ---> Removed intermediate container dba250b51307\n ---> 5f1784c80a95\nSuccessfully built 5f1784c80a95\nSuccessfully tagged ve-everything-f46d957:latest\nDEPRECATED: The legacy builder is deprecated and will be removed in a future release.\n            Install the buildx component to build images with BuildKit:\n            https://docs.docker.com/go/buildx/\n\n",
+  "commit": "f46d9578190b476b3501923ea8977d899e8db2cb",
+  "component_path": "src/everything",
+  "entrypoint_note": "CMD matches VE-METHOD-MCP-001 argv. ENTRYPOINT is the Node base image wrapper docker-entrypoint.sh, which execs that CMD. The server was not started.",
+  "entrypoint_recorded_not_run": [
+    "node",
+    "dist/index.js",
+    "stdio"
+  ],
+  "evidence_path_validated": true,
+  "executed": false,
+  "execution_artifact": {
+    "artifact_origin": "locally_built_from_pinned_source",
+    "base_image_id": "sha256:51eff88af6dff26f59316b6e356188ffa2c422bd3c3b76f2556a2e7e89d080bd",
+    "build_recipe": "npm ci --ignore-scripts && tsc -p src/everything/tsconfig.json",
+    "build_recipe_version": "1",
+    "build_timestamp": "2026-09-26T05:44:34.512508881-07:00",
+    "local_image_id": "sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6",
+    "lockfile_sha256": "df3034c8bb82e772389fa4518793c0cee24361c581c66e7bb04d0d7270dc24e1",
+    "node_version": "v22.12.0",
+    "npm_version": "10.9.0",
+    "registry_digest": null
+  },
+  "execution_contradiction": false,
+  "executor_implemented": true,
+  "fixture_validated": true,
+  "image_built": true,
+  "image_cmd": [
+    "node",
+    "dist/index.js",
+    "stdio"
+  ],
+  "image_digest": "sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6",
+  "image_entrypoint": [
+    "docker-entrypoint.sh"
+  ],
+  "image_repo_digests": [
+    "ve-everything-f46d957@sha256:5f1784c80a95be56091a16ac8f6955b32eb170dcf89ee3b9d2cb86c0b26fe1d6"
+  ],
+  "local_digest_note": "RepoDigests names the local tag and the image id. The image was not pushed, so there is no registry digest.",
+  "local_tag": "ve-everything-f46d957",
+  "lockfile": "package-lock.json",
+  "lockfile_sha256": "df3034c8bb82e772389fa4518793c0cee24361c581c66e7bb04d0d7270dc24e1",
+  "lockfile_version": 3,
+  "node_version": "v22.12.0",
+  "npm_version": "10.9.0",
+  "package_scripts": "ignored via npm ci --ignore-scripts; tsc is invoked explicitly",
+  "pushed": false,
+  "registry_digest": null,
+  "repository": "https://github.com/modelcontextprotocol/servers.git",
+  "requested_base_image": "node:22.12-alpine",
+  "source_identity": {
+    "component_path": "src/everything",
+    "package_name": "@modelcontextprotocol/server-everything",
+    "package_version": "2.0.0",
+    "package_version_meaning": "source package metadata, not an npm registry artifact",
+    "source_commit": "f46d9578190b476b3501923ea8977d899e8db2cb",
+    "source_repository": "https://github.com/modelcontextprotocol/servers"
+  }
+}

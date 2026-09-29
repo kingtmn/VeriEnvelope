@@ -1,0 +1,38 @@
+{
+  "algorithm": "sha256",
+  "files": [
+    {
+      "path": "manifest.json",
+      "sha256": "4eeb4bad8144b56ea5b6b5f5e19cb08fba6332086fd4d1ee29ce5afe0f1b78b0"
+    },
+    {
+      "path": "environment.json",
+      "sha256": "8eaa7d2fe57ca239f8c16a4974a4bf7a4bbd08fddd0c9efa4a7613920ffbc97d"
+    },
+    {
+      "path": "input/case.json",
+      "sha256": "a7c37a8a4f68e3fd9be3d9c717d80cbefdee49a6600038a057a572952f83c41b"
+    },
+    {
+      "path": "input/component.json",
+      "sha256": "98569077acb70e9bf908ba69f460da98ec4ffef03ff8bff726823ba03d3ed88b"
+    },
+    {
+      "path": "stdout.log",
+      "sha256": "986bb616dcd151457f6da64de1407aaeca99b546e7dbd968c6b445645c1c30e7"
+    },
+    {
+      "path": "stderr.log",
+      "sha256": "af108c90140243775b708b383bd9f22d201e0c896038e0c230eec268797abf0a"
+    },
+    {
+      "path": "result.json",
+      "sha256": "83817169ab2d8ddd9af82facb50a596861e30940c4fd5bca46e110719d722be3"
+    },
+    {
+      "path": "notes.md",
+      "sha256": "13e909caba9ef33838a85bbcdcf20c87736d06725c3e3ae22845a3aec05407bb"
+    }
+  ],
+  "kind": "evidence_package_seal"
+}

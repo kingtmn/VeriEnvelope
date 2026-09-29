@@ -1,0 +1,9 @@
+[
+  {
+    "kind": "unmatched",
+    "message": {
+      "jsonrpc": "2.0",
+      "method": "notifications/tools/list_changed"
+    }
+  }
+]

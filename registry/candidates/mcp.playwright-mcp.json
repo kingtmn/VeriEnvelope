@@ -1,0 +1,12 @@
+{
+  "id": "mcp.playwright-mcp",
+  "name": "Playwright MCP",
+  "component_type": "mcp_server",
+  "description": "microsoft/playwright-mcp。package_version 0.0.82 是源码 package metadata，不是已经核对的 npm 发布物。执行工件在方法 VE-METHOD-MCP-002 里钉住之前，本记录只是候选。status candidate 不是 admitted。",
+  "source_repository": "https://github.com/microsoft/playwright-mcp",
+  "license": "Apache-2.0",
+  "version": "0.0.82",
+  "commit": "e87bb897e15a6f2af402afb0f10b45eced9e1f9b",
+  "publisher": "Microsoft",
+  "status": "candidate"
+}

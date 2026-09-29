@@ -1,0 +1,15 @@
+{
+  "case_id": "VE-METHOD-001-ECHO-MISMATCH",
+  "method_id": "VE-METHOD-001",
+  "method_version": "0.1.0",
+  "title": "Fixture stdout does not match",
+  "claim": "输出不同的 fixture 不会被记成已证明。",
+  "testable_statement": "运行 fixtures/mismatch/tool.py。若退出码为 0 但 stdout 不是 fixtures/input.txt 的字节，则该陈述未被证明。",
+  "fixture_id": "FIX-MISMATCH-001",
+  "component_path": "fixtures/component.json",
+  "entrypoint": "fixtures/mismatch/tool.py",
+  "input_file": "fixtures/input.txt",
+  "expected_exit_code": 0,
+  "expected_stdout_file": "fixtures/input.txt",
+  "timeout_seconds": 5
+}

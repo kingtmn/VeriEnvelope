@@ -1,0 +1,92 @@
+{
+  "case_id": "p2-c3",
+  "judgments": {
+    "C1": {
+      "capability_status": "demonstrated",
+      "note": "C1 的 protocolVersion 与 serverInfo 符合运行前写下的字符串。",
+      "observation": "match",
+      "outcome_class": "confirmed",
+      "rule_id": "P2-M1"
+    },
+    "C2": {
+      "capability_status": "demonstrated",
+      "note": "C2 与运行前抽出的名字集合一致。",
+      "observation": "match",
+      "outcome_class": "confirmed",
+      "rule_id": "P2-M5"
+    },
+    "C3": {
+      "capability_status": "not_demonstrated",
+      "note": "C3 没有被 demonstrated。原因未归类。",
+      "observation": "mismatch",
+      "outcome_class": "unclassified",
+      "rule_id": "P2-M8"
+    }
+  },
+  "messages_sent": [
+    "initialize",
+    "notifications/initialized",
+    "tools/list",
+    "tools/call"
+  ],
+  "method_version": "0.3.0",
+  "name_comparison": {
+    "actual": [
+      "browser_click",
+      "browser_close",
+      "browser_console_messages",
+      "browser_drag",
+      "browser_drop",
+      "browser_emulate_media",
+      "browser_evaluate",
+      "browser_file_upload",
+      "browser_fill_form",
+      "browser_find",
+      "browser_handle_dialog",
+      "browser_hover",
+      "browser_navigate",
+      "browser_navigate_back",
+      "browser_network_request",
+      "browser_network_requests",
+      "browser_press_key",
+      "browser_resize",
+      "browser_run_code_unsafe",
+      "browser_select_option",
+      "browser_snapshot",
+      "browser_tabs",
+      "browser_take_screenshot",
+      "browser_type",
+      "browser_wait_for"
+    ],
+    "expected": [
+      "browser_click",
+      "browser_close",
+      "browser_console_messages",
+      "browser_drag",
+      "browser_drop",
+      "browser_emulate_media",
+      "browser_evaluate",
+      "browser_file_upload",
+      "browser_fill_form",
+      "browser_find",
+      "browser_handle_dialog",
+      "browser_hover",
+      "browser_navigate",
+      "browser_navigate_back",
+      "browser_network_request",
+      "browser_network_requests",
+      "browser_press_key",
+      "browser_resize",
+      "browser_run_code_unsafe",
+      "browser_select_option",
+      "browser_snapshot",
+      "browser_tabs",
+      "browser_take_screenshot",
+      "browser_type",
+      "browser_wait_for"
+    ],
+    "missing": [],
+    "unexpected": []
+  },
+  "primary_claim": "C3"
+}

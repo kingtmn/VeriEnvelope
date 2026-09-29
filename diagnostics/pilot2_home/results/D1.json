@@ -1,0 +1,21 @@
+{
+  "label": "D1",
+  "diagnostic_only": true,
+  "not_registry_evidence": true,
+  "command": [
+    "env",
+    "-i",
+    "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "LANG=C",
+    "HOME=/work/home",
+    "sh",
+    "-c",
+    "mkdir -p /work/home && node --input-type=module -e \"$1\"; status=$?; ls -ld /work/home; exit $status",
+    "ve-diag",
+    "import os from \"node:os\";\n\nconsole.log(os.homedir());\n"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "stdout": "/work/home\ndrwxr-xr-x 2 65532 65532 40 Sep 27 02:09 /work/home\n",
+  "stderr": ""
+}

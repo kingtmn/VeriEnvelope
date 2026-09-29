@@ -1,0 +1,286 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verienvelope.local/schemas/verification_result.schema.json",
+  "title": "VerificationResult",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "result_id",
+    "record_purpose",
+    "component_id",
+    "component_version",
+    "component_commit",
+    "component_type",
+    "source_repository",
+    "method_id",
+    "method_version",
+    "runner_name",
+    "runner_version",
+    "implemented_rule_ids",
+    "rule_id",
+    "environment",
+    "fixture_id",
+    "run_id",
+    "timestamp",
+    "observation",
+    "outcome_class",
+    "capabilities",
+    "assurance",
+    "envelope",
+    "evidence_refs",
+    "evidence_dir",
+    "history",
+    "admission",
+    "admission_reasons"
+  ],
+  "properties": {
+    "result_id": { "type": "string", "minLength": 1 },
+    "record_purpose": {
+      "enum": ["pipeline_self_test", "instrument_self_test", "component_verification"]
+    },
+    "component_id": { "type": "string", "minLength": 1 },
+    "component_version": { "type": "string", "minLength": 1 },
+    "component_commit": { "type": ["string", "null"] },
+    "component_type": { "enum": ["tool", "mcp_server"] },
+    "source_repository": { "type": "string", "minLength": 1 },
+    "method_id": { "type": "string", "minLength": 1 },
+    "method_version": { "type": "string", "minLength": 1 },
+    "runner_name": { "type": "string", "minLength": 1 },
+    "runner_version": { "type": "string", "minLength": 1 },
+    "implemented_rule_ids": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1
+    },
+    "rule_id": { "type": "string", "minLength": 1 },
+    "environment": { "$ref": "#/$defs/environment" },
+    "fixture_id": { "type": "string", "minLength": 1 },
+    "run_id": { "type": "string", "minLength": 1 },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "observation": {
+      "enum": ["match", "mismatch", "execution_error", "blocked", "not_run"]
+    },
+    "outcome_class": { "$ref": "#/$defs/outcomeClass" },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/capability" }
+    },
+    "assurance": { "$ref": "#/$defs/assurance" },
+    "envelope": { "$ref": "#/$defs/envelope" },
+    "evidence_refs": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "evidence_dir": { "type": "string", "minLength": 1 },
+    "history": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/historyEvent" }
+    },
+    "admission": {
+      "enum": ["admitted", "insufficient", "withheld"]
+    },
+    "admission_reasons": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "outcomeClass": {
+      "enum": [
+        "confirmed",
+        "not_reproduced",
+        "out_of_envelope",
+        "component_failure",
+        "runner_defect",
+        "method_defect",
+        "environment_failure",
+        "evaluation_defect",
+        "unclassified"
+      ]
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "environment_id",
+        "os",
+        "os_release",
+        "arch",
+        "python",
+        "runner_name",
+        "runner_version",
+        "implementation"
+      ],
+      "properties": {
+        "environment_id": { "type": "string", "minLength": 1 },
+        "os": { "type": "string", "minLength": 1 },
+        "os_release": { "type": "string" },
+        "arch": { "type": "string", "minLength": 1 },
+        "python": { "type": "string", "minLength": 1 },
+        "runner_name": { "type": "string", "minLength": 1 },
+        "runner_version": { "type": "string", "minLength": 1 },
+        "implementation": { "type": "string", "minLength": 1 }
+      }
+    },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability_id",
+        "claim",
+        "testable_statement",
+        "status",
+        "supporting_evidence",
+        "tested_under",
+        "notes"
+      ],
+      "properties": {
+        "capability_id": { "type": "string", "minLength": 1 },
+        "claim": { "type": "string", "minLength": 1 },
+        "testable_statement": { "type": "string", "minLength": 1 },
+        "status": {
+          "enum": [
+            "demonstrated",
+            "not_demonstrated",
+            "insufficient",
+            "unknown",
+            "out_of_envelope"
+          ]
+        },
+        "supporting_evidence": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "tested_under": { "type": "string", "minLength": 1 },
+        "notes": { "type": "string" },
+        "envelope": { "$ref": "#/$defs/claimEnvelope" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "status": { "const": "demonstrated" } },
+            "required": ["status"]
+          },
+          "then": {
+            "properties": {
+              "supporting_evidence": { "minItems": 1 }
+            }
+          }
+        }
+      ]
+    },
+    "assurance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dependencies",
+        "permissions",
+        "execution_mode",
+        "external_services",
+        "provenance",
+        "reproducibility_notes"
+      ],
+      "properties": {
+        "dependencies": { "type": "array", "items": { "type": "string" } },
+        "permissions": { "type": "array", "items": { "type": "string" } },
+        "execution_mode": { "type": "string", "minLength": 1 },
+        "external_services": { "type": "array", "items": { "type": "string" } },
+        "provenance": { "type": "string", "minLength": 1 },
+        "reproducibility_notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "claimEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tested_conditions",
+        "known_limits",
+        "untested_areas",
+        "revalidation_triggers"
+      ],
+      "properties": {
+        "tested_conditions": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "known_limits": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "untested_areas": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "revalidation_triggers": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "envelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tested_conditions",
+        "known_limits",
+        "known_failures",
+        "untested_areas",
+        "environment_constraints",
+        "version_constraints",
+        "revalidation_triggers"
+      ],
+      "properties": {
+        "tested_conditions": { "type": "array", "items": { "type": "string" } },
+        "known_limits": { "type": "array", "items": { "type": "string" } },
+        "known_failures": { "type": "array", "items": { "type": "string" } },
+        "untested_areas": { "type": "array", "items": { "type": "string" } },
+        "environment_constraints": { "type": "array", "items": { "type": "string" } },
+        "version_constraints": { "type": "array", "items": { "type": "string" } },
+        "revalidation_triggers": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "historyEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "timestamp",
+        "event_type",
+        "previous_state",
+        "new_state",
+        "reason",
+        "evidence_refs"
+      ],
+      "properties": {
+        "event_id": { "type": "string", "minLength": 1 },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "event_type": {
+          "enum": [
+            "confirmed",
+            "not_reproduced",
+            "out_of_envelope",
+            "component_failure",
+            "runner_defect",
+            "method_defect",
+            "environment_failure",
+            "evaluation_defect",
+            "unclassified",
+            "fixed",
+            "revalidated"
+          ]
+        },
+        "previous_state": { "type": ["string", "null"] },
+        "new_state": { "type": "string", "minLength": 1 },
+        "reason": { "type": "string", "minLength": 1 },
+        "evidence_refs": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

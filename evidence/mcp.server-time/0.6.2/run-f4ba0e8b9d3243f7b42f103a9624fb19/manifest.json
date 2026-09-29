@@ -1,0 +1,58 @@
+{
+  "artifacts": [
+    {
+      "path": "environment.json",
+      "sha256": "8eaa7d2fe57ca239f8c16a4974a4bf7a4bbd08fddd0c9efa4a7613920ffbc97d"
+    },
+    {
+      "path": "input/artifact.json",
+      "sha256": "b3db80ab9f13fe23aaeb645f0017f9e8f5d26dd30d5bfa81bc7ef3313a1b2814"
+    },
+    {
+      "path": "input/case.json",
+      "sha256": "847d2364d7851e6c90c9abada5d3f880489f60e161a6e2b711a198a989680740"
+    },
+    {
+      "path": "input/component.json",
+      "sha256": "9c94550a1c06786337dc42e7f4263410897a7c3f265bbe93d8a24b1c9bcdf1c8"
+    },
+    {
+      "path": "input/request.log",
+      "sha256": "acc41265eb5515b02ccc1c6dada5b8b0f4af5427adaa0df849a56fe3c40e008b"
+    },
+    {
+      "path": "runtime.json",
+      "sha256": "485d16fce9b43248cfbfe8fac56575da1652286477cb245d1008d27f4e92e39c"
+    },
+    {
+      "path": "stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "stdout.log",
+      "sha256": "acc41265eb5515b02ccc1c6dada5b8b0f4af5427adaa0df849a56fe3c40e008b"
+    }
+  ],
+  "environment": {
+    "arch": "arm64",
+    "environment_id": "env-3f9003af2ba9",
+    "implementation": "CPython",
+    "os": "Darwin",
+    "os_release": "25.6.0",
+    "python": "3.12.3",
+    "runner_name": "verienvelope-reference",
+    "runner_version": "0.1.0"
+  },
+  "evidence_id": "ev-193018158dcd4fac8b27aaacdfe96fd4",
+  "fixture_id": "p4-r1",
+  "method_id": "VE-METHOD-MCP-004",
+  "method_version": "0.1.0",
+  "notes": "primary R1 rule P4-M7. R1 的文本包含预注册的 time_difference。这是这条主张被 demonstrated 的条件。",
+  "observation": "match",
+  "outcome_class": "confirmed",
+  "raw_artifact_path": "mcp.server-time/0.6.2/run-f4ba0e8b9d3243f7b42f103a9624fb19",
+  "run_id": "run-f4ba0e8b9d3243f7b42f103a9624fb19",
+  "runner_version": "0.1.0",
+  "source_type": "ve_test",
+  "timestamp": "2026-09-27T05:34:14Z"
+}

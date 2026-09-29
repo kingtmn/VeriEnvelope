@@ -1,0 +1,12 @@
+{"event": "authorization_consumed", "note": "Run #2 已经发生。本事件不改写当时 authorized 为真的记录。", "planned_run": "external-run-2", "recorded_at": "2026-09-26T15:34:00Z"}
+{"event": "authorization_consumed", "note": "Run #3 已经发生。本事件不改写当时 authorized 为真的记录。", "planned_run": "external-run-3", "recorded_at": "2026-09-26T15:34:00Z"}
+{"event": "authorization_consumed", "note": "Pilot #2 authorization consumed at start. The authorization file is not rewritten.", "planned_run": "external-run-p2-1", "recorded_at": "2026-09-27T01:43:35Z"}
+{"event": "authorization_consumed", "note": "Pilot #2 authorization consumed at start. The authorization file is not rewritten.", "planned_run": "external-run-p2-2", "recorded_at": "2026-09-27T02:13:33Z"}
+{"event": "authorization_consumed", "note": "Pilot #2 authorization consumed at start. The authorization file is not rewritten.", "planned_run": "external-run-p2-3", "recorded_at": "2026-09-27T02:34:55Z"}
+{"event": "authorization_consumed", "note": "Pilot #2 authorization consumed at start. The authorization file is not rewritten.", "planned_run": "external-run-p2-4", "recorded_at": "2026-09-27T02:47:54Z"}
+{"event": "authorization_consumed", "note": "Pilot #2 authorization consumed at start. The authorization file is not rewritten.", "planned_run": "external-run-p2-5", "recorded_at": "2026-09-27T03:02:26Z"}
+{"event": "authorization_consumed", "note": "Pilot #2 authorization consumed at start. The authorization file is not rewritten.", "planned_run": "external-run-p2-6", "recorded_at": "2026-09-27T03:22:12Z"}
+{"event": "authorization_consumed", "note": "Pilot #3 authorization consumed at start. The authorization file is not rewritten.", "planned_run": "external-run-p3-1", "recorded_at": "2026-09-27T03:30:07Z"}
+{"event": "authorization_consumed", "note": "Pilot #3 authorization consumed at start. The authorization file is not rewritten.", "planned_run": "external-run-p3-2", "recorded_at": "2026-09-27T04:50:23Z"}
+{"event": "authorization_consumed", "note": "Pilot #4 authorization consumed at start. The authorization file is not rewritten.", "planned_run": "external-run-p4-1", "recorded_at": "2026-09-27T05:34:13Z"}
+{"event": "authorization_consumed", "note": "Pilot #5 authorization consumed at start. The authorization file is not rewritten.", "planned_run": "external-run-p5-1", "recorded_at": "2026-09-27T05:39:15Z"}

@@ -1,0 +1,58 @@
+{
+  "artifacts": [
+    {
+      "path": "environment.json",
+      "sha256": "8eaa7d2fe57ca239f8c16a4974a4bf7a4bbd08fddd0c9efa4a7613920ffbc97d"
+    },
+    {
+      "path": "input/artifact.json",
+      "sha256": "46acfc46b439287b8a4deb1746605e1a7db144e9cdedda52feb4dd13e6401c6d"
+    },
+    {
+      "path": "input/case.json",
+      "sha256": "ff57250fd46201b0b20834b0a784ca52b9975969b1eb31e19db27b9339677738"
+    },
+    {
+      "path": "input/component.json",
+      "sha256": "387b186b6a08c6507cc735e409c49e7d736b308822978017fab718c9e25f1239"
+    },
+    {
+      "path": "input/request.log",
+      "sha256": "f0b8ac37786c763a064498277a11965880a3e0f4a04287f19de237a2ff39bbfc"
+    },
+    {
+      "path": "runtime.json",
+      "sha256": "42de62072d7b7ce6d8321a25a0328a26da86a5b6fb12a6e28d5d0ab381b6da40"
+    },
+    {
+      "path": "stderr.log",
+      "sha256": "16c825ed20f9c3ab63f5c439687a4c861e82078190c1cbb1f175e960c17042f8"
+    },
+    {
+      "path": "stdout.log",
+      "sha256": "f0b8ac37786c763a064498277a11965880a3e0f4a04287f19de237a2ff39bbfc"
+    }
+  ],
+  "environment": {
+    "arch": "arm64",
+    "environment_id": "env-3f9003af2ba9",
+    "implementation": "CPython",
+    "os": "Darwin",
+    "os_release": "25.6.0",
+    "python": "3.12.3",
+    "runner_name": "verienvelope-reference",
+    "runner_version": "0.1.0"
+  },
+  "evidence_id": "ev-4245e3b5a52e4476b165e06be5e7eb42",
+  "fixture_id": "p5-r1",
+  "method_id": "VE-METHOD-MCP-005",
+  "method_version": "0.1.0",
+  "notes": "primary R1 rule P5-M7. R1 的实体数组与预注册值一致。这是这条主张被 demonstrated 的条件。",
+  "observation": "match",
+  "outcome_class": "confirmed",
+  "raw_artifact_path": "mcp.server-memory/0.6.3/run-21d1582275e347ee9389bc241b6756dd",
+  "run_id": "run-21d1582275e347ee9389bc241b6756dd",
+  "runner_version": "0.1.0",
+  "source_type": "ve_test",
+  "timestamp": "2026-09-27T05:39:15Z"
+}

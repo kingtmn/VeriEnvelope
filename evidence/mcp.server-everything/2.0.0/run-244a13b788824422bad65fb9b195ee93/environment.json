@@ -1,0 +1,10 @@
+{
+  "arch": "arm64",
+  "environment_id": "env-3f9003af2ba9",
+  "implementation": "CPython",
+  "os": "Darwin",
+  "os_release": "25.6.0",
+  "python": "3.12.3",
+  "runner_name": "verienvelope-reference",
+  "runner_version": "0.1.0"
+}

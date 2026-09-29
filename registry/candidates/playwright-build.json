@@ -1,0 +1,23 @@
+{
+  "base_image": "public.ecr.aws/docker/library/node:22-bookworm-slim",
+  "base_image_id": "sha256:43ac6c60b8f89723f746e8a92ce91abd5017e627ce1ddfe4238355d3a30b772c",
+  "base_image_repo_digests": [
+    "public.ecr.aws/docker/library/node@sha256:43ac6c60b8f89723f746e8a92ce91abd5017e627ce1ddfe4238355d3a30b772c"
+  ],
+  "build_note": "The first Dockerfile set PLAYWRIGHT_BROWSERS_PATH only after install, so browsers landed in /root/.cache/ms-playwright and chmod of /ms-playwright failed. That attempt did not start the server. The recipe was corrected before any Pilot #2 process, and this image is the corrected build.",
+  "build_recipe": "npm ci --omit=dev --ignore-scripts && npx playwright-core install-deps chromium && npx playwright-core install chromium && apt-get install tini. Host npm was not used.",
+  "commit": "e87bb897e15a6f2af402afb0f10b45eced9e1f9b",
+  "executed": false,
+  "execution_artifact": {
+    "artifact_origin": "locally_built_from_pinned_source",
+    "base_image_id": "sha256:43ac6c60b8f89723f746e8a92ce91abd5017e627ce1ddfe4238355d3a30b772c",
+    "build_timestamp": "2026-09-26T18:41:58.737324717-07:00",
+    "local_image_id": "sha256:cc8221f580a2ff7cdecac250da533250ef12e03a4101c13363056039072544cd",
+    "lockfile_sha256": "10bcbeb19608f046a76ea3b2c2d3d2bea3b2cc43e852c11f1d1b2ce602e1e5eb",
+    "node_version": "v22.23.3",
+    "npm_version": "10.9.9",
+    "registry_digest": null
+  },
+  "image_pushed": false,
+  "server_started": false
+}

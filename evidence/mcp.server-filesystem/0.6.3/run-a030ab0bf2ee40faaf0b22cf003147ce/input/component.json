@@ -1,0 +1,12 @@
+{
+  "commit": "f46d9578190b476b3501923ea8977d899e8db2cb",
+  "component_type": "mcp_server",
+  "description": "MCP server from modelcontextprotocol/servers src/filesystem. package_version is source metadata, not a verified npm artifact.",
+  "id": "mcp.server-filesystem",
+  "license": "SEE LICENSE IN LICENSE",
+  "name": "Filesystem MCP",
+  "publisher": "Model Context Protocol a Series of LF Projects, LLC.",
+  "source_repository": "https://github.com/modelcontextprotocol/servers",
+  "status": "candidate",
+  "version": "0.6.3"
+}

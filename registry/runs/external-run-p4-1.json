@@ -1,0 +1,10 @@
+{
+  "authorized": true,
+  "execution_artifact": "sha256:f4cd3016ba9ee1e1fc2c94a75694e7a67a23d9882514372129c49ed04f0ef3b4",
+  "method_version": "0.1.0",
+  "planned_run": "external-run-p4-1",
+  "primary_claim": "R1",
+  "question": "Under method 0.1.0, does convert_time from UTC 12:00 to Asia/Tokyo include the preregistered time_difference?",
+  "sandbox_policy": "ADR-008-amendment-3",
+  "timestamp": "2026-09-27T05:34:05Z"
+}

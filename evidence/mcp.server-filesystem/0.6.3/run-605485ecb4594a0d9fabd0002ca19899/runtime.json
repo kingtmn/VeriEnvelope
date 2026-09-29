@@ -1,0 +1,46 @@
+{
+  "boundary": {
+    "cap_drop": [
+      "ALL"
+    ],
+    "memory": 536870912,
+    "mount_sources": [],
+    "nano_cpus": 1000000000,
+    "network_mode": "none",
+    "pids_limit": 64,
+    "readonly_rootfs": true,
+    "security_opt": [
+      "no-new-privileges"
+    ],
+    "user": "65532:65532"
+  },
+  "environment_boundary": {
+    "container_config_env": [
+      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG=C",
+      "NODE_VERSION=22.23.3",
+      "YARN_VERSION=1.22.22"
+    ],
+    "host_inheritance": "none",
+    "image_defined_env": [
+      "NODE_VERSION=22.23.3",
+      "YARN_VERSION=1.22.22"
+    ],
+    "process_env_names": [
+      "HOME",
+      "LANG",
+      "PATH"
+    ],
+    "process_wrapper": "mkdir /work/home && env -i PATH LANG HOME=/work/home",
+    "sandbox_policy": "ADR-008-amendment-3"
+  },
+  "exit_code": 0,
+  "image_id": "sha256:3e895777b0a562383d0ca49a12d27c385d47a43bfe9ab3d3ba50f678431be5cf",
+  "messages_sent": [
+    "initialize",
+    "notifications/initialized",
+    "tools/list",
+    "tools/call"
+  ],
+  "sandbox_policy": "ADR-008-amendment-3"
+}

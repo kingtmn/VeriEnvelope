@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://verienvelope.local/schemas/test_case.schema.json",
+  "title": "TestCase",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "method_id",
+    "method_version",
+    "title",
+    "claim",
+    "testable_statement",
+    "fixture_id",
+    "component_path",
+    "entrypoint",
+    "input_file",
+    "expected_exit_code",
+    "expected_stdout_file",
+    "timeout_seconds"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "method_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "method_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claim": {
+      "type": "string",
+      "minLength": 1
+    },
+    "testable_statement": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fixture_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "component_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "entrypoint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "input_file": {
+      "type": "string",
+      "minLength": 1
+    },
+    "expected_exit_code": {
+      "type": "integer"
+    },
+    "expected_stdout_file": {
+      "type": "string",
+      "minLength": 1
+    },
+    "timeout_seconds": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    }
+  }
+}

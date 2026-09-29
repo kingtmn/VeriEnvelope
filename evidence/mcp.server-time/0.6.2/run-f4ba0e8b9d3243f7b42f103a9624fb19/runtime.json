@@ -1,0 +1,50 @@
+{
+  "boundary": {
+    "cap_drop": [
+      "ALL"
+    ],
+    "memory": 536870912,
+    "mount_sources": [],
+    "nano_cpus": 1000000000,
+    "network_mode": "none",
+    "pids_limit": 64,
+    "readonly_rootfs": true,
+    "security_opt": [
+      "no-new-privileges"
+    ],
+    "user": "65532:65532"
+  },
+  "environment_boundary": {
+    "container_config_env": [
+      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG=C",
+      "GPG_KEY=A035C8C19219BA821ECEA86B64E628F8D684696D",
+      "PYTHON_VERSION=3.11.16",
+      "PYTHON_SHA256=91bcdebfdde239a003ae93738a7fce0f9230fee5c4bc2b86f6e6e8c6f98aabe8",
+      "UV_PYTHON_INSTALL_DIR=/opt/uv-python"
+    ],
+    "host_inheritance": "none",
+    "image_defined_env": [
+      "GPG_KEY=A035C8C19219BA821ECEA86B64E628F8D684696D",
+      "PYTHON_VERSION=3.11.16",
+      "PYTHON_SHA256=91bcdebfdde239a003ae93738a7fce0f9230fee5c4bc2b86f6e6e8c6f98aabe8",
+      "UV_PYTHON_INSTALL_DIR=/opt/uv-python"
+    ],
+    "process_env_names": [
+      "HOME",
+      "LANG",
+      "PATH"
+    ],
+    "process_wrapper": "mkdir /work/home && env -i PATH LANG HOME=/work/home",
+    "sandbox_policy": "ADR-008-amendment-3"
+  },
+  "exit_code": 0,
+  "image_id": "sha256:f4cd3016ba9ee1e1fc2c94a75694e7a67a23d9882514372129c49ed04f0ef3b4",
+  "messages_sent": [
+    "initialize",
+    "notifications/initialized",
+    "tools/list",
+    "tools/call"
+  ],
+  "sandbox_policy": "ADR-008-amendment-3"
+}

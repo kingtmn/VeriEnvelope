@@ -1,0 +1,50 @@
+{
+  "repository_url": "https://github.com/kingtmn/VeriEnvelope",
+  "cases": [
+    {
+      "slug": "everything-echo",
+      "name": "Everything MCP Server",
+      "claim_label": "echo returns the fixed message",
+      "surface": "Protocol / deterministic Tool behavior",
+      "primary_capability": "C3",
+      "expected_status": "demonstrated",
+      "result_path": "evidence/mcp.server-everything/2.0.0/run-244a13b788824422bad65fb9b195ee93/result.json"
+    },
+    {
+      "slug": "playwright-navigate",
+      "name": "Playwright MCP",
+      "claim_label": "browser_navigate reaches the fixed local page",
+      "surface": "Browser / runtime",
+      "primary_capability": "C3",
+      "expected_status": "not_demonstrated",
+      "result_path": "evidence/mcp.playwright-mcp/0.0.82/run-d22d4d1928204029b8d2e45e82f749ad/result.json"
+    },
+    {
+      "slug": "filesystem-read",
+      "name": "Filesystem MCP Server",
+      "claim_label": "read_text_file returns the fixed fixture bytes",
+      "surface": "Filesystem / permission",
+      "primary_capability": "R1",
+      "expected_status": "demonstrated",
+      "result_path": "evidence/mcp.server-filesystem/0.6.3/run-a030ab0bf2ee40faaf0b22cf003147ce/result.json"
+    },
+    {
+      "slug": "time-convert",
+      "name": "Time MCP Server",
+      "claim_label": "convert_time reports the fixed UTC to Tokyo offset",
+      "surface": "Timezone conversion",
+      "primary_capability": "R1",
+      "expected_status": "demonstrated",
+      "result_path": "evidence/mcp.server-time/0.6.2/run-f4ba0e8b9d3243f7b42f103a9624fb19/result.json"
+    },
+    {
+      "slug": "memory-create",
+      "name": "Memory MCP Server",
+      "claim_label": "create_entities returns the fixed entity",
+      "surface": "Process-local knowledge graph",
+      "primary_capability": "R1",
+      "expected_status": "demonstrated",
+      "result_path": "evidence/mcp.server-memory/0.6.3/run-21d1582275e347ee9389bc241b6756dd/result.json"
+    }
+  ]
+}
