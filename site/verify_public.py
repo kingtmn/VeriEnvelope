@@ -183,6 +183,28 @@ def check_metadata(errors: list[str]) -> None:
         errors.append("robots.txt is missing the sitemap URL")
 
 
+def check_catalog(errors: list[str]) -> None:
+    config = json.loads((SITE / "site.json").read_text())
+    path = DIST / "cases/index.json"
+    if not path.is_file():
+        errors.append("missing machine-readable case index")
+        return
+    catalog = json.loads(path.read_text())
+    entries = config["cases"]
+    if catalog["source_revision"] != config["source_revision"] or len(catalog["records"]) != len(entries):
+        errors.append("case index differs from the publication snapshot")
+        return
+    for entry, record in zip(entries, catalog["records"]):
+        result = json.loads((ROOT / entry["result_path"]).read_text())
+        primary = next(item for item in result["capabilities"] if item["capability_id"] == entry["primary_capability"])
+        source = f"{config['repository_url']}/blob/{config['source_revision']}/{entry['result_path']}"
+        page = (DIST / "cases" / entry["slug"] / "index.html").read_text()
+        if (record["status"], record["run_id"], record["result"]) != (primary["status"], result["run_id"], source):
+            errors.append(f"{entry['slug']}: catalog disagrees with sealed record")
+        if f'{source.rsplit("/", 1)[0]}/stdout.log' not in page or 'id="transcript"' not in page:
+            errors.append(f"{entry['slug']}: missing transcript or pinned log")
+
+
 def main() -> int:
     errors: list[str] = []
     check_hygiene(errors)
@@ -190,6 +212,7 @@ def main() -> int:
     check_cases(errors)
     check_generated_links(errors)
     check_metadata(errors)
+    check_catalog(errors)
     if errors:
         for error in sorted(set(errors)):
             print(f"ERROR: {error}", file=sys.stderr)

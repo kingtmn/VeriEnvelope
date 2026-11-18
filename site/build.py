@@ -11,6 +11,8 @@ import shutil
 from datetime import date
 from pathlib import Path
 
+from check_records import check_record
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
@@ -106,7 +108,7 @@ def page(
   <footer class="site-footer">
     <div class="shell footer-grid">
       <div><a class="brand footer-brand" href="/">VeriEnvelope</a><p>Specific claims. Reproducible evidence. Explicit boundaries.</p></div>
-      <div><p>Public presentation v0.2 · Tool claim scope v0.1</p><p>Feedback: <a href="mailto:kingtmn1@gmail.com">kingtmn1@gmail.com</a></p></div>
+      <div><p>Evidence viewer v0.3 · Tool claim scope v0.1</p><p>Feedback: <a href="mailto:kingtmn1@gmail.com">kingtmn1@gmail.com</a></p></div>
     </div>
   </footer>
 </body>
@@ -130,6 +132,7 @@ def load_cases() -> tuple[dict, list[dict]]:
     config = json.loads(CONFIG.read_text(encoding="utf-8"))
     loaded = []
     for entry in config["cases"]:
+        check_record(entry)
         result_path = ROOT / entry["result_path"]
         result = json.loads(result_path.read_text(encoding="utf-8"))
         capabilities = {item["capability_id"]: item for item in result["capabilities"]}
@@ -157,13 +160,33 @@ def case_card(case: dict) -> str:
 </article>"""
 
 
+def catalog_row(case: dict) -> str:
+    result = case["result"]
+    link = f"/cases/{esc(case['slug'])}/"
+    return f"""<tr>
+      <th scope="row"><a href="{link}">{esc(case['name'])}</a><small>{esc(case['surface'])}</small></th>
+      <td>{esc(case['claim_label'])}</td><td>{status_badge(case['primary']['status'])}</td>
+      <td><a href="{link}#transcript">Read response →</a></td></tr>"""
+
+
 def list_items(values: list[str]) -> str:
     if not values:
         return '<p class="quiet">None empirically established for this run.</p>'
     return "<ul>" + "".join(f"<li>{esc(value)}</li>" for value in values) + "</ul>"
 
 
-def build_case(case: dict, repository_url: str) -> str:
+def response_excerpt(case: dict) -> str:
+    """Display the recorded primary JSON-RPC reply for these five fixed fixtures."""
+    log = (ROOT / case["result_path"]).with_name("stdout.log")
+    replies = [message["result"] for line in log.read_text().splitlines()
+               if (message := json.loads(line)).get("id") == 3 and "result" in message]
+    if len(replies) != 1:
+        raise ValueError(f"{case['slug']}: expected one recorded reply with id 3")
+    value = replies[0]["content"][0]["text"]
+    return value[:600] + ("\n[… excerpt continues in stdout.log]" if len(value) > 600 else "")
+
+
+def build_case(case: dict, source: str) -> str:
     result = case["result"]
     primary = case["primary"]
     envelope = primary["envelope"]
@@ -174,8 +197,24 @@ def build_case(case: dict, repository_url: str) -> str:
             for event in history
         ]
     )
-    evidence_url = f"{repository_url}/blob/main/{case['result_path']}"
-    method_url = f"{repository_url}/blob/main/methods/{result['method_id']}/method.yaml"
+    evidence_url = f"{source}/{case['result_path']}"
+    package = evidence_url.rsplit("/", 1)[0]
+    method_path = Path("methods") / result["method_id"] / "method.yaml"
+    method_lines = (ROOT / method_path).read_text().splitlines()
+    marker = f"- id: {result['rule_id']}"
+    line, = [number for number, value in enumerate(method_lines, 1) if value.strip() == marker]
+    method_url = f"{source}/{method_path}#L{line}"
+    related = "".join(
+        f"<li><code>{esc(item['capability_id'])}</code> {esc(item['testable_statement'])} "
+        f"{status_badge(item['status'])}</li>"
+        for item in result["capabilities"] if item["capability_id"] != primary["capability_id"]
+    )
+    revision_note = ""
+    if case["slug"] == "filesystem-read":
+        revision_note = f"""<p>The first read matched the fixture. Method 0.1.0 lacked a rule
+        authorizing the capability label supplied by the Runner. A newly authorized measurement
+        under 0.2.0 supports the current result.</p>
+        <a href="{source}/docs/research/pilot3_rule_revalidation.md">Read the revalidation record ↗</a>"""
     body = f"""
 <div class="shell page-shell">
   <section class="case-hero">
@@ -185,6 +224,17 @@ def build_case(case: dict, repository_url: str) -> str:
     <div class="case-result-line">{status_badge(primary['status'])}<span>One claim. One declared envelope.</span></div>
   </section>
   <div class="record-grid">
+    <section class="record-section wide transcript" id="transcript">
+      <p class="eyebrow">Protocol transcript · response 3</p>
+      <h2>What the tool returned</h2>
+      <pre>{esc(response_excerpt(case))}</pre>
+      <nav class="record-links" aria-label="Source files">
+        <a href="{package}/stdout.log">Full transcript ↗</a>
+        <a href="{method_url}">Method ↗</a>
+        <a href="{evidence_url}">Result JSON ↗</a>
+        <a href="#envelope">Tested conditions ↓</a>
+      </nav>
+    </section>
     <section class="record-section wide">
       <p class="record-number">01 / Claim</p>
       <h2>What was tested</h2>
@@ -197,6 +247,7 @@ def build_case(case: dict, repository_url: str) -> str:
       <p>{status_badge(primary['status'])}</p>
       <p>{esc(primary['notes'])}</p>
       <p>Admission: <code>{esc(result['admission'])}</code></p>
+      <details><summary>Other claims in this run</summary><ul>{related}</ul></details>
     </section>
     <section class="record-section">
       <p class="record-number">Identity</p>
@@ -233,7 +284,15 @@ def build_case(case: dict, repository_url: str) -> str:
       <p class="record-number">History</p>
       <h2>The record is append-only</h2>
       {history_html}
+      {revision_note}
       <p class="quiet">Historical evidence is retained. A later result does not erase an earlier run.</p>
+    </section>
+    <section class="record-section wide">
+      <h2>Check this record locally</h2>
+      <p>From the repository root, compare this package and its Method with the published SHA-256 digests.</p>
+      <pre>python3 site/check_records.py {esc(case['slug'])}</pre>
+      <p>The checksum identifies file changes relative to the public snapshot. The seal is unsigned.</p>
+      <a href="{package}/manifest.json">Artifact manifest ↗</a> · <a href="{package}/seal.json">Package seal ↗</a>
     </section>
   </div>
 </div>"""
@@ -264,18 +323,16 @@ def method_flow() -> str:
 
 def build() -> None:
     config, cases = load_cases()
-    if DIST.exists():
-        shutil.rmtree(DIST)
-    DIST.mkdir(parents=True)
-    (DIST / "assets").mkdir(parents=True)
+    (DIST / "assets").mkdir(parents=True, exist_ok=True)
     for asset in ("styles.css", "favicon.svg", "og-card.svg", "og-card.png"):
         shutil.copyfile(SITE / "assets" / asset, DIST / "assets" / asset)
 
     cards = "".join(case_card(case) for case in cases)
     playwright = next(case for case in cases if case["slug"] == "playwright-navigate")
     playwright_result = playwright["result"]
-    playwright_evidence = f"{config['repository_url']}/blob/main/{playwright['result_path']}"
-    playwright_method = f"{config['repository_url']}/blob/main/methods/{playwright_result['method_id']}/method.yaml"
+    source = f"{config['repository_url']}/blob/{config['source_revision']}"
+    playwright_evidence = f"{source}/{Path(playwright['result_path']).with_name('stdout.log')}"
+    playwright_method = f"{source}/methods/{playwright_result['method_id']}/method.yaml"
     old_filesystem = f"{config['repository_url']}/blob/main/evidence/mcp.server-filesystem/0.6.3/run-605485ecb4594a0d9fabd0002ca19899/result.json"
     new_filesystem = f"{config['repository_url']}/blob/main/evidence/mcp.server-filesystem/0.6.3/run-a030ab0bf2ee40faaf0b22cf003147ce/result.json"
     home = f"""
@@ -291,10 +348,12 @@ def build() -> None:
         <a class="button" href="#how-it-works">How it works</a>
       </div>
     </div>
-    <aside class="hero-note" aria-label="VeriEnvelope principle">
-      <p class="note-label">Principle / 001</p>
-      <p>A result without its envelope is incomplete.</p>
-      <span>Claim · Method · Evidence · Boundary</span>
+    <aside class="specimen" aria-label="Featured evidence">
+      <div class="specimen-head">Playwright MCP <code>{esc(playwright_result['component_version'])}</code></div>
+      <p class="eyebrow">Recorded reply</p>
+      <pre>{esc(response_excerpt(playwright).split('Browser logs:')[0].strip())}</pre>
+      <a href="/cases/playwright-navigate/#transcript">Inspect this response →</a>
+      <p class="quiet">A result without its envelope is incomplete.</p>
     </aside>
   </div>
 </section>
@@ -311,7 +370,7 @@ def build() -> None:
       <dl>
         <div><dt>Tool</dt><dd>Playwright MCP</dd></div>
         <div><dt>Claim</dt><dd><code>browser_navigate</code> reaches the fixed local page</dd></div>
-        <div><dt>Status</dt><dd>{status_badge('not_demonstrated')}</dd></div>
+        <div><dt>Status</dt><dd>{status_badge(playwright['primary']['status'])}</dd></div>
         <div><dt>Method</dt><dd><code>{esc(playwright_result['method_id'])} {esc(playwright_result['method_version'])}</code></dd></div>
       </dl>
       <div class="record-links"><a href="{esc(playwright_evidence)}">Evidence ↗</a><a href="{esc(playwright_method)}">Method ↗</a><a href="/cases/playwright-navigate/#envelope">Envelope →</a></div>
@@ -373,11 +432,15 @@ def build() -> None:
     cases_body = f"""
 <div class="shell page-shell">
   <section class="case-hero listing-hero">
-    <p class="eyebrow">Current v0.1 Tool scope</p>
-    <h1>Five claims.<br>Five evidence trails.</h1>
-    <p class="claim">Each record links one testable statement to its frozen Method, sealed evidence, status, envelope, and history. This is not a benchmark or leaderboard.</p>
+    <p class="eyebrow">Published Tool claims</p>
+    <h1>Evidence index</h1>
+    <p class="claim">Choose a claim to inspect the tool response, the rule used to interpret it, and the tested conditions.</p>
+    <a href="/cases/index.json">Open the machine-readable index (JSON)</a>
   </section>
-  <div class="case-grid">{cards}</div>
+  <table class="catalog"><caption>Five published records</caption>
+    <thead><tr><th>Component</th><th>Claim</th><th>Status</th><th>Transcript</th></tr></thead>
+    <tbody>{''.join(catalog_row(case) for case in cases)}</tbody>
+  </table>
 </div>"""
     write_page(
         "cases/index.html",
@@ -389,8 +452,20 @@ def build() -> None:
         ),
     )
 
+    catalog = []
     for case in cases:
-        write_page(f"cases/{case['slug']}/index.html", build_case(case, config["repository_url"]))
+        route = f"/cases/{case['slug']}/"
+        write_page(f"cases/{case['slug']}/index.html", build_case(case, source))
+        result = case["result"]
+        catalog.append({
+            "url": canonical_url(route), "component": case["name"],
+            "component_version": result["component_version"], "claim": case["claim_label"],
+            "status": case["primary"]["status"], "run_id": result["run_id"],
+            "method_id": result["method_id"], "method_version": result["method_version"],
+            "result": f"{source}/{case['result_path']}", "seal_sha256": case["seal_sha256"],
+        })
+    write_page("cases/index.json", json.dumps({"source_revision": config["source_revision"],
+               "records": catalog}, ensure_ascii=False, indent=2) + "\n")
 
     methodology = f"""
 <div class="shell page-shell">

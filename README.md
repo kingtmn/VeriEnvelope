@@ -14,6 +14,18 @@ VeriEnvelope keeps a narrow, testable statement attached to the frozen rule that
 
 Explore the public Viewer at [verienvelope.pages.dev](https://verienvelope.pages.dev/) or inspect the source-of-truth records in this repository.
 
+### Inspect a published measurement
+
+The [evidence index](https://verienvelope.pages.dev/cases/) opens the recorded tool response alongside its Method and runtime conditions. The [JSON index](https://verienvelope.pages.dev/cases/index.json) provides the same five primary claim statuses with run IDs and source links pinned to the public evidence snapshot.
+
+From a local checkout, compare the files against that snapshot using Python 3.11 or newer. Omit the case name to check every published package.
+
+```bash
+python3 site/check_records.py playwright-navigate
+```
+
+The command checks the Method, package seal, and files listed in the seal and manifest. A match establishes byte consistency relative to the published digests. These seals are unsigned.
+
 ## A real case: Playwright MCP
 
 The current record for the claim that `browser_navigate` reaches a fixed local page is **`not_demonstrated`** under `VE-METHOD-MCP-002` 0.4.0.

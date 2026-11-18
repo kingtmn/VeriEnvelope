@@ -1,8 +1,11 @@
 {
+  "source_revision": "d297db5a876d38206f15214798f8f376dd2523e3",
   "repository_url": "https://github.com/kingtmn/VeriEnvelope",
   "cases": [
     {
       "slug": "everything-echo",
+      "seal_sha256": "74e2cb62b825431f04722154205a7452c71047136a81b635a9b8ade89341a76a",
+      "method_sha256": "901148f8da1833c60e252d7913b601272014ade16def3642147e7c5eff339276",
       "name": "Everything MCP Server",
       "claim_label": "echo returns the fixed message",
       "surface": "Protocol / deterministic Tool behavior",
@@ -12,6 +15,8 @@
     },
     {
       "slug": "playwright-navigate",
+      "seal_sha256": "e6ca9685ce8926164c015324a29f2d6d8688902f269e88042b09311781166343",
+      "method_sha256": "cd9e51276ee9e76e7e59f148906b8fd1341e2530619c17948700d4d25e2a4751",
       "name": "Playwright MCP",
       "claim_label": "browser_navigate reaches the fixed local page",
       "surface": "Browser / runtime",
@@ -21,6 +26,8 @@
     },
     {
       "slug": "filesystem-read",
+      "seal_sha256": "c94a3a275d1502a93d4ef971779ef05a57bbf82708bbb7b18787200819ad373e",
+      "method_sha256": "87af934023c6165fc1754fe1b11cd77dff1d52d9fa67705b417671fa8d83236a",
       "name": "Filesystem MCP Server",
       "claim_label": "read_text_file returns the fixed fixture bytes",
       "surface": "Filesystem / permission",
@@ -30,6 +37,8 @@
     },
     {
       "slug": "time-convert",
+      "seal_sha256": "8b5a90c2b3bb3a5b49ebd86bf778182e7ae7facdd8b71e26d9f0a42f6007c659",
+      "method_sha256": "0b3a6fc9f3963612b4a6453c174e1193101792b867c7d3ecbd4b107286346edd",
       "name": "Time MCP Server",
       "claim_label": "convert_time reports the fixed UTC to Tokyo offset",
       "surface": "Timezone conversion",
@@ -39,6 +48,8 @@
     },
     {
       "slug": "memory-create",
+      "seal_sha256": "48e7f8be680b1d2dc941055db02f0b026cf4c49b02ed8afa11236f60730af24b",
+      "method_sha256": "68958e0424ab13d291c7c4374c3c41980e2331d12c5161a64ee4375770837c03",
       "name": "Memory MCP Server",
       "claim_label": "create_entities returns the fixed entity",
       "surface": "Process-local knowledge graph",
