@@ -100,7 +100,7 @@ def page(
         <a href="/methodology/">Methodology</a>
         <a href="/about/">About</a>
         <a href="/request/">Request verification</a>
-        <a class="nav-source" href="{REPOSITORY_URL}">View source ↗</a>
+        <a class="nav-source" href="{REPOSITORY_URL}"><span aria-hidden="true">☆ </span>Star on GitHub</a>
       </div>
     </nav>
   </header>
@@ -186,7 +186,19 @@ def response_excerpt(case: dict) -> str:
     return value[:600] + ("\n[… excerpt continues in stdout.log]" if len(value) > 600 else "")
 
 
-def build_case(case: dict, source: str) -> str:
+def markdown_citation(case: dict, source: str) -> str:
+    result = case["result"]
+    method = f"{result['method_id']} {result['method_version']}"
+    record = f"{source}/{case['result_path']}"
+    return (
+        f"**{case['name']} {result['component_version']}** — Claim tested: “{case['claim_label']}”. "
+        f"Status: `{case['primary']['status']}` under `{method}` in this run.\n\n"
+        f"[Sealed result and tested conditions]({record}) · "
+        f"[VeriEnvelope case notes]({BASE_URL}/cases/{case['slug']}/#envelope)\n"
+    )
+
+
+def build_case(case: dict, source: str, citation: str) -> str:
     result = case["result"]
     primary = case["primary"]
     envelope = primary["envelope"]
@@ -233,6 +245,7 @@ def build_case(case: dict, source: str) -> str:
         <a href="{method_url}">Method ↗</a>
         <a href="{evidence_url}">Result JSON ↗</a>
         <a href="#envelope">Tested conditions ↓</a>
+        <a href="#cite">Cite this run ↓</a>
       </nav>
     </section>
     <section class="record-section wide">
@@ -293,6 +306,15 @@ def build_case(case: dict, source: str) -> str:
       <pre>python3 site/check_records.py {esc(case['slug'])}</pre>
       <p>The checksum identifies file changes relative to the public snapshot. The seal is unsigned.</p>
       <a href="{package}/manifest.json">Artifact manifest ↗</a> · <a href="{package}/seal.json">Package seal ↗</a>
+    </section>
+    <section class="record-section wide" id="cite">
+      <h2>Cite this run</h2>
+      <label for="citation">Markdown for an issue, pull request, or test report</label>
+      <textarea class="citation" id="citation" rows="5" readonly spellcheck="false">{esc(citation.rstrip())}</textarea>
+      <nav class="record-links" aria-label="Reuse this record">
+        <a href="citation.md" download="{esc(case['slug'])}-citation.md">Download Markdown</a>
+        <a href="{REPOSITORY_URL}">Star VeriEnvelope to find these records again ↗</a>
+      </nav>
     </section>
   </div>
 </div>"""
@@ -455,7 +477,9 @@ def build() -> None:
     catalog = []
     for case in cases:
         route = f"/cases/{case['slug']}/"
-        write_page(f"cases/{case['slug']}/index.html", build_case(case, source))
+        citation = markdown_citation(case, source)
+        write_page(f"cases/{case['slug']}/citation.md", citation)
+        write_page(f"cases/{case['slug']}/index.html", build_case(case, source, citation))
         result = case["result"]
         catalog.append({
             "url": canonical_url(route), "component": case["name"],

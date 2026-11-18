@@ -10,31 +10,35 @@ VeriEnvelope is an open evidence system for verifying specific Tool claims under
 Claim → Method → Evidence → Envelope
 ```
 
-VeriEnvelope keeps a narrow, testable statement attached to the frozen rule that judged it, the observation that supports it, and the conditions where the conclusion stops. It does not produce product scores, rankings, certifications, or fitness-for-use verdicts.
+### What happened when Playwright MCP tried to open a local page?
 
-Explore the public Viewer at [verienvelope.pages.dev](https://verienvelope.pages.dev/) or inspect the source-of-truth records in this repository.
+We asked Playwright MCP 0.0.82 to navigate to a fixed local page. The frozen test looked for its title, `ve-pilot-2`. The recorded tool response included this line:
 
-### Inspect a published measurement
+> Error: async initializeServer: Target page, context or browser has been closed
 
-The [evidence index](https://verienvelope.pages.dev/cases/) opens the recorded tool response alongside its Method and runtime conditions. The [JSON index](https://verienvelope.pages.dev/cases/index.json) provides the same five primary claim statuses with run IDs and source links pinned to the public evidence snapshot.
+The status for that claim was **`not_demonstrated`** under Method `VE-METHOD-MCP-002` 0.4.0. This does **not** mean Playwright is broken. The cause remains unclassified.
 
-From a local checkout, compare the files against that snapshot using Python 3.11 or newer. Omit the case name to check every published package.
+[Inspect the transcript](https://verienvelope.pages.dev/cases/playwright-navigate/#transcript) · [Read the tested conditions](https://verienvelope.pages.dev/cases/playwright-navigate/#envelope) · [Get the Markdown citation](https://verienvelope.pages.dev/cases/playwright-navigate/#cite)
+
+**Keep this evidence library handy.** Star the repository to find the records again when a tool claim comes up in a review. Each [published case](https://verienvelope.pages.dev/cases/) includes a citation you can paste into an issue or pull request, with the component version, claim status, frozen Method, and a link to the exact evidence snapshot.
+
+### Check the Playwright record on your machine
+
+With Git and Python 3.11+ installed, run:
 
 ```bash
+git clone --depth 1 https://github.com/kingtmn/VeriEnvelope.git
+cd VeriEnvelope
 python3 site/check_records.py playwright-navigate
 ```
 
-The command checks the Method, package seal, and files listed in the seal and manifest. A match establishes byte consistency relative to the published digests. These seals are unsigned.
+Expected output:
 
-## A real case: Playwright MCP
+```text
+playwright-navigate: Method, seal and listed artifact hashes match
+```
 
-The current record for the claim that `browser_navigate` reaches a fixed local page is **`not_demonstrated`** under `VE-METHOD-MCP-002` 0.4.0.
-
-This does **not** mean Playwright is broken. It means this specific claim was not demonstrated under the frozen Method and runtime envelope. The cause remains unclassified.
-
-- [Read the sealed result](evidence/mcp.playwright-mcp/0.0.82/run-d22d4d1928204029b8d2e45e82f749ad/result.json)
-- [Inspect the frozen Method](methods/VE-METHOD-MCP-002/method.yaml)
-- [View the claim and Envelope](https://verienvelope.pages.dev/cases/playwright-navigate/)
+The check compares the local file bytes to the published digests. The seal is unsigned. To check all five packages, omit the case name. For scripts, the [JSON index](https://verienvelope.pages.dev/cases/index.json) provides run IDs, claim statuses, and source links.
 
 ## Why this exists
 

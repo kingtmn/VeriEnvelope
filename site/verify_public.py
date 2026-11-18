@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import html
 import json
 import re
 import subprocess
@@ -203,6 +204,15 @@ def check_catalog(errors: list[str]) -> None:
             errors.append(f"{entry['slug']}: catalog disagrees with sealed record")
         if f'{source.rsplit("/", 1)[0]}/stdout.log' not in page or 'id="transcript"' not in page:
             errors.append(f"{entry['slug']}: missing transcript or pinned log")
+        citation_path = DIST / "cases" / entry["slug"] / "citation.md"
+        if not citation_path.is_file():
+            errors.append(f"{entry['slug']}: missing downloadable citation")
+            continue
+        citation = citation_path.read_text(encoding="utf-8").strip()
+        required = (entry["claim_label"], result["component_version"], primary["status"],
+                    result["method_id"], result["method_version"], source, f"{record['url']}#envelope")
+        if not all(value in citation for value in required) or html.escape(citation) not in page:
+            errors.append(f"{entry['slug']}: citation differs from the published record or page")
 
 
 def main() -> int:
